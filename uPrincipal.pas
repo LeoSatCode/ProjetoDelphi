@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, uDTMConexao, Enter,
   ufrmAtualizaDB, uCadUsuario, uLogin, cUsuarioLogado, Vcl.ComCtrls,FireDAC.Stan.Option,cAtualizacaoTabelaMSSQL,
   cAtualizacaoBandoDeDados, cAcaoAcesso,RLReport, uUsuarioVsAcoes, Vcl.ExtCtrls, VclTee.TeeGDIPlus, Data.DB,
-  VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart, Vcl.StdCtrls, cFuncao;
+  VCLTee.TeEngine, VCLTee.Series, VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart, Vcl.StdCtrls, cFuncao, uCaixa;
 
 type
   TfrmPrincipal = class(TForm)
@@ -54,6 +54,7 @@ type
     lbl1: TLabel;
     tmrAtualizacaoDashBoard: TTimer;
     mniROCARUSURIO1: TMenuItem;
+    mniCAIXA1: TMenuItem;
     procedure mnuFecharClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CATEGORIA1Click(Sender: TObject);
@@ -77,6 +78,7 @@ type
     procedure MOVIMENTAO1Click(Sender: TObject);
     procedure RELATRIO1Click(Sender: TObject);
     procedure mniROCARUSURIO1Click(Sender: TObject);
+    procedure mniCAIXA1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -181,6 +183,7 @@ begin
     TAcaoAcesso.CriarAcoes(TfrmCadAcaoAcesso, dtmConexao.ConexaoDB);
     TAcaoAcesso.CriarAcoes(TfrmAlterarSenha, dtmConexao.ConexaoDB);
     TAcaoAcesso.CriarAcoes(TfrmProVendas, dtmConexao.ConexaoDB);
+    TAcaoAcesso.CriarAcoes(TfrmCaixa, dtmConexao.ConexaoDB);
     TAcaoAcesso.CriarAcoes(TfrmRelVendaPorData, dtmConexao.ConexaoDB);
     TAcaoAcesso.CriarAcoes(TfrmRelClienteFicha, dtmConexao.ConexaoDB);
     TAcaoAcesso.CriarAcoes(TfrmRelCliente, dtmConexao.ConexaoDB);
@@ -223,6 +226,11 @@ end;
 procedure TfrmPrincipal.mniALTERARSENHA1Click(Sender: TObject);
 begin
   TFuncao.CriarForm(TfrmAlterarSenha, oUsuarioLogado, dtmConexao.ConexaoDB);
+end;
+
+procedure TfrmPrincipal.mniCAIXA1Click(Sender: TObject);
+begin
+  TFuncao.CriarForm(TfrmCaixa, oUsuarioLogado, dtmConexao.ConexaoDB);
 end;
 
 procedure TfrmPrincipal.mniCategoria2Click(Sender: TObject);
@@ -283,6 +291,7 @@ begin
 
       // login OK  status atualizado
       stbPrincipal.Panels[0].Text := 'USUÁRIO: ' + oUsuarioLogado.nome;
+      ShowMessage('Usuário Alterado!');
       // aqui chegou porque foi mrOk → login deu certo
       // então atualiza o status bar com o novo usuário
 
@@ -294,7 +303,7 @@ begin
   finally
     // libera o backup da memória
     UsuarioBackup.Free;
-    ShowMessage('Usuário Alterado!');
+
   end;
 end;
 

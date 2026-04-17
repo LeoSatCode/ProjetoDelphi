@@ -33,11 +33,17 @@ object frmTelaHeranca: TfrmTelaHeranca
       54)
     object btnNovo: TBitBtn
       Tag = 99
-      Left = 16
+      Left = 4
       Top = 15
-      Width = 85
+      Width = 109
       Height = 25
-      Caption = '&NOVO'
+      Cursor = crHandPoint
+      Caption = 'Novo (F1)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -65,16 +71,24 @@ object frmTelaHeranca: TfrmTelaHeranca
         CF871DCF871DCE861DCC831CCC821CCA801BC87D1BC67A1AC47719C37419C172
         17BF6F17FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      ParentFont = False
       TabOrder = 0
       OnClick = btnNovoClick
+      OnKeyDown = btnNovoKeyDown
     end
     object btnAlterar: TBitBtn
       Tag = 99
-      Left = 107
+      Left = 119
       Top = 15
-      Width = 85
+      Width = 110
       Height = 25
-      Caption = '&ALTERAR'
+      Cursor = crHandPoint
+      Caption = ' Alterar (F2)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -102,15 +116,23 @@ object frmTelaHeranca: TfrmTelaHeranca
         CE861DCC831CCC821CCA801BC87D1BC67A1AC47719C37419C172170A0A9A2231
         C30A0A9AFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FF4B4BAAFF00FFFF00FFFF00FF}
+      ParentFont = False
       TabOrder = 1
       OnClick = btnAlterarClick
+      OnKeyDown = btnAlterarKeyDown
     end
     object btnCancelar: TBitBtn
-      Left = 198
+      Left = 235
       Top = 15
-      Width = 85
+      Width = 113
       Height = 25
-      Caption = '&CANCELAR'
+      Cursor = crHandPoint
+      Caption = 'Cancelar (F3)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -138,16 +160,23 @@ object frmTelaHeranca: TfrmTelaHeranca
         2D2BB4292AB42627B42125B41E22B41920B4171EB4141CB4111AB40E19B46B3B
         3B6B3B3BFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      ParentFont = False
       TabOrder = 2
       OnClick = btnCancelarClick
     end
     object btnGravar: TBitBtn
       Tag = 99
-      Left = 289
+      Left = 354
       Top = 15
-      Width = 85
+      Width = 99
       Height = 25
-      Caption = '&GRAVAR'
+      Cursor = crHandPoint
+      Caption = 'Gravar (F4)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -175,16 +204,23 @@ object frmTelaHeranca: TfrmTelaHeranca
         6B3B3B2D2BB4292AB42627B42125B41E22B41920B4171EB4141CB4111AB40E19
         B46B3B3B6B3B3BFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      ParentFont = False
       TabOrder = 3
       OnClick = btnGravarClick
     end
     object btnApagar: TBitBtn
       Tag = 99
-      Left = 380
+      Left = 459
       Top = 15
-      Width = 85
+      Width = 107
       Height = 25
-      Caption = 'APAGA&R'
+      Cursor = crHandPoint
+      Caption = 'Apagar (F5)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -212,16 +248,23 @@ object frmTelaHeranca: TfrmTelaHeranca
         BABAEEB1B1E48F8FCAFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5656AD5C5C
         C54F4FC14D4DAAFF00FFFF00FFFF00FFACABC69898CEFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FF5050A95858AFFF00FFFF00FF}
+      ParentFont = False
       TabOrder = 4
       OnClick = btnApagarClick
     end
     object btnFechar: TBitBtn
-      Left = 851
+      Left = 800
       Top = 16
-      Width = 85
+      Width = 86
       Height = 24
+      Cursor = crHandPoint
       Anchors = [akTop, akRight]
-      Caption = '&SAIR'
+      Caption = 'Sair (F6)'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000120B0000120B00000000000000000000FF00FF244E6E
@@ -249,14 +292,16 @@ object frmTelaHeranca: TfrmTelaHeranca
         2B8CB23192B53697B93C9CBC3FA0BF45A6C24AABC64FB0C954B5CD59BAD15FBF
         D363C4D7244E6EFF00FFFF00FF244E6E244E6E244E6E244E6E244E6E244E6E24
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
+      ParentFont = False
       TabOrder = 5
       OnClick = btnFecharClick
     end
     object btnNavigator: TDBNavigator
-      Left = 486
-      Top = 14
+      Left = 584
+      Top = 15
       Width = 204
       Height = 25
+      Cursor = crHandPoint
       DataSource = dtsListagem
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
       TabOrder = 6
@@ -283,14 +328,14 @@ object frmTelaHeranca: TfrmTelaHeranca
         TabOrder = 0
         object lblIndice: TLabel
           Left = 24
-          Top = 0
+          Top = 6
           Width = 75
           Height = 13
           Caption = 'CampoPesquisa'
         end
         object mskPesquisar: TMaskEdit
           Left = 24
-          Top = 17
+          Top = 23
           Width = 265
           Height = 21
           TabOrder = 0
@@ -301,9 +346,10 @@ object frmTelaHeranca: TfrmTelaHeranca
         object btnPesquisar: TBitBtn
           Tag = 99
           Left = 295
-          Top = 15
+          Top = 21
           Width = 114
           Height = 25
+          Cursor = crHandPoint
           Caption = '&PESQUISAR'
           Glyph.Data = {
             36030000424D3603000000000000360000002800000010000000100000000100

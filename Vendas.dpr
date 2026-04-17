@@ -19,6 +19,7 @@ uses
   cProVendas in 'Classes\cProVendas.pas' {frmProVendas},
   cControleEstoque in 'Classes\cControleEstoque.pas',
   uRelCadClienteFicha in 'Relatorio\uRelCadClienteFicha.pas' {frmRelClienteFicha},
+  uRelPreVenda in 'Relatorio\uRelPreVenda.pas' {frmRelPreVenda},
   uRelProVenda in 'Relatorio\uRelProVenda.pas' {frmRelProVenda},
   uRelCadCliente in 'Relatorio\uRelCadCliente.pas' {frmRelCliente},
   uRelCategoria in 'Relatorio\uRelCategoria.pas' {frmRelCategoria},
@@ -44,7 +45,10 @@ uses
   uTelaHerancaConsulta in 'Heranca\uTelaHerancaConsulta.pas' {frmTelaHerancaConsulta},
   uConCategoria in 'Consulta\uConCategoria.pas' {frmConCategoria},
   cValidacoes in 'Classes\cValidacoes.pas',
-  uConCliente in 'Consulta\uConCliente.pas' {frmConCliente};
+  uConCliente in 'Consulta\uConCliente.pas' {frmConCliente},
+  Vcl.Themes,
+  Vcl.Styles,
+  uCaixa in 'Processo\uCaixa.pas' {frmCaixa};
 
 {$R *.res}
 

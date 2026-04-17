@@ -88,47 +88,52 @@ begin
   end;
 end;
 
-procedure TfrmUsuarioVsAcoes.grdAcoesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+procedure TfrmUsuarioVsAcoes.grdAcoesDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
-var Linha: Integer;
+var
+  Linha: Integer;
+  Grid: TDBGrid;
 begin
-  if not QryAcoes.FieldByName('ativo').AsBoolean then
-  begin
-    TDBGrid(Sender).Canvas.Font.Color   :=clWhite;
-    TDBGrid(Sender).Canvas.Brush.Color  :=clRed;
-  end;
-  TDBGrid(Sender).DefaultDrawDataCell(Rect, TDBGrid(Sender).Columns[DataCol].Field, State);
+  Grid := TDBGrid(Sender);
 
   if (gdFixed in State) then
   begin
-    grdAcoes.Canvas.Brush.Color := clGray;
-    grdAcoes.Canvas.FillRect(Rect);
-    grdAcoes.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    Grid.Canvas.Brush.Color := clGray;
+    Grid.Canvas.FillRect(Rect);
+    Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
     Exit;
   end;
 
-  Linha := grdAcoes.DataSource.DataSet.RecNo;
+  Linha := Grid.DataSource.DataSet.RecNo;
 
-  if not (gdSelected in State) then
+  if not QryAcoes.FieldByName('ativo').AsBoolean then
   begin
-    grdAcoes.Canvas.Font.Color := clBlack;
-
-    if (Linha mod 2) = 0 then
-      grdAcoes.Canvas.Brush.Color := clWebLightgrey
-    else
-      grdAcoes.Canvas.Brush.Color := clWhite;
+    Grid.Canvas.Brush.Color := clRed;
+    Grid.Canvas.Font.Color  := clWhite;
   end
   else
   begin
-    grdAcoes.Canvas.Brush.Color := $00FFCC99;
-    grdAcoes.Canvas.Font.Color := clHighlightText;
+    // seleção
+    if (gdSelected in State) then
+    begin
+      Grid.Canvas.Brush.Color := $00FFCC99;
+      Grid.Canvas.Font.Color := clHighlightText;
+    end
+    else
+    begin
+      Grid.Canvas.Font.Color := clBlack;
+
+      // zebra
+      if (Linha mod 2) = 0 then
+        Grid.Canvas.Brush.Color := clWebLightgrey
+      else
+        Grid.Canvas.Brush.Color := clWhite;
+    end;
   end;
 
-  grdAcoes.Canvas.FillRect(Rect);
-
-
-  grdAcoes.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-
+  Grid.Canvas.FillRect(Rect);
+  Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TfrmUsuarioVsAcoes.grdUsuariosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer;
@@ -157,7 +162,7 @@ begin
   end
   else
   begin
-    grdUsuarios.Canvas.Brush.Color := $00FFF4EA;
+    grdUsuarios.Canvas.Brush.Color := $00FFCC99;
     grdUsuarios.Canvas.Font.Color := clHighlightText;
   end;
 

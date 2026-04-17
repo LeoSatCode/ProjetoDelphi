@@ -12,9 +12,7 @@ inherited frmProVendas: TfrmProVendas
       ExplicitLeft = 912
     end
     inherited btnNavigator: TDBNavigator
-      Top = 15
       Hints.Strings = ()
-      ExplicitTop = 15
     end
   end
   inherited pgcPrincipal: TPageControl
@@ -34,12 +32,16 @@ inherited frmProVendas: TfrmProVendas
         Columns = <
           item
             Expanded = False
-            FieldName = 'vendaId'
+            FieldName = 'preVendaId'
+            Title.Caption = 'N'#250'mero Pr'#233' Venda'
+            Width = 117
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'clienteId'
+            Title.Caption = 'C'#243'd Cliente'
+            Width = 101
             Visible = True
           end
           item
@@ -49,12 +51,19 @@ inherited frmProVendas: TfrmProVendas
           end
           item
             Expanded = False
-            FieldName = 'dataVenda'
+            FieldName = 'dataEmissao'
+            Title.Caption = 'Data Emissao'
+            Width = 107
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'totalVenda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'status'
             Visible = True
           end>
       end
@@ -267,19 +276,19 @@ inherited frmProVendas: TfrmProVendas
               item
                 Expanded = False
                 FieldName = 'quantidade'
-                Width = 64
+                Width = 123
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorUnitario'
-                Width = 64
+                Width = 147
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'valorTotalProduto'
-                Width = 64
+                Width = 269
                 Visible = True
               end>
           end
@@ -306,7 +315,7 @@ inherited frmProVendas: TfrmProVendas
           end
           object edtValorTotalProduto: TCurrencyEdit
             Left = 861
-            Top = 9
+            Top = 6
             Width = 121
             Height = 21
             Font.Charset = DEFAULT_CHARSET
@@ -454,43 +463,53 @@ inherited frmProVendas: TfrmProVendas
   end
   inherited QryListagem: TFDQuery
     SQL.Strings = (
-      'SELECT vendas.vendaId'
-      #9'  ,vendas.clienteId'
-      #9',clientes.nome'
-      #9'  ,vendas.dataVenda'
-      #9'  ,vendas.totalVenda'
-      ' FROM vendas'
-      ' INNER JOIN clientes ON clientes.clienteId = vendas.clienteId')
-    object fdtncfldQryListagemvendaId: TFDAutoIncField
-      DisplayLabel = 'N'#250'mero Venda'
-      FieldName = 'vendaId'
-      Origin = 'vendaId'
+      'SELECT '
+      '    pv.preVendaId,'
+      '    pv.clienteId,'
+      '    c.nome,'
+      '    pv.dataEmissao,'
+      '    pv.totalVenda,'
+      '    pv.status'
+      'FROM preVenda pv'
+      'INNER JOIN clientes c ON c.clienteId = pv.clienteId')
+    object QryListagempreVendaId: TFDAutoIncField
+      DisplayLabel = 'C'#243'd. Pr'#233' Venda'
+      FieldName = 'preVendaId'
+      Origin = 'preVendaId'
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = True
     end
     object QryListagemclienteId: TIntegerField
-      DisplayLabel = 'Cod. Cliente'
+      DisplayLabel = 'C'#243'd. Cliente'
       FieldName = 'clienteId'
       Origin = 'clienteId'
       Required = True
     end
-    object strngfldQryListagemnome: TStringField
-      DisplayLabel = 'Nome do Cliente'
+    object QryListagemnome: TStringField
+      DisplayLabel = 'Nome'
       FieldName = 'nome'
       Origin = 'nome'
       Size = 60
     end
-    object sqltmstmpfldQryListagemdataVenda: TSQLTimeStampField
-      DisplayLabel = 'Data Venda'
-      FieldName = 'dataVenda'
-      Origin = 'dataVenda'
+    object QryListagemdataEmissao: TSQLTimeStampField
+      DisplayLabel = 'Data Emiss'#227'o'
+      FieldName = 'dataEmissao'
+      Origin = 'dataEmissao'
+      Required = True
     end
-    object fmtbcdfldQryListagemtotalVenda: TFMTBCDField
-      DisplayLabel = 'Total da Venda'
+    object QryListagemtotalVenda: TFMTBCDField
+      DisplayLabel = 'Total Venda'
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
+      Required = True
       Precision = 18
       Size = 5
+    end
+    object QryListagemstatus: TStringField
+      DisplayLabel = 'Status'
+      FieldName = 'status'
+      Origin = 'status'
+      Required = True
     end
   end
   inherited ilimage: TImageList

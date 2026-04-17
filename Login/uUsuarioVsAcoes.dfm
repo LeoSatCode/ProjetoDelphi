@@ -172,7 +172,6 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     end
   end
   object QryUsuario: TFDQuery
-    Active = True
     AfterScroll = QryUsuarioAfterScroll
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
@@ -197,7 +196,6 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     end
   end
   object QryAcoes: TFDQuery
-    Active = True
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
       'SELECT ua.usuarioId,'

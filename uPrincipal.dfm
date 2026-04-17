@@ -379,7 +379,6 @@ object frmPrincipal: TfrmPrincipal
       Font.Name = '@Microsoft YaHei'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitLeft = 409
       ExplicitWidth = 108
     end
   end
@@ -452,6 +451,10 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'VENDAS'
         ShortCut = 8278
         OnClick = VENDAS1Click
+      end
+      object mniCAIXA1: TMenuItem
+        Caption = 'CAIXA'
+        OnClick = mniCAIXA1Click
       end
     end
     object RELATRIO1: TMenuItem

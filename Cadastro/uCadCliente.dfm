@@ -16,13 +16,12 @@ inherited frmCadCliente: TfrmCadCliente
       ExplicitLeft = 921
     end
     inherited btnNavigator: TDBNavigator
-      Top = 15
       Hints.Strings = ()
-      ExplicitTop = 15
     end
   end
   inherited pgcPrincipal: TPageControl
     Width = 1011
+    ActivePage = tabManutencao
     ExplicitWidth = 1011
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1003
@@ -325,7 +324,10 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 1003
+      ExplicitHeight = 433
       object lbl1: TLabel
         Left = 12
         Top = 101
@@ -398,6 +400,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 10
         Text = ''
         OnChange = edtTelefoneChange
+        OnKeyPress = edtTelefoneKeyPress
       end
       object edtCidade: TLabeledEdit
         Left = 12
@@ -440,6 +443,7 @@ inherited frmCadCliente: TfrmCadCliente
         TabOrder = 4
         Text = ''
         OnExit = edtCEPExit
+        OnKeyPress = edtCEPKeyPress
       end
       object edtNome: TLabeledEdit
         Tag = 2
@@ -452,6 +456,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'Nome'
         MaxLength = 60
         TabOrder = 1
+        OnKeyPress = edtNomeKeyPress
       end
       object edtClienteId: TLabeledEdit
         Tag = 1
@@ -476,6 +481,7 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Caption = 'Estado'
         MaxLength = 2
         TabOrder = 8
+        OnKeyPress = edtEstadoKeyPress
       end
       object cbPessoa: TComboBox
         Left = 425
@@ -542,8 +548,8 @@ inherited frmCadCliente: TfrmCadCliente
       '  situacaoId,'
       '  observacao'
       'from clientes')
-    Left = 908
-    Top = 152
+    Left = 788
+    Top = 224
     object fdtncfldQryListagemclienteId: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'clienteId'
@@ -629,8 +635,8 @@ inherited frmCadCliente: TfrmCadCliente
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
       'Select * From situacao')
-    Left = 740
-    Top = 152
+    Left = 716
+    Top = 224
     object QrySituacaosituacaoId: TFDAutoIncField
       FieldName = 'situacaoId'
       Origin = 'situacaoId'

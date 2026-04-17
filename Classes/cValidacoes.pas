@@ -3,7 +3,7 @@ unit cValidacoes;
 interface
 
 uses
-  System.SysUtils;
+  System.SysUtils, cFuncao;
 
 // Declaramos a função para o sistema inteiro enxergar
 function ValidarCPF(const aCPF: string): Boolean;
@@ -11,23 +11,12 @@ function ValidarCNPJ(const aCNPJ: string): Boolean;
 
 implementation
 
-function SomenteNumeros(const Num:string):string;
-var
-  I:Integer;
-begin
-  Result:='';
-
-  for I:= 1 to Length(Num) do
-    if Num[I] in ['0'..'9'] then
-    Result:= Result+Num[I];
-end;
-
 function ValidarCPF(const aCPF: string): Boolean;
 var
   CPFLimpo: string;
   I, Soma, Resto, Digito1, Digito2:Integer;
 begin
-  CPFLimpo := SomenteNumeros(aCPF); // lógica de limpeza (Somente Numeros)
+  CPFLimpo := TFuncao.SomenteNumeros(aCPF); // lógica de limpeza (Somente Numeros)
 
   if Length(CPFLimpo) <> 11 then
     Exit;
@@ -70,7 +59,7 @@ var
   I, Soma, Resto, Digito1, Digito2: Integer;
   Pesos1, Pesos2: array[0..12] of Integer;  // Array com os pesos do CNPJ
 begin
-  CNPJLimpo := SomenteNumeros(aCNPJ);
+  CNPJLimpo := TFuncao.SomenteNumeros(aCNPJ);
 
   // CNPJ tem 14 dígitos
   if Length(CNPJLimpo) <> 14 then

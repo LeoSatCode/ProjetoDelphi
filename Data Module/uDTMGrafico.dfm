@@ -31,15 +31,20 @@ object dtmGrafico: TdtmGrafico
   object QryVendaValorPorCliente: TFDQuery
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
+      'SELECT '
       
-        'SELECT CONVERT(VARCHAR, vendas.clienteId)+'#39'_'#39'+clientes.nome AS L' +
-        'abel, SUM(vendas.totalVenda) AS Value'
-      #9'FROM Vendas'
-      #9#9'INNER JOIN clientes ON clientes.clienteId = vendas.clienteId'
+        '    CONVERT(VARCHAR, vendas.clienteId) + '#39'_'#39' + clientes.nome AS ' +
+        'Label,'
+      '    SUM(vendas.totalVenda) AS Value'
+      'FROM Vendas'
+      'INNER JOIN clientes ON clientes.clienteId = vendas.clienteId'
       
-        ' WHERE vendas.dataVenda BETWEEN CONVERT(DATE, GETDATE()-7) and C' +
-        'ONVERT(DATE, GETDATE())'
-      ' GROUP BY Vendas.clienteId, clientes.nome')
+        'WHERE vendas.dataVenda >= DATEADD(DAY, -7, CAST(GETDATE() AS DAT' +
+        'E))'
+      
+        '  AND vendas.dataVenda <  DATEADD(DAY, 1, CAST(GETDATE() AS DATE' +
+        '))'
+      'GROUP BY vendas.clienteId, clientes.nome')
     Left = 72
     Top = 128
     object strngfldQryVendaValorPorClienteLabel: TStringField

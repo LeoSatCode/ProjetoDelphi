@@ -35,9 +35,9 @@ object frmRelProVenda: TfrmRelProVenda
       object rlbl1: TRLLabel
         Left = 3
         Top = 29
-        Width = 196
+        Width = 396
         Height = 24
-        Caption = 'Relat'#243'rio de Venda'
+        Caption = 'Demonstrativo de Inten'#231#227'o de Compra'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -21
@@ -139,7 +139,7 @@ object frmRelProVenda: TfrmRelProVenda
       Top = 97
       Width = 718
       Height = 120
-      DataFields = 'vendaId'
+      DataFields = 'preVendaId'
       object rlbnd2: TRLBand
         Left = 0
         Top = 0
@@ -166,9 +166,9 @@ object frmRelProVenda: TfrmRelProVenda
         object rldbtxtprodutoId1: TRLDBText
           Left = 62
           Top = 3
-          Width = 47
+          Width = 69
           Height = 16
-          DataField = 'vendaId'
+          DataField = 'preVendaId'
           DataSource = dtsVendas
           Text = ''
           Transparent = False
@@ -200,9 +200,9 @@ object frmRelProVenda: TfrmRelProVenda
         object rldbtxtvalor: TRLDBText
           Left = 646
           Top = 5
-          Width = 66
+          Width = 80
           Height = 16
-          DataField = 'dataVenda'
+          DataField = 'dataEmissao'
           DataSource = dtsVendas
           Text = ''
         end
@@ -401,34 +401,35 @@ object frmRelProVenda: TfrmRelProVenda
     end
   end
   object QryVendas: TFDQuery
+    Active = True
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
-      'select vendas.vendaId,'
-      'vendas.ClienteId,'
+      'select preVenda.preVendaId,'
+      'preVenda.clienteId,'
       'clientes.nome,'
-      'vendas.dataVenda,'
-      'cast(vendas.totalVenda as numeric(18,3)) as totalVenda'
+      'preVenda.dataEmissao,'
+      'cast(preVenda.totalVenda as numeric(18,3)) as totalVenda'
       
-        'from vendas inner join clientes on clientes.clienteId = vendas.c' +
-        'lienteId'
-      'where vendas.vendaId =:vendaId')
+        'from prevenda inner join clientes on clientes.clienteId = preVen' +
+        'da.clienteId'
+      'where preVenda.preVendaId =:preVendaId')
     Left = 752
     ParamData = <
       item
-        Name = 'vendaId'
+        Name = 'PREVENDAID'
         DataType = ftInteger
         ParamType = ptInput
         Value = 1
       end>
-    object QryVendasvendaId: TFDAutoIncField
-      FieldName = 'vendaId'
-      Origin = 'vendaId'
+    object QryVendaspreVendaId: TFDAutoIncField
+      FieldName = 'preVendaId'
+      Origin = 'preVendaId'
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = True
     end
-    object QryVendasClienteId: TIntegerField
-      FieldName = 'ClienteId'
-      Origin = 'ClienteId'
+    object QryVendasclienteId: TIntegerField
+      FieldName = 'clienteId'
+      Origin = 'clienteId'
       Required = True
     end
     object QryVendasnome: TStringField
@@ -436,15 +437,15 @@ object frmRelProVenda: TfrmRelProVenda
       Origin = 'nome'
       Size = 60
     end
-    object QryVendasdataVenda: TSQLTimeStampField
-      FieldName = 'dataVenda'
-      Origin = 'dataVenda'
+    object QryVendasdataEmissao: TSQLTimeStampField
+      FieldName = 'dataEmissao'
+      Origin = 'dataEmissao'
+      Required = True
     end
     object QryVendastotalVenda: TBCDField
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       ReadOnly = True
-      DisplayFormat = '##,##0.00'
       Precision = 18
       Size = 3
     end
@@ -467,60 +468,63 @@ object frmRelProVenda: TfrmRelProVenda
     Top = 320
   end
   object QryVendaItens: TFDQuery
+    Active = True
     Connection = dtmConexao.ConexaoDB
     SQL.Strings = (
-      'select vendasItens.vendaId,'
-      'vendasItens.produtoId,'
+      'select preVendaItens.preVendaItemId,'
+      'preVendaItens.produtoId,'
       'produtos.Nome,'
-      'vendasItens.quantidade,'
-      'vendasItens.valorUnitario,'
-      'vendasItens.totalProduto from vendasItens'
+      'preVendaItens.quantidade,'
+      'preVendaItens.valorUnitario,'
+      'preVendaItens.totalProduto from preVendaItens'
       
-        'inner join produtos on produtos.produtoId = vendasItens.produtoI' +
-        'd'
-      'where vendasItens.vendaId =:vendaId'
-      'order by vendasItens.produtoId')
+        'inner join produtos on produtos.produtoId = preVendaItens.produt' +
+        'oId'
+      'where preVendaItens.preVendaItemId =:preVendaId'
+      'order by preVendaItens.produtoId')
     Left = 744
     Top = 320
     ParamData = <
       item
-        Name = 'vendaId'
+        Name = 'PREVENDAID'
         DataType = ftInteger
         ParamType = ptInput
         Value = 1
       end>
-    object intgrfldQryVendaItensvendaId: TIntegerField
-      FieldName = 'vendaId'
-      Origin = 'vendaId'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
+    object QryVendaItenspreVendaItemId: TFDAutoIncField
+      FieldName = 'preVendaItemId'
+      Origin = 'preVendaItemId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
-    object intgrfldQryVendaItensprodutoId: TIntegerField
+    object QryVendaItensprodutoId: TIntegerField
       FieldName = 'produtoId'
       Origin = 'produtoId'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object strngfldQryVendaItensNome: TStringField
+    object QryVendaItensNome: TStringField
       FieldName = 'Nome'
       Origin = 'Nome'
       Size = 60
     end
-    object fmtbcdfldQryVendaItensquantidade: TFMTBCDField
+    object QryVendaItensquantidade: TFMTBCDField
       FieldName = 'quantidade'
       Origin = 'quantidade'
+      Required = True
       Precision = 18
       Size = 5
     end
-    object fmtbcdfldQryVendaItensvalorUnitario: TFMTBCDField
+    object QryVendaItensvalorUnitario: TFMTBCDField
       FieldName = 'valorUnitario'
       Origin = 'valorUnitario'
+      Required = True
       Precision = 18
       Size = 5
     end
-    object fmtbcdfldQryVendaItenstotalProduto: TFMTBCDField
+    object QryVendaItenstotalProduto: TFMTBCDField
       FieldName = 'totalProduto'
       Origin = 'totalProduto'
+      Required = True
       Precision = 18
       Size = 5
     end

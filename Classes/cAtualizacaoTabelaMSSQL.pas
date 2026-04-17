@@ -26,6 +26,8 @@ type
     procedure AcaoAcesso;
     procedure UsuariosAcaoAcesso;
     procedure situacaoCliente;
+    procedure PreVenda;
+    procedure PreVendaItens;
 
   protected
 
@@ -49,6 +51,8 @@ begin
   Usuario;
   AcaoAcesso;
   UsuariosAcaoAcesso;
+  PreVenda;
+  PreVendaItens;
 end;
 
 destructor TAtualizacaoTableMSSQL.Destroy;
@@ -247,6 +251,47 @@ begin
       //NOTA: Esses Foreign Key's, são para garantir que na tabela só existam usuários já cadastrados
       //e ações que já estão cadastradas nas tabelas referenciadas à ação.
   );
+  end;
+end;
+
+procedure TAtualizacaoTableMSSQL.PreVenda;
+begin
+  if not TabelaExiste('preVenda') then
+  begin
+    ExecutaDiretoBancoDeDados(
+      ' CREATE TABLE preVenda ( '+
+      '   preVendaId INT IDENTITY(1,1) NOT NULL, '+
+      '   clienteId INT NOT NULL, '+
+      '   dataEmissao DATETIME NOT NULL, '+
+      '   totalVenda DECIMAL(18,5) NOT NULL, '+
+      '   status VARCHAR(20) NOT NULL DEFAULT ''PENDENTE'', '+
+      '   PRIMARY KEY (preVendaId), '+
+      '   CONSTRAINT FK_PreVendaCliente '+
+      '   FOREIGN KEY (clienteId) REFERENCES clientes(clienteId) '+
+      ' ) '
+    );
+  end;
+end;
+
+procedure TAtualizacaoTableMSSQL.PreVendaItens;
+begin
+  if not TabelaExiste('preVendaItens') then
+  begin
+    ExecutaDiretoBancoDeDados(
+      ' CREATE TABLE preVendaItens ( '+
+      '   preVendaItemId INT IDENTITY(1,1) NOT NULL, '+
+      '   preVendaId INT NOT NULL, '+
+      '   produtoId INT NOT NULL, '+
+      '   quantidade DECIMAL(18,5) NOT NULL, '+
+      '   valorUnitario DECIMAL(18,5) NOT NULL, '+
+      '   totalProduto DECIMAL(18,5) NOT NULL, '+
+      '   PRIMARY KEY (preVendaItemId), '+
+      '   CONSTRAINT FK_PreVendaItensPreVenda '+
+      '   FOREIGN KEY (preVendaId) REFERENCES preVenda(preVendaId) ON DELETE CASCADE, '+
+      '   CONSTRAINT FK_PreVendaItensProduto '+
+      '   FOREIGN KEY (produtoId) REFERENCES produtos(produtoId) '+
+      ' ) '
+    );
   end;
 end;
 end.

@@ -25,6 +25,8 @@ type
     function AtualizarItem(cds: TClientDataSet): Boolean;
     procedure RetornarEstoque(sCodigo: string; Acao: TAcaoExcluirEstoque);
     procedure BaixarEstoque(produtoId: Integer; Quantidade: Double);
+    procedure InserirPreVendaItens(Qry: TFDQuery; cds: TClientDataSet);
+
 
   public
     constructor Create(aConexao:TFDConnection);
@@ -33,6 +35,11 @@ type
     function Atualizar(cds:TClientDataSet):Boolean;
     function Apagar:Boolean;
     function Selecionar(id:Integer; var cds:TClientDataSet):Boolean;
+    function InserirPreVenda(cds: TClientDataSet): Boolean;
+    function EfetivarPreVenda(aPreVendaId: Integer): Boolean;
+    function ApagarPreVenda(aPrevendaId: Integer): Boolean;
+    function SelecionarPreVenda(id: Integer; var cds: TClientDataSet): Boolean;
+    function AtualizarPreVenda(cds:TClientDataSet):Boolean;
 
   published
     property VendaId:Integer        read F_vendaId        write F_vendaId;
@@ -296,35 +303,6 @@ begin
     Qry:=TFDQuery.Create(nil);
     Qry.Connection:= ConexaoDB;
 
-    {O PROBLEMA COM A RECUPERAÇÃO DE DADOS DA VENDA}
-
-    //O problema está aqui no método Inserir:
-
-    //Qry.ExecSQL;
-
-    //Qry.SQL.Clear;
-    //Qry.SQL.Add('select scope_identity() as ID');
-    //Qry.Open;
-
-    //IdVendaGerado:=Qry.FieldByName('ID').AsInteger;
-
-    //Isso nem sempre funciona corretamente no FireDAC.
-
-    //Dependendo da conexão ou driver, o scope_identity() pode retornar 0.
-
-    //Então:
-
-    //IdVendaGerado = 0
-
-    //Depois podemos passar isso aqui:
-
-    //InserirItens(cds, IdVendaGerado);
-
-    //E gravar:
-
-    //vendaId = 0
-
-
     Qry.SQL.Clear;
     Qry.SQL.Add('insert into vendas (clienteId, dataVenda, totalVenda) '+
                 'output inserted.vendaId '+
@@ -426,6 +404,299 @@ begin
 
   finally
     if Assigned(Qry) then FreeAndNil(Qry);
+  end;
+end;
+{$ENDREGION}
+
+{$REGION 'Pré-Venda'}
+function TVenda.InserirPreVenda(cds: TClientDataSet): Boolean;
+var
+  Qry: TFDQuery;
+begin
+  Result := True;
+  Qry := TFDQuery.Create(nil);
+  try
+    Qry.Connection := ConexaoDB;
+    ConexaoDB.StartTransaction;
+    try
+      // GRAVAR PRÉ-VENDA
+      Qry.SQL.Clear;
+      Qry.SQL.Add('INSERT INTO preVenda (clienteId, dataEmissao, totalVenda, status) ');
+      Qry.SQL.Add('OUTPUT INSERTED.preVendaId '); // O SQL Server devolve o ID gerado instantaneamente
+      Qry.SQL.Add('VALUES (:clienteId, GETDATE(), :totalVenda, ''PENDENTE'')');
+
+      Qry.ParamByName('clienteId').AsInteger := Self.F_clienteId;
+      Qry.ParamByName('totalVenda').AsFloat  := Self.F_totalVenda;
+
+      // Open em vez de ExecSQL porque o OUTPUT devolve um resultado (o ID)
+      Qry.Open;
+      Self.F_vendaId := Qry.FieldByName('preVendaId').AsInteger;
+      Qry.Close;
+
+      InserirPreVendaItens(Qry, cds); //Método extraído
+
+      ConexaoDB.Commit; // Tudo correu bem, confirmamos os registos!
+    except
+      ConexaoDB.Rollback; // Deu erro? Revertemos tudo para não deixar lixo!
+      Result := False;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TVenda.EfetivarPreVenda(aPreVendaId: Integer): Boolean;
+var
+  Qry, QryItens: TFDQuery;
+  oEstoque: TControleEstoque;
+  vNovaVendaId: Integer;
+begin
+  Result := True;
+  Qry := TFDQuery.Create(nil);
+  QryItens := TFDQuery.Create(nil);
+  try
+    Qry.Connection := ConexaoDB;
+    QryItens.Connection := ConexaoDB;
+
+    ConexaoDB.StartTransaction;
+    try
+      Qry.SQL.Clear;
+      Qry.SQL.Add('SELECT status FROM preVenda WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.Open;
+
+      if Qry.IsEmpty then
+      begin
+        ConexaoDB.Rollback;
+        Result := False;
+        Exit;
+      end;
+
+      if Qry.FieldByName('status').AsString = 'PAGO' then
+      begin
+        ConexaoDB.Rollback;
+        Result := False;
+        Exit;
+      end;
+
+      Qry.Close;
+
+      //Gerando a venda oficial
+      Qry.SQL.Clear;
+      Qry.SQL.Add('INSERT INTO Vendas (clienteId, dataVenda, totalVenda) ');
+      Qry.SQL.Add('OUTPUT INSERTED.vendaId AS vendaId '); // Pegamos o ID da venda gerada
+      Qry.SQL.Add('SELECT clienteId, GETDATE(), totalVenda FROM preVenda WHERE preVendaId =:id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.Open;
+      vNovaVendaId := Qry.FieldByName('vendaId').AsInteger;
+      Self.F_vendaId := vNovaVendaId;
+      Qry.Close;
+
+      //Transfere os itens do rascunho para Vendas Itens
+      Qry.SQL.Clear;
+      Qry.SQL.Add('INSERT INTO vendasItens (vendaId, produtoId, valorUnitario, quantidade, totalProduto) ');
+      Qry.SQL.Add('SELECT :novaVendaId, produtoId, valorUnitario, quantidade, totalProduto ');
+      Qry.SQL.Add('FROM preVendaItens WHERE preVendaId =:id');
+      Qry.ParamByName('novaVendaId').AsInteger := vNovaVendaId;
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.ExecSQL;
+
+      //Atualiza a Pré-Venda e Busca os itens para baixar o estoque
+      Qry.SQL.Clear;
+      Qry.SQL.Add('UPDATE preVenda SET status = ''PAGO'' WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.ExecSQL;
+
+      QryItens.SQL.Clear;
+      QryItens.SQL.Add('SELECT produtoId, quantidade FROM preVendaItens WHERE preVendaId = :id');
+      QryItens.ParamByName('id').AsInteger := aPreVendaId;
+      QryItens.Open;
+
+      // Chama o estoque e faz a baixa física
+      oEstoque := TControleEstoque.Create(ConexaoDB);
+      try
+        QryItens.First;
+        while not QryItens.Eof do
+        begin
+          oEstoque.ProdutoId  := QryItens.FieldByName('produtoId').AsInteger;
+          oEstoque.Quantidade := QryItens.FieldByName('quantidade').AsFloat;
+          oEstoque.BaixarEstoque; // A mágica da sua outra classe acontecendo aqui
+          QryItens.Next;
+        end;
+      finally
+        FreeAndNil(oEstoque);
+      end;
+
+      ConexaoDB.Commit; // Deu tudo certo? Salva no banco!
+    except
+      ConexaoDB.Rollback; // Deu BO? Desfaz tudo pra não cobrar sem dar o produto!
+      Result := False;
+    end;
+  finally
+    FreeAndNil(Qry);
+    FreeAndNil(QryItens);
+  end;
+end;
+
+function TVenda.ApagarPreVenda(aPrevendaId: Integer): Boolean;
+var Qry: TFDQuery;
+begin
+  Result:=True;
+  Qry   :=TFDQuery.Create(nil);
+  try
+    Qry.Connection:=ConexaoDB;
+    ConexaoDB.StartTransaction;
+    try
+      //Deleta primeiro os itens da Pré-Venda
+      Qry.SQL.Clear;
+      Qry.SQL.Add('DELETE FROM preVendaItens WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPrevendaId;
+      Qry.ExecSQL;
+
+      //Deleta a Pré-Venda em si
+      Qry.SQL.Clear;
+      Qry.SQL.Add('DELETE FROM preVenda WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPrevendaId;
+      Qry.ExecSQL;
+
+      ConexaoDB.Commit;
+    except
+      on E: Exception do begin
+        ConexaoDB.Rollback;
+        ShowMessage('Ocorreu um erro '+ E.Message); //Debug maroto porquê já tive muito erro nessa parte kkkkkk
+        Result:= False;
+      end;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TVenda.SelecionarPreVenda(id: Integer; var cds: TClientDataSet): Boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result         :=True;
+    Qry            :=TFDQuery.Create(nil);
+    Qry.Connection :=ConexaoDB;
+
+    //Carrega a Pré-Venda
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT preVendaId, clienteId, dataEmissao, totalVenda FROM preVenda WHERE preVendaId = :id');
+    Qry.ParamByName('id').AsInteger := id;
+    Qry.Open;
+
+    if Qry.IsEmpty then
+    begin
+      Result := False;
+      Exit;
+    end;
+
+    Self.F_vendaId      := Qry.FieldByName('preVendaId').AsInteger;
+    Self.F_clienteId    := Qry.FieldByName('clienteId').AsInteger;
+    Self.F_dataVenda    := Qry.FieldByName('dataEmissao').AsDateTime;
+    Self.F_totalVenda   := Qry.FieldByName('totalVenda').AsFloat;
+
+    //Limpa o carrinho da tela
+    cds.First;
+    while not cds.Eof do
+      cds.Delete;
+
+    //Carrega os itens da Pré-Venda(Rascunho)
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT pvi.produtoId, p.nome, pvi.valorUnitario, pvi.quantidade, pvi.totalProduto ');
+    Qry.SQL.Add('FROM preVendaItens pvi ');
+    Qry.SQL.Add('INNER JOIN produtos p ON p.produtoId = pvi.produtoId ');
+    Qry.SQL.Add('WHERE pvi.preVendaId = :id');
+    Qry.ParamByName('id'). AsInteger := id;
+    Qry.Open;
+
+    //Preenche os Itens
+    Qry.First;
+    while not Qry.Eof do
+    begin
+      cds.Append;
+      cds.FieldByName('produtoId').AsInteger      :=  Qry.FieldByName('produtoId').AsInteger;
+      cds.FieldByName('nomeProduto').AsString     :=  Qry.FieldByName('nome').AsString;
+      cds.FieldByName('valorUnitario').AsFloat    :=  Qry.FieldByName('valorUnitario').AsFloat;
+      cds.FieldByName('quantidade').AsFloat       :=  Qry.FieldByName('quantidade').AsFloat;
+      cds.FieldByName('valorTotalProduto').AsFloat:=  Qry.FieldByName('totalProduto').AsFloat;
+      cds.Post;
+      Qry.Next;
+    end;
+    cds.First;
+
+  except
+  on E: Exception do
+  begin
+    ShowMessage('Erro '+ E.Message);
+    Result:=False;
+  end;
+
+  end;
+end;
+
+function TVenda.AtualizarPreVenda(cds: TClientDataSet): Boolean;
+var Qry:TFDQuery;
+begin
+   Result:=True;
+   Qry   :=TFDQuery.Create(nil);
+  try
+    Qry.Connection:= ConexaoDB;
+    ConexaoDB.StartTransaction;
+    try
+      Qry.SQL.Clear;
+      Qry.SQL.Add('UPDATE preVenda SET');
+      Qry.SQL.Add('clienteId = :clienteId, ');
+      Qry.SQL.Add('totalVenda = :totalVenda ');
+      Qry.SQL.Add('WHERE preVendaId = :id');
+
+      Qry.ParamByName('id').AsInteger       :=Self.F_vendaId;
+      Qry.ParamByName('clienteId').AsInteger:=Self.F_clienteId;
+      Qry.ParamByName('totalVenda').AsFloat :=Self.F_totalVenda;
+
+      Qry.ExecSQL;
+
+      //Apaga e resinsere os itens
+      Qry.SQL.Clear;
+      Qry.SQL.Add('DELETE FROM preVendaItens WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := Self.F_vendaId;
+      Qry.ExecSQL;
+
+      InserirPreVendaItens(Qry, cds);
+
+      ConexaoDB.Commit;
+    except
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
+        ShowMessage('Erro '+ E.Message);
+        Result:=False;
+      end;
+
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TVenda.InserirPreVendaItens(Qry: TFDQuery; cds: TClientDataSet);
+begin
+  // Gravar os itens da pré Venda
+  cds.First;
+  while not cds.Eof do
+  begin
+    Qry.SQL.Clear;
+    Qry.SQL.Add('INSERT INTO preVendaItens (preVendaId, produtoId, quantidade, valorUnitario, totalProduto) ');
+    Qry.SQL.Add('VALUES (:preVendaId, :produtoId, :quantidade, :valorUnitario, :totalProduto)');
+    Qry.ParamByName('preVendaId').AsInteger := Self.F_vendaId;
+    Qry.ParamByName('produtoId').AsInteger := cds.FieldByName('produtoId').AsInteger;
+    Qry.ParamByName('quantidade').AsFloat := cds.FieldByName('quantidade').AsFloat;
+    Qry.ParamByName('valorUnitario').AsFloat := cds.FieldByName('valorUnitario').AsFloat;
+    Qry.ParamByName('totalProduto').AsFloat := cds.FieldByName('valorTotalProduto').AsFloat;
+    Qry.ExecSQL;
+    cds.Next;
   end;
 end;
 {$ENDREGION}

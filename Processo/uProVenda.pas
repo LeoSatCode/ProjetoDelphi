@@ -12,11 +12,6 @@ uses
 
 type
   TfrmProVendas = class(TfrmTelaHeranca)
-    fdtncfldQryListagemvendaId: TFDAutoIncField;
-    QryListagemclienteId: TIntegerField;
-    strngfldQryListagemnome: TStringField;
-    sqltmstmpfldQryListagemdataVenda: TSQLTimeStampField;
-    fmtbcdfldQryListagemtotalVenda: TFMTBCDField;
     pnl1: TPanel;
     pnl2: TPanel;
     pnl3: TPanel;
@@ -42,6 +37,12 @@ type
     edtVendaId: TLabeledEdit;
     lkpCliente: TDBLookupComboBox;
     edtDataVenda: TDateEdit;
+    QryListagempreVendaId: TFDAutoIncField;
+    QryListagemclienteId: TIntegerField;
+    QryListagemnome: TStringField;
+    QryListagemdataEmissao: TSQLTimeStampField;
+    QryListagemtotalVenda: TFMTBCDField;
+    QryListagemstatus: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -100,18 +101,22 @@ begin
   oVenda.DataVenda        :=edtDataVenda.Date;
   oVenda.TotalVenda       :=edtValorTotalProduto.Value;
 
-  if (EstadoDoCadastro=ecInserir) then
-     oVenda.VendaId := oVenda.Inserir(dtmVendas.cdsItensVenda)
-  else if (EstadoDoCadastro=ecAlterar) then
-     oVenda.Atualizar(dtmVendas.cdsItensVenda);
+    if (EstadoDoCadastro=ecInserir) then
+    begin
+       oVenda.InserirPreVenda(dtmVendas.cdsItensVenda);
+    end
+    else if (EstadoDoCadastro=ecAlterar) then
+    begin
+       oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda);
+    end;
 
      frmRelProVenda:=TfrmRelProVenda.Create(Self);
      frmRelProVenda.QryVendas.Close;
-     frmRelProVenda.QryVendas.ParamByName('VendaId').AsInteger     :=oVenda.VendaId;
+     frmRelProVenda.QryVendas.ParamByName('preVendaId').AsInteger     :=oVenda.VendaId;
      frmRelProVenda.QryVendas.Open;
 
      frmRelProVenda.QryVendaItens.Close;
-     frmRelProVenda.QryVendaItens.ParamByName('VendaId').AsInteger :=oVenda.VendaId;
+     frmRelProVenda.QryVendaItens.ParamByName('preVendaId').AsInteger :=oVenda.VendaId;
      frmRelProVenda.QryVendaItens.Open;
 
      frmRelProVenda.Relatorio.PreviewModal;
@@ -121,9 +126,32 @@ begin
 end;
 
 function TfrmProVendas.Excluir: Boolean;
+var vPreVendaId: Integer;
+    vStatus    : String;
 begin
-  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVendas.cdsItensVenda) then begin
-     Result:=oVenda.Apagar;
+  //Dados da linha selecionada na Grid
+  vPreVendaId:= QryListagem.FieldByName('preVendaId').AsInteger;
+  vStatus    := QryListagem.FieldByName('status').AsString;
+
+  //Se o pedido foi faturado no caixa, então não é possível apagar
+  if vStatus = 'PAGO' then
+  begin
+    MessageDlg('Não é possível excluir uma Pré-Venda faturada no Caixa.', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  //Pede confirmação ao usuário
+  if MessageDlg('Deseja realmente cancelar essa Pré-Venda (Nº '+ IntToStr(vPreVendaId) + ')?', mtConfirmation, [mbYes,mbNo],0) = mrYes then
+  begin
+    if oVenda.ApagarPreVenda(vPreVendaId) then
+    begin
+      MessageDlg('Pré-Venda cancelada com sucesso.', mtInformation, [mbOK],0);
+      Result:=True;
+    end
+    else
+    begin
+      MessageDlg('Erro ao cancelar a Pré-Venda.', mtError, [mbOK], 0);
+    end;
   end;
 end;
 {$ENDREGION}
@@ -232,6 +260,10 @@ begin
     AbrirCadastroCliente(
       dtmVendas.QryCliente.FieldByName('clienteId').AsInteger
     );
+  end
+  else
+  begin
+    lkpCliente.KeyValue:='';
   end;
   end;
 
@@ -242,7 +274,7 @@ begin
 
       with dtmVendas.QryClienteUpdate do
       begin
-        SQL.Text := 'UPDATE clientes SET IDSituacao = :IDSituacao WHERE clienteId = :id';
+        SQL.Text := 'UPDATE clientes SET situacaoId = :situacaoId WHERE clienteId = :id';
         ParamByName('situacaoId').AsInteger := 1;
         ParamByName('id').AsInteger := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
         ExecSQL;
@@ -290,8 +322,18 @@ begin
 end;
 
 procedure TfrmProVendas.btnAlterarClick(Sender: TObject);
+var vStatus:string;
 begin
-  if oVenda.Selecionar(QryListagem.FieldByName('vendaId').AsInteger, dtmVendas.cdsItensVenda) then begin
+  //Não deixa alterar pedidos faturados no Caixa
+  vStatus := QryListagem.FieldByName('status').AsString;
+  if vStatus = 'PAGO' then
+  begin
+    MessageDlg('Essa Pré-Venda ja foi faturada no caixa e não pode ser alterada.', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  //Seleciona a Pré-Venda
+  if oVenda.SelecionarPreVenda(QryListagem.FieldByName('preVendaId').AsInteger, dtmVendas.cdsItensVenda) then begin
     edtVendaId.Text               :=IntToStr(oVenda.VendaId);
     lkpCliente.KeyValue           :=oVenda.ClienteId;
     edtDataVenda.Date             :=oVenda.DataVenda;
@@ -299,6 +341,7 @@ begin
   end
   else begin
     btnCancelar.Click;
+    MessageDlg('Erro ao carregar Pré-Venda', mtError, [mbOK],0);
     Abort;
   end;
 
@@ -313,19 +356,58 @@ end;
 
 procedure TfrmProVendas.btnGravarClick(Sender: TObject);
 begin
- // Verifica se o grid está vazio.
-  if dtmVendas.cdsItensVenda.IsEmpty then begin
-    MessageDlg('Produto é um campo obrigatório' ,mtInformation,[mbOK],0);
-    lkpProduto.SetFocus;
+
+  if dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 2 then
+  begin
+    MessageDlg('Operação barrada: Cliente com status BLOQUEADO!', mtWarning, [mbOK], 0);
     Abort;
   end;
 
-  if MessageDlg('Deseja finalizar/gravar a venda?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-    Exit;
-  inherited;
+  // Validação se o carrinho não está vazio
+  if dtmVendas.cdsItensVenda.IsEmpty then
+  begin
+    MessageDlg('Insira ao menos um produto para gerar a pré-venda!', mtWarning, [mbOK], 0);
+    Abort;
+  end;
 
-  LimparCds;
+  oVenda.clienteId  := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+  oVenda.totalVenda := edtValorTotalProduto.Value; // O componente onde fica o total do pedido
+
+   if edtVendaId.Text <> '' then
+    oVenda.VendaId := StrToInt(edtVendaId.Text)
+  else
+    oVenda.VendaId := 0;
+
+  oVenda.ClienteId  := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+  oVenda.TotalVenda := edtValorTotalProduto.Value;
+
+  if oVenda.VendaId = 0 then
+  begin
+    // NOVA PRÉ-VENDA
+    if oVenda.InserirPreVenda(dtmVendas.cdsItensVenda) then
+    begin
+      MessageDlg('Pré-Venda gravada com sucesso!', mtInformation, [mbOK], 0);
+      btnCancelar.Click;
+    end
+    else
+      MessageDlg('Erro ao gravar Pré-Venda.', mtError, [mbOK], 0);
+  end
+  else
+  begin
+    // ALTERAÇÃO
+    if oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda) then
+    begin
+      MessageDlg('Pré-Venda atualizada com sucesso!', mtInformation, [mbOK], 0);
+      btnCancelar.Click;
+    end
+    else
+      MessageDlg('Erro ao atualizar Pré-Venda.', mtError, [mbOK], 0);
+  end;
+
+  QryListagem.Close;
+  QryListagem.Open;
 end;
+
 
 procedure TfrmProVendas.btnCadClienteClick(Sender: TObject);
 begin

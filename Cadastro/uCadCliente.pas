@@ -3,12 +3,12 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,cValidacoes,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,cValidacoes, System.Character,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls,
   Vcl.DBCtrls, Vcl.Buttons, RxToolEdit, cCadCliente, uEnum, System.IniFiles, System.ImageList, Vcl.ImgList, System.JSON,
-  IPPeerClient, REST.Client,Data.Bind.Components, Data.Bind.ObjectScope, Vcl.Imaging.pngimage;
+  IPPeerClient, REST.Client,Data.Bind.Components, Data.Bind.ObjectScope, Vcl.Imaging.pngimage, cFuncao;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -75,6 +75,10 @@ type
     procedure edtDocumentoExit(Sender: TObject);
     procedure edtCEPExit(Sender: TObject);
     procedure lkpSituacaoCloseUp(Sender: TObject);
+    procedure edtCEPKeyPress(Sender: TObject; var Key: Char);
+    procedure edtTelefoneKeyPress(Sender: TObject; var Key: Char);
+    procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -157,17 +161,6 @@ begin
 end;
 
 {$ENDREGION}
-
-function SomenteNumeros(const Num:string):string;
-var
-  I:Integer;
-begin
-  Result:='';
-
-  for I:= 1 to Length(Num) do
-    if Num[I] in ['0'..'9'] then
-    Result:= Result+Num[I];
-end;
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
 begin
@@ -289,6 +282,12 @@ begin
   end;
 end;
 
+procedure TfrmCadCliente.edtCEPKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not (Key in ['0'..'9', #8]) then Key:=#0;
+end;
+
 procedure TfrmCadCliente.edtDocumentoChange(Sender: TObject);
 var
   TextoLimpo: String; // Variável que vai guardar apenas os números puros, sem sujeira
@@ -299,7 +298,7 @@ begin
 
   // Chama a nossa função para limpar o texto atual e pegar só os números
   // Ex: se o cara digitou "123.", ele limpa o ponto e guarda só o "123"
-  TextoLimpo := SomenteNumeros(Edit.Text);
+  TextoLimpo := TFuncao.SomenteNumeros(Edit.Text);
 
   // Verifica se o usuário escolheu "Física" lá no ComboBox
   if cbPessoa.Text = 'Física' then
@@ -376,6 +375,24 @@ begin
   if not (Key in ['0'..'9', #8]) then Key:=#0;
 end;
 
+procedure TfrmCadCliente.edtEstadoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not (IsLetter(Key) or (Key = #8) or (Key = #32) or (Key = #3) or (Key = #22)) then
+  begin
+    Key := #0;
+  end;
+end;
+
+procedure TfrmCadCliente.edtNomeKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not (IsLetter(Key) or (Key = #8) or (Key = #32) or (Key = #3) or (Key = #22)) then
+  begin
+    Key := #0;
+  end;
+end;
+
 procedure TfrmCadCliente.edtTelefoneChange(Sender: TObject);
 var TextoLimpo: string;
     Edit: TEdit;
@@ -383,7 +400,7 @@ begin
   inherited;
   TextoLimpo:=edtTelefone.Text;
 
-  TextoLimpo:=SomenteNumeros(edtTelefone.Text);
+  TextoLimpo:=TFuncao.SomenteNumeros(edtTelefone.Text);
 
   Edit := TEdit(Sender);
 
@@ -449,6 +466,12 @@ begin
         end;
       end;
     end;
+end;
+
+procedure TfrmCadCliente.edtTelefoneKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not (Key in ['0'..'9', #8]) then Key:=#0;
 end;
 
 procedure TfrmCadCliente.FormCreate(Sender: TObject);

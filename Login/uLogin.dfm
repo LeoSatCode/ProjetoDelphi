@@ -3,7 +3,6 @@
   Top = 0
   BorderIcons = []
   BorderStyle = bsDialog
-  Caption = 'frmLogin'
   ClientHeight = 488
   ClientWidth = 419
   Color = clBtnFace
@@ -40,8 +39,6 @@
     Color = 16774378
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitWidth = 427
     object img1: TImage
       Left = 104
       Top = 32

@@ -46,7 +46,10 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure gdrListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
- 
+    procedure btnNovoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnAlterarKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+
+
   private
     { Private declarations }
     SelectOriginal:String;
@@ -173,6 +176,7 @@ begin
     ShowMessage('Alterado');
     Result := True;
 end;
+
 {$ENDREGION}
 
 procedure TfrmTelaHeranca.ControlarBotoes(bntNovo, bntAlterar, btnCancelar,
@@ -207,6 +211,24 @@ begin
 
   EstadoDoCadastro:=ecInserir;
   LimparEdits;
+end;
+
+procedure TfrmTelaHeranca.btnNovoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_F1 then
+  begin
+    if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+    begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+      Abort;
+    end;
+
+      ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+                  btnNavigator, pgcPrincipal,False);
+
+    EstadoDoCadastro:=ecInserir;
+    LimparEdits;
+  end;
 end;
 
 procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
@@ -293,6 +315,21 @@ begin
   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
                   btnNavigator, pgcPrincipal,False);
   EstadoDoCadastro:=ecAlterar;
+end;
+
+procedure TfrmTelaHeranca.btnAlterarKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+ if Key = VK_F2 then
+ begin
+   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+   begin
+      MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+      Abort;
+   end;
+   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+                  btnNavigator, pgcPrincipal,False);
+   EstadoDoCadastro:=ecAlterar;
+ end;
 end;
 
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);

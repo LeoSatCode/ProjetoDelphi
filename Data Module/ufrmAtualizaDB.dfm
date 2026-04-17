@@ -2,7 +2,6 @@ object frmAtualizaDB: TfrmAtualizaDB
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'frmAtualizaDB'
   ClientHeight = 74
   ClientWidth = 699
   Color = clBtnFace
@@ -28,7 +27,6 @@ object frmAtualizaDB: TfrmAtualizaDB
     Color = clBlack
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 281
     object pnl2: TPanel
       Left = 6
       Top = 6
@@ -41,8 +39,6 @@ object frmAtualizaDB: TfrmAtualizaDB
       Enabled = False
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 70
-      ExplicitHeight = 269
       object lbl1: TLabel
         Left = 56
         Top = 10

@@ -1,4 +1,4 @@
-unit uRelProVenda;
+unit uRelPreVenda;
 
 interface
 
@@ -10,10 +10,13 @@ uses
 
 type
   TfrmRelProVenda = class(TForm)
+    QryVendas: TFDQuery;
+    dtsVendas: TDataSource;
     Relatorio: TRLReport;
     cabecalho: TRLBand;
     rlbl1: TRLLabel;
     rldrw1: TRLDraw;
+    rlpdfltr1: TRLPDFFilter;
     rlbnds: TRLBand;
     rldrw2: TRLDraw;
     rlsystmnf1: TRLSystemInfo;
@@ -23,46 +26,43 @@ type
     rlbl3: TRLLabel;
     BandaDoGrupo: TRLGroup;
     rlbnd2: TRLBand;
-    rlbl9: TRLLabel;
-    rldbtxtprodutoId1: TRLDBText;
     rlbnd3: TRLBand;
     rldbtxtprodutoId: TRLDBText;
     rldbtxtnome: TRLDBText;
     rldbtxtvalor: TRLDBText;
-    rlbl5: TRLLabel;
-    rlbl6: TRLLabel;
-    rlsbdtl1: TRLSubDetail;
-    rlbnd1: TRLBand;
-    rlbl10: TRLLabel;
-    rlbl4: TRLLabel;
-    rlbl8: TRLLabel;
-    rlbl11: TRLLabel;
-    rldbtxtvendaId: TRLDBText;
-    rlbnd4: TRLBand;
-    RLDBText1: TRLDBText;
-    RLDBText2: TRLDBText;
-    rldbtxtNome1: TRLDBText;
-    rldbtxtvalorUnitario: TRLDBText;
+    rlbl9: TRLLabel;
+    rldbtxtprodutoId1: TRLDBText;
     rlbnd5: TRLBand;
     rldbrsltTotalVenda: TRLDBResult;
     rldrw4: TRLDraw;
     rlbl7: TRLLabel;
-    QryVendas: TFDQuery;
-    QryVendasvendaId: TFDAutoIncField;
-    QryVendasClienteId: TIntegerField;
-    QryVendasnome: TStringField;
-    QryVendasdataVenda: TSQLTimeStampField;
-    QryVendastotalVenda: TBCDField;
-    dtsVendas: TDataSource;
-    rlpdfltr1: TRLPDFFilter;
     dtsVendasItens: TDataSource;
     QryVendaItens: TFDQuery;
-    intgrfldQryVendaItensvendaId: TIntegerField;
-    intgrfldQryVendaItensprodutoId: TIntegerField;
-    strngfldQryVendaItensNome: TStringField;
-    fmtbcdfldQryVendaItensquantidade: TFMTBCDField;
-    fmtbcdfldQryVendaItensvalorUnitario: TFMTBCDField;
-    fmtbcdfldQryVendaItenstotalProduto: TFMTBCDField;
+    rlbl5: TRLLabel;
+    rlbl6: TRLLabel;
+    rlsbdtl1: TRLSubDetail;
+    rlbnd1: TRLBand;
+    rlbnd4: TRLBand;
+    RLDBText1: TRLDBText;
+    RLDBText2: TRLDBText;
+    rlbl10: TRLLabel;
+    rldbtxtNome1: TRLDBText;
+    rlbl4: TRLLabel;
+    rldbtxtvalorUnitario: TRLDBText;
+    rlbl8: TRLLabel;
+    rlbl11: TRLLabel;
+    rldbtxtvendaId: TRLDBText;
+    QryVendaspreVendaId: TFDAutoIncField;
+    QryVendasclienteId: TIntegerField;
+    QryVendasnome: TStringField;
+    QryVendasdataEmissao: TSQLTimeStampField;
+    QryVendastotalVenda: TBCDField;
+    QryVendaItenspreVendaItemId: TFDAutoIncField;
+    QryVendaItensprodutoId: TIntegerField;
+    QryVendaItensNome: TStringField;
+    QryVendaItensquantidade: TFMTBCDField;
+    QryVendaItensvalorUnitario: TFMTBCDField;
+    QryVendaItenstotalProduto: TFMTBCDField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private

@@ -21,11 +21,13 @@ type
   TFuncao = class
   private
 
+
   public
     class procedure CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao:TFDConnection); static;
     class procedure CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao:TFDConnection); static;
     class procedure CarregarImagem(aImage:TImage); static;
     class procedure LimparImagem(var aImage:TImage); static;
+    class function SomenteNumeros(const Num: string): string; static;
   end;
 
 implementation
@@ -176,6 +178,17 @@ end;
 class procedure TFuncao.LimparImagem(var aImage: TImage);
 begin
   aImage.Picture.Assign(nil);
+end;
+
+class function TFuncao.SomenteNumeros(const Num:string):string;
+var
+  I:Integer;
+begin
+  Result:='';
+
+  for I:= 1 to Length(Num) do
+    if Num[I] in ['0'..'9'] then
+    Result:= Result+Num[I];
 end;
 
 end.
