@@ -7,8 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, cProVendas, uEnum, JvExComCtrls, JvHotKey,
-  System.ImageList, Vcl.ImgList, System.IniFiles, System.UITypes;
+  Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, System.ImageList, Vcl.ImgList, uRelPreVenda, cProVendas, uEnum, JvExComCtrls, JvHotKey,
+   System.IniFiles, System.UITypes, cRelatorio;
 
 type
   TfrmProVendas = class(TfrmTelaHeranca)
@@ -87,7 +87,7 @@ implementation
 
 {$R *.dfm}
 
-uses uRelProVenda, uCadCliente, cFuncao, uPrincipal, uConCliente;
+uses uCadCliente, cFuncao, uPrincipal, uConCliente;
 
 {$REGION 'Overrides'}
 function TfrmProVendas.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -109,18 +109,6 @@ begin
     begin
        oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda);
     end;
-
-     frmRelProVenda:=TfrmRelProVenda.Create(Self);
-     frmRelProVenda.QryVendas.Close;
-     frmRelProVenda.QryVendas.ParamByName('preVendaId').AsInteger     :=oVenda.VendaId;
-     frmRelProVenda.QryVendas.Open;
-
-     frmRelProVenda.QryVendaItens.Close;
-     frmRelProVenda.QryVendaItens.ParamByName('preVendaId').AsInteger :=oVenda.VendaId;
-     frmRelProVenda.QryVendaItens.Open;
-
-     frmRelProVenda.Relatorio.PreviewModal;
-     frmRelProVenda.Release;
 
   Result:=True;
 end;
@@ -371,7 +359,7 @@ begin
   end;
 
   oVenda.clienteId  := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
-  oVenda.totalVenda := edtValorTotalProduto.Value; // O componente onde fica o total do pedido
+  oVenda.totalVenda := edtValorTotalProduto.Value;
 
    if edtVendaId.Text <> '' then
     oVenda.VendaId := StrToInt(edtVendaId.Text)
@@ -388,6 +376,8 @@ begin
     begin
       MessageDlg('Pré-Venda gravada com sucesso!', mtInformation, [mbOK], 0);
       btnCancelar.Click;
+      TRel.MostrarRelatorioPreVenda(Self, oVenda);
+      
     end
     else
       MessageDlg('Erro ao gravar Pré-Venda.', mtError, [mbOK], 0);

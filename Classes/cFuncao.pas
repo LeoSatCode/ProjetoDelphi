@@ -10,7 +10,7 @@ uses System.Classes,Vcl.Controls,Vcl.ExtCtrls,
      FireDAC.Stan.Async,FireDAC.Phys, FireDAC.Phys.MSSQL,
      FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB,
      FireDAC.Comp.Client, System.SysUtils,
-     cAcaoAcesso, cUsuarioLogado, RLReport,
+     cAcaoAcesso, cUsuarioLogado, RLReport, cProVendas,
 
      Vcl.Imaging.pngimage,
      Vcl.Imaging.jpeg,
@@ -190,5 +190,6 @@ begin
     if Num[I] in ['0'..'9'] then
     Result:= Result+Num[I];
 end;
+
 
 end.

@@ -1,9 +1,10 @@
 object frmCaixa: TfrmCaixa
   Left = 0
   Top = 0
+  AutoSize = True
   Caption = 'Caixa'
-  ClientHeight = 363
-  ClientWidth = 816
+  ClientHeight = 201
+  ClientWidth = 304
   Color = 16774378
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,25 +21,33 @@ object frmCaixa: TfrmCaixa
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 816
-    Height = 363
+    Width = 304
+    Height = 201
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 816
+    ExplicitHeight = 363
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 808
+      ExplicitHeight = 335
       object pnl2: TPanel
         Left = 0
-        Top = 294
-        Width = 808
+        Top = 388
+        Width = 966
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        ExplicitTop = 294
+        ExplicitWidth = 808
         object btnReceber: TBitBtn
-          Left = 368
-          Top = 6
+          Left = 437
+          Top = 8
           Width = 75
           Height = 25
           Caption = 'Receber'
@@ -49,12 +58,13 @@ object frmCaixa: TfrmCaixa
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 808
+        Width = 966
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 808
         object lblIndice: TLabel
           Left = 24
           Top = 0
@@ -114,8 +124,8 @@ object frmCaixa: TfrmCaixa
       object gdrPendentes: TDBGrid
         Left = 0
         Top = 57
-        Width = 808
-        Height = 237
+        Width = 966
+        Height = 331
         Align = alClient
         DataSource = dtsPendentes
         DrawingStyle = gdsClassic
@@ -148,6 +158,7 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'nome'
+            Width = 362
             Visible = True
           end
           item
@@ -175,25 +186,32 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 808
+      ExplicitHeight = 335
       object Panel2: TPanel
         Left = 0
-        Top = 294
-        Width = 808
+        Top = 388
+        Width = 966
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        ExplicitTop = 294
+        ExplicitWidth = 808
       end
       object pnlListagemTopo1: TPanel
         Left = 0
         Top = 0
-        Width = 808
+        Width = 966
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 808
         object lblIndice1: TLabel
           Left = 24
           Top = 0
@@ -251,8 +269,8 @@ object frmCaixa: TfrmCaixa
       object gdrFaturados: TDBGrid
         Left = 0
         Top = 57
-        Width = 808
-        Height = 237
+        Width = 966
+        Height = 331
         Align = alClient
         DataSource = dtsFaturados
         DrawingStyle = gdsClassic
@@ -357,6 +375,8 @@ object frmCaixa: TfrmCaixa
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
+      DisplayFormat = '##,##0.00'
+      currency = True
       Precision = 18
       Size = 5
     end
@@ -424,6 +444,8 @@ object frmCaixa: TfrmCaixa
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
+      DisplayFormat = '##,##0.00'
+      currency = True
       Precision = 18
       Size = 5
     end

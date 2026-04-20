@@ -368,7 +368,7 @@ object frmPrincipal: TfrmPrincipal
     object lbl1: TLabel
       Left = 3
       Top = 3
-      Width = 911
+      Width = 108
       Height = 22
       Align = alClient
       Alignment = taCenter
@@ -379,7 +379,6 @@ object frmPrincipal: TfrmPrincipal
       Font.Name = '@Microsoft YaHei'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 108
     end
   end
   object mainPrincipal: TMainMenu

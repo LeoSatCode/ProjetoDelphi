@@ -9,14 +9,11 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, RLReport, RLFilters, RLPDFFilter, Vcl.DBCGrids;
 
 type
-  TfrmRelProVenda = class(TForm)
-    QryVendas: TFDQuery;
-    dtsVendas: TDataSource;
+  TfrmRelPreVenda = class(TForm)
     Relatorio: TRLReport;
     cabecalho: TRLBand;
     rlbl1: TRLLabel;
     rldrw1: TRLDraw;
-    rlpdfltr1: TRLPDFFilter;
     rlbnds: TRLBand;
     rldrw2: TRLDraw;
     rlsystmnf1: TRLSystemInfo;
@@ -26,38 +23,41 @@ type
     rlbl3: TRLLabel;
     BandaDoGrupo: TRLGroup;
     rlbnd2: TRLBand;
+    rlbl9: TRLLabel;
+    rldbtxtprodutoId1: TRLDBText;
     rlbnd3: TRLBand;
     rldbtxtprodutoId: TRLDBText;
     rldbtxtnome: TRLDBText;
     rldbtxtvalor: TRLDBText;
-    rlbl9: TRLLabel;
-    rldbtxtprodutoId1: TRLDBText;
-    rlbnd5: TRLBand;
-    rldbrsltTotalVenda: TRLDBResult;
-    rldrw4: TRLDraw;
-    rlbl7: TRLLabel;
-    dtsVendasItens: TDataSource;
-    QryVendaItens: TFDQuery;
     rlbl5: TRLLabel;
     rlbl6: TRLLabel;
     rlsbdtl1: TRLSubDetail;
     rlbnd1: TRLBand;
-    rlbnd4: TRLBand;
-    RLDBText1: TRLDBText;
-    RLDBText2: TRLDBText;
     rlbl10: TRLLabel;
-    rldbtxtNome1: TRLDBText;
     rlbl4: TRLLabel;
-    rldbtxtvalorUnitario: TRLDBText;
     rlbl8: TRLLabel;
     rlbl11: TRLLabel;
     rldbtxtvendaId: TRLDBText;
+    rlbnd4: TRLBand;
+    RLDBText1: TRLDBText;
+    RLDBText2: TRLDBText;
+    rldbtxtNome1: TRLDBText;
+    rldbtxtvalorUnitario: TRLDBText;
+    rlbnd5: TRLBand;
+    rldbrsltTotalVenda: TRLDBResult;
+    rldrw4: TRLDraw;
+    rlbl7: TRLLabel;
+    QryVendas: TFDQuery;
+    dtsVendas: TDataSource;
+    rlpdfltr1: TRLPDFFilter;
+    dtsVendasItens: TDataSource;
+    QryVendaItens: TFDQuery;
     QryVendaspreVendaId: TFDAutoIncField;
-    QryVendasclienteId: TIntegerField;
+    QryVendasClienteId: TIntegerField;
     QryVendasnome: TStringField;
     QryVendasdataEmissao: TSQLTimeStampField;
     QryVendastotalVenda: TBCDField;
-    QryVendaItenspreVendaItemId: TFDAutoIncField;
+    QryVendaItenspreVendaId: TIntegerField;
     QryVendaItensprodutoId: TIntegerField;
     QryVendaItensNome: TStringField;
     QryVendaItensquantidade: TFMTBCDField;
@@ -72,19 +72,19 @@ type
   end;
 
 var
-  frmRelProVenda: TfrmRelProVenda;
+  frmRelPreVenda: TfrmRelPreVenda;
 
 implementation
 
 {$R *.dfm}
 
-procedure TfrmRelProVenda.FormCreate(Sender: TObject);
+procedure TfrmRelPreVenda.FormCreate(Sender: TObject);
 begin
   QryVendas.Open;
   QryVendaItens.Open;
 end;
 
-procedure TfrmRelProVenda.FormDestroy(Sender: TObject);
+procedure TfrmRelPreVenda.FormDestroy(Sender: TObject);
 begin
   QryVendas.Close;
   QryVendaItens.Close;

@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, System.IniFiles, uDTMVenda,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uDTMConexao, cProVendas, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes;
+  FireDAC.Comp.Client, uEnum,cProVendas,
+  uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes;
 
 type
   TfrmCaixa = class(TForm)
@@ -57,12 +58,15 @@ type
       State: TGridDrawState);
   private
     { Private declarations }
+    dtmVendas:TdtmVenda;
+    oVenda:TVenda;
+    EstadoDoCadastro:TEstadoDoCadastro;
     SelectOriginal:String;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
     procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
     function RetornarCampoTraduzido(Campo: String): String;
     procedure CentralizarTituloGrid(Grid: TDBGrid);
-    function MostrarRelatorio(oVenda: TVenda): Boolean;
+    function MostrarRelatorio: Boolean;
     procedure ZebrarGrid(Grid: TDBGrid; State: TGridDrawState; Column: TColumn; Rect: TRect);
   public
     { Public declarations }
@@ -100,9 +104,6 @@ begin
       MessageDlg('Venda finalizada com sucesso! Estoque atualizado.', mtInformation, [mbOK], 0);
 
 
-
-      MostrarRelatorio(oVenda);
-
       // Atualiza o grid pra sumir a venda que acabou de ser paga
       QryPendentes.Close;
       QryPendentes.Open;
@@ -117,6 +118,7 @@ begin
   finally
     FreeAndNil(oVenda);//Limpa a classe da memória
   end;
+  MostrarRelatorio;
 end;
 
 procedure TfrmCaixa.ExibirLabelIndice(Campo:string; aLabel:TLabel);
@@ -414,8 +416,17 @@ begin
 
 end;
 
-function TfrmCaixa.MostrarRelatorio(oVenda:TVenda): Boolean;
+function TfrmCaixa.MostrarRelatorio: Boolean;
 begin
+      if (EstadoDoCadastro=ecInserir) then
+      begin
+        oVenda.Inserir(dtmVendas.cdsItensVenda);
+      end
+      else if (EstadoDoCadastro=ecAlterar) then
+      begin
+        oVenda.Atualizar(dtmVendas.cdsItensVenda)
+      end;
+
       frmRelProVenda:=TfrmRelProVenda.Create(Self);
       frmRelProVenda.QryVendas.Close;
       frmRelProVenda.QryVendas.ParamByName('vendaId').AsInteger     :=oVenda.VendaId;

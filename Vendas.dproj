@@ -152,10 +152,6 @@
             <Form>frmRelClienteFicha</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Relatorio\uRelPreVenda.pas">
-            <Form>frmRelPreVenda</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Relatorio\uRelProVenda.pas">
             <Form>frmRelProVenda</Form>
         </DCCReference>
@@ -234,6 +230,11 @@
             <Form>frmCaixa</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Relatorio\uRelPreVenda.pas">
+            <Form>frmRelPreVenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Classes\cRelatorio.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
