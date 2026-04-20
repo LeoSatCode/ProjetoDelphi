@@ -1,10 +1,9 @@
 object frmCaixa: TfrmCaixa
   Left = 0
   Top = 0
-  AutoSize = True
   Caption = 'Caixa'
-  ClientHeight = 201
-  ClientWidth = 304
+  ClientHeight = 460
+  ClientWidth = 995
   Color = 16774378
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,30 +20,28 @@ object frmCaixa: TfrmCaixa
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 304
-    Height = 201
+    Width = 995
+    Height = 460
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 816
-    ExplicitHeight = 363
+    ExplicitWidth = 304
+    ExplicitHeight = 201
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 808
-      ExplicitHeight = 335
+      ExplicitWidth = 296
+      ExplicitHeight = 173
       object pnl2: TPanel
         Left = 0
-        Top = 388
-        Width = 966
+        Top = 391
+        Width = 987
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = 294
-        ExplicitWidth = 808
+        ExplicitTop = 132
+        ExplicitWidth = 296
         object btnReceber: TBitBtn
           Left = 437
           Top = 8
@@ -58,13 +55,13 @@ object frmCaixa: TfrmCaixa
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 966
+        Width = 987
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 808
+        ExplicitWidth = 296
         object lblIndice: TLabel
           Left = 24
           Top = 0
@@ -124,8 +121,8 @@ object frmCaixa: TfrmCaixa
       object gdrPendentes: TDBGrid
         Left = 0
         Top = 57
-        Width = 966
-        Height = 331
+        Width = 987
+        Height = 334
         Align = alClient
         DataSource = dtsPendentes
         DrawingStyle = gdsClassic
@@ -186,32 +183,25 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 808
-      ExplicitHeight = 335
       object Panel2: TPanel
         Left = 0
-        Top = 388
-        Width = 966
+        Top = 391
+        Width = 987
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = 294
-        ExplicitWidth = 808
       end
       object pnlListagemTopo1: TPanel
         Left = 0
         Top = 0
-        Width = 966
+        Width = 987
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 808
         object lblIndice1: TLabel
           Left = 24
           Top = 0
@@ -269,8 +259,8 @@ object frmCaixa: TfrmCaixa
       object gdrFaturados: TDBGrid
         Left = 0
         Top = 57
-        Width = 966
-        Height = 331
+        Width = 987
+        Height = 334
         Align = alClient
         DataSource = dtsFaturados
         DrawingStyle = gdsClassic

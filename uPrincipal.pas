@@ -104,7 +104,7 @@ uses uCadCategoria, uCadCliente, uCadProduto, uProVenda,
      uRelCategoria, uRelCadCliente,
      uRelCadClienteFicha, uRelProduto,
      uRelProdutoComCategoria, uSelecionarData,
-     uRelVendaPorData, uRelProVenda,uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uTelaHeranca, uDTMGrafico;
+     uRelVendaPorData,uAlterarSenha, cArquivoIni, uCadAcaoAcesso, uTelaHeranca, uDTMGrafico;
 
 procedure TfrmPrincipal.CADASTRO1Click(Sender: TObject);
 begin

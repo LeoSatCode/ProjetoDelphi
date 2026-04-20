@@ -12,7 +12,7 @@ uses
      FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB,
      FireDAC.Comp.Client, System.SysUtils,
      cAcaoAcesso, cUsuarioLogado, RLReport,
-     cProVendas, uRelProVenda, uRelPreVenda,
+     cProVendas, uRelGenerico,
 
      Vcl.Imaging.pngimage,
      Vcl.Imaging.jpeg,
@@ -20,13 +20,14 @@ uses
      Vcl.ExtDlgs;
 
 type
+  TFormRelClass = class of TfrmGenerico; // Tipo que representa a CLASSE do form e não a instancia dele
+
   TRel = class
   private
 
 
   public
-    oVenda:TVenda;
-    class procedure MostrarRelatorioPreVenda(Form:TForm; oVenda:TVenda); static;
+    class procedure MostrarRelatorio(AOwner: TComponent; FormClass: TFormRelClass; oVenda: TVenda); static;
   end;
 
 implementation
@@ -34,19 +35,26 @@ implementation
 
 { TRel }
 
-class procedure TRel.MostrarRelatorioPreVenda(Form: TForm; oVenda:TVenda);
+
+{ TRel }
+
+class procedure TRel.MostrarRelatorio(AOwner: TComponent; FormClass: TFormRelClass; oVenda: TVenda);
+var frmRel: TfrmGenerico;
 begin
-  frmRelPreVenda:=TfrmRelPreVenda.Create(Form);
-  frmRelPreVenda.QryVendas.Close;
-  frmRelPreVenda.QryVendas.ParamByName('preVendaId').AsInteger     :=oVenda.VendaId;
-  frmRelPreVenda.QryVendas.Open;
+  frmRel := FormClass.Create(AOwner);
+  try
+    frmRel.QryMaster.Close;
+    frmRel.QryMaster.ParamByName('id').AsInteger := oVenda.VendaId;
+    frmRel.QryMaster.Open;
 
-  frmRelPreVenda.QryVendaItens.Close;
-  frmRelPreVenda.QryVendaItens.ParamByName('preVendaId').AsInteger :=oVenda.VendaId;
-  frmRelPreVenda.QryVendaItens.Open;
+    frmRel.QryDetalhes.Close;
+    frmRel.QryDetalhes.ParamByName('id').AsInteger := oVenda.VendaId;
+    frmRel.QryDetalhes.Open;
 
-  frmRelPreVenda.Relatorio.PreviewModal;
-  frmRelPreVenda.Release;
+    frmRel.Relatorio.PreviewModal;
+  finally
+    frmRel.Free;
+  end;
 end;
 
 end.

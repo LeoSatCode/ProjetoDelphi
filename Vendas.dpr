@@ -19,7 +19,7 @@ uses
   cProVendas in 'Classes\cProVendas.pas' {frmProVendas},
   cControleEstoque in 'Classes\cControleEstoque.pas',
   uRelCadClienteFicha in 'Relatorio\uRelCadClienteFicha.pas' {frmRelClienteFicha},
-  uRelProVenda in 'Relatorio\uRelProVenda.pas' {frmRelProVenda},
+  uRelGenerico in 'Relatorio\uRelGenerico.pas' {frmGenerico},
   uRelCadCliente in 'Relatorio\uRelCadCliente.pas' {frmRelCliente},
   uRelCategoria in 'Relatorio\uRelCategoria.pas' {frmRelCategoria},
   uRelProduto in 'Relatorio\uRelProduto.pas' {frmRelProduto},
@@ -48,8 +48,9 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   uCaixa in 'Processo\uCaixa.pas' {frmCaixa},
+  cRelatorio in 'Classes\cRelatorio.pas',
   uRelPreVenda in 'Relatorio\uRelPreVenda.pas' {frmRelPreVenda},
-  cRelatorio in 'Classes\cRelatorio.pas';
+  uRelProVenda in 'Relatorio\uRelProVenda.pas' {frmRelProVenda};
 
 {$R *.res}
 
@@ -58,5 +59,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmRelPreVenda, frmRelPreVenda);
+  Application.CreateForm(TfrmRelProVenda, frmRelProVenda);
   Application.Run;
 end.

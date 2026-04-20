@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, System.ImageList, Vcl.ImgList, uRelPreVenda, cProVendas, uEnum, JvExComCtrls, JvHotKey,
+  Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, System.ImageList, Vcl.ImgList, cProVendas, uEnum, JvExComCtrls, JvHotKey,
    System.IniFiles, System.UITypes, cRelatorio;
 
 type
@@ -87,7 +87,7 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCliente, cFuncao, uPrincipal, uConCliente;
+uses uCadCliente, cFuncao, uPrincipal, uConCliente, uRelPreVenda;
 
 {$REGION 'Overrides'}
 function TfrmProVendas.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -376,8 +376,7 @@ begin
     begin
       MessageDlg('Pré-Venda gravada com sucesso!', mtInformation, [mbOK], 0);
       btnCancelar.Click;
-      TRel.MostrarRelatorioPreVenda(Self, oVenda);
-      
+      TRel.MostrarRelatorio(Self, TfrmRelPreVenda, oVenda);
     end
     else
       MessageDlg('Erro ao gravar Pré-Venda.', mtError, [mbOK], 0);

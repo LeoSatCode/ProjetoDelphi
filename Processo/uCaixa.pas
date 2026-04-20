@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, System.IniFiles, uDTMVenda,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uEnum,cProVendas,
+  FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes;
 
 type
@@ -66,7 +66,6 @@ type
     procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
     function RetornarCampoTraduzido(Campo: String): String;
     procedure CentralizarTituloGrid(Grid: TDBGrid);
-    function MostrarRelatorio: Boolean;
     procedure ZebrarGrid(Grid: TDBGrid; State: TGridDrawState; Column: TColumn; Rect: TRect);
   public
     { Public declarations }
@@ -103,7 +102,7 @@ begin
     begin
       MessageDlg('Venda finalizada com sucesso! Estoque atualizado.', mtInformation, [mbOK], 0);
 
-
+      TRel.MostrarRelatorio(Self, TfrmRelProVenda, oVenda);
       // Atualiza o grid pra sumir a venda que acabou de ser paga
       QryPendentes.Close;
       QryPendentes.Open;
@@ -118,7 +117,6 @@ begin
   finally
     FreeAndNil(oVenda);//Limpa a classe da memória
   end;
-  MostrarRelatorio;
 end;
 
 procedure TfrmCaixa.ExibirLabelIndice(Campo:string; aLabel:TLabel);
@@ -414,32 +412,6 @@ begin
     end;
   end;
 
-end;
-
-function TfrmCaixa.MostrarRelatorio: Boolean;
-begin
-      if (EstadoDoCadastro=ecInserir) then
-      begin
-        oVenda.Inserir(dtmVendas.cdsItensVenda);
-      end
-      else if (EstadoDoCadastro=ecAlterar) then
-      begin
-        oVenda.Atualizar(dtmVendas.cdsItensVenda)
-      end;
-
-      frmRelProVenda:=TfrmRelProVenda.Create(Self);
-      frmRelProVenda.QryVendas.Close;
-      frmRelProVenda.QryVendas.ParamByName('vendaId').AsInteger     :=oVenda.VendaId;
-      frmRelProVenda.QryVendas.Open;
-
-      frmRelProVenda.QryVendaItens.Close;
-      frmRelProVenda.QryVendaItens.ParamByName('vendaId').AsInteger :=oVenda.VendaId;
-      frmRelProVenda.QryVendaItens.Open;
-
-      frmRelProVenda.Relatorio.PreviewModal;
-      frmRelProVenda.Release;
-
-      Result:=True;
 end;
 
 end.
