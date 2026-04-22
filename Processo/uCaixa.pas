@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, System.IniFiles, uDTMVenda,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio,
+  FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes;
 
 type
@@ -45,6 +45,8 @@ type
     btnPesquisar1: TBitBtn;
     gdrPendentes: TDBGrid;
     gdrFaturados: TDBGrid;
+    btnCancelar: TBitBtn;
+    btnSair: TBitBtn;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -56,11 +58,11 @@ type
       State: TGridDrawState);
     procedure gdrFaturadosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
   private
     { Private declarations }
     dtmVendas:TdtmVenda;
-    oVenda:TVenda;
-    EstadoDoCadastro:TEstadoDoCadastro;
     SelectOriginal:String;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
     procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
@@ -84,8 +86,7 @@ uses
 
 
 procedure TfrmCaixa.btnReceberClick(Sender: TObject);
-var
-  oVenda: TVenda;
+var oCaixa: TCaixa;
 begin
   // Validação básica: tem pedido selecionado no grid?
   if QryPendentes.IsEmpty then
@@ -95,14 +96,14 @@ begin
   end;
 
   // Instancia a classe de vendas conectada ao banco
-  oVenda := TVenda.Create(dtmConexao.ConexaoDB);
+  oCaixa := TCaixa.Create(dtmConexao.ConexaoDB);
   try
     // Chama a lógica de efetivação
-    if oVenda.EfetivarPreVenda( QryPendentes.FieldByName('preVendaId').AsInteger ) then
+    if oCaixa.FaturarVenda( QryPendentes.FieldByName('preVendaId').AsInteger ) then
     begin
       MessageDlg('Venda finalizada com sucesso! Estoque atualizado.', mtInformation, [mbOK], 0);
 
-      TRel.MostrarRelatorio(Self, TfrmRelProVenda, oVenda);
+      TRel.MostrarRelatorio(Self, TfrmRelProVenda, oCaixa.VendaId);
       // Atualiza o grid pra sumir a venda que acabou de ser paga
       QryPendentes.Close;
       QryPendentes.Open;
@@ -115,10 +116,47 @@ begin
       MessageDlg('Erro ao efetivar a venda. Chame o suporte!', mtError, [mbOK], 0);
     end;
   finally
-    FreeAndNil(oVenda);//Limpa a classe da memória
+    FreeAndNil(oCaixa);//Limpa a classe da memória
   end;
+
+  TFuncao.AtualizarDashBoard;
 end;
 
+procedure TfrmCaixa.btnCancelarClick(Sender: TObject);
+var oCaixa:TCaixa;
+begin
+  if QryPendentes.IsEmpty then
+  begin
+    MessageDlg('Selecione uma pré-venda na lista para cancelar!', mtWarning, [mbOK], 0);
+    Exit; // Sai da rotina sem fazer nada
+  end;
+
+  oCaixa := TCaixa.Create(dtmConexao.ConexaoDB);
+  try
+    if oCaixa.CancelarVenda(QryPendentes.FieldByName('preVendaId').AsInteger) then
+    begin
+      MessageDlg('Venda cancelada com sucesso!', mtInformation, [mbOK], 0);
+
+      QryPendentes.Close;
+      QryPendentes.Open;
+
+      QryFaturados.Close;
+      QryFaturados.Open;
+    end;
+  finally
+    FreeAndNil(oCaixa);
+  end;
+  TFuncao.AtualizarDashBoard;
+end;
+
+procedure TfrmCaixa.btnSairClick(Sender: TObject);
+begin
+  Close;
+  TFuncao.AtualizarDashBoard;
+end;
+
+
+{$REGION 'Pesquisa e Grid'}
 procedure TfrmCaixa.ExibirLabelIndice(Campo:string; aLabel:TLabel);
 begin
   aLabel.Caption:=RetornarCampoTraduzido(Campo);
@@ -200,6 +238,8 @@ begin
 
   QryPendentes.Close;
   QryFaturados.Close;
+
+  TFuncao.AtualizarDashBoard;
 end;
 
 procedure CarregarGrid(Grid: TDBGrid; NomeSecao: string);
@@ -250,7 +290,6 @@ begin
   CentralizarTituloGrid(gdrPendentes);
   CentralizarTituloGrid(gdrFaturados);
 end;
-
 
 procedure TfrmCaixa.mskPesquisarChange(Sender: TObject);
 var Date:TDateTime;
@@ -414,4 +453,5 @@ begin
 
 end;
 
+{$ENDREGION}
 end.

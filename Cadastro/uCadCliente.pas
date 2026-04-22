@@ -79,6 +79,7 @@ type
     procedure edtTelefoneKeyPress(Sender: TObject; var Key: Char);
     procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
+    procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -193,6 +194,12 @@ begin
   end;
 
   inherited;
+end;
+
+procedure TfrmCadCliente.btnFecharClick(Sender: TObject);
+begin
+  inherited;
+  TFuncao.AtualizarDashBoard;
 end;
 
 procedure TfrmCadCliente.btnNovoClick(Sender: TObject);

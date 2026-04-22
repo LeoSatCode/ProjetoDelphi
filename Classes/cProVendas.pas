@@ -36,7 +36,6 @@ type
     function Apagar:Boolean;
     function Selecionar(id:Integer; var cds:TClientDataSet):Boolean;
     function InserirPreVenda(cds: TClientDataSet): Boolean;
-    function EfetivarPreVenda(aPreVendaId: Integer): Boolean;
     function ApagarPreVenda(aPrevendaId: Integer): Boolean;
     function SelecionarPreVenda(id: Integer; var cds: TClientDataSet): Boolean;
     function AtualizarPreVenda(cds:TClientDataSet):Boolean;
@@ -442,99 +441,6 @@ begin
     end;
   finally
     FreeAndNil(Qry);
-  end;
-end;
-
-function TVenda.EfetivarPreVenda(aPreVendaId: Integer): Boolean;
-var
-  Qry, QryItens: TFDQuery;
-  oEstoque: TControleEstoque;
-  vNovaVendaId: Integer;
-begin
-  Result := True;
-  Qry := TFDQuery.Create(nil);
-  QryItens := TFDQuery.Create(nil);
-  try
-    Qry.Connection := ConexaoDB;
-    QryItens.Connection := ConexaoDB;
-
-    ConexaoDB.StartTransaction;
-    try
-      Qry.SQL.Clear;
-      Qry.SQL.Add('SELECT status FROM preVenda WHERE preVendaId = :id');
-      Qry.ParamByName('id').AsInteger := aPreVendaId;
-      Qry.Open;
-
-      if Qry.IsEmpty then
-      begin
-        ConexaoDB.Rollback;
-        Result := False;
-        Exit;
-      end;
-
-      if Qry.FieldByName('status').AsString = 'PAGO' then
-      begin
-        ConexaoDB.Rollback;
-        Result := False;
-        Exit;
-      end;
-
-      Qry.Close;
-
-      //Gerando a venda oficial
-      Qry.SQL.Clear;
-      Qry.SQL.Add('INSERT INTO Vendas (clienteId, dataVenda, totalVenda) ');
-      Qry.SQL.Add('OUTPUT INSERTED.vendaId AS vendaId '); // Pegamos o ID da venda gerada
-      Qry.SQL.Add('SELECT clienteId, GETDATE(), totalVenda FROM preVenda WHERE preVendaId =:id');
-      Qry.ParamByName('id').AsInteger := aPreVendaId;
-      Qry.Open;
-      vNovaVendaId := Qry.FieldByName('vendaId').AsInteger;
-      Self.F_vendaId := vNovaVendaId;
-      Qry.Close;
-
-      //Transfere os itens do rascunho para Vendas Itens
-      Qry.SQL.Clear;
-      Qry.SQL.Add('INSERT INTO vendasItens (vendaId, produtoId, valorUnitario, quantidade, totalProduto) ');
-      Qry.SQL.Add('SELECT :novaVendaId, produtoId, valorUnitario, quantidade, totalProduto ');
-      Qry.SQL.Add('FROM preVendaItens WHERE preVendaId =:id');
-      Qry.ParamByName('novaVendaId').AsInteger := vNovaVendaId;
-      Qry.ParamByName('id').AsInteger := aPreVendaId;
-      Qry.ExecSQL;
-
-      //Atualiza a Pré-Venda e Busca os itens para baixar o estoque
-      Qry.SQL.Clear;
-      Qry.SQL.Add('UPDATE preVenda SET status = ''PAGO'' WHERE preVendaId = :id');
-      Qry.ParamByName('id').AsInteger := aPreVendaId;
-      Qry.ExecSQL;
-
-      QryItens.SQL.Clear;
-      QryItens.SQL.Add('SELECT produtoId, quantidade FROM preVendaItens WHERE preVendaId = :id');
-      QryItens.ParamByName('id').AsInteger := aPreVendaId;
-      QryItens.Open;
-
-      // Chama o estoque e faz a baixa física
-      oEstoque := TControleEstoque.Create(ConexaoDB);
-      try
-        QryItens.First;
-        while not QryItens.Eof do
-        begin
-          oEstoque.ProdutoId  := QryItens.FieldByName('produtoId').AsInteger;
-          oEstoque.Quantidade := QryItens.FieldByName('quantidade').AsFloat;
-          oEstoque.BaixarEstoque; // A mágica da sua outra classe acontecendo aqui
-          QryItens.Next;
-        end;
-      finally
-        FreeAndNil(oEstoque);
-      end;
-
-      ConexaoDB.Commit; // Deu tudo certo? Salva no banco!
-    except
-      ConexaoDB.Rollback; // Deu BO? Desfaz tudo pra não cobrar sem dar o produto!
-      Result := False;
-    end;
-  finally
-    FreeAndNil(Qry);
-    FreeAndNil(QryItens);
   end;
 end;
 

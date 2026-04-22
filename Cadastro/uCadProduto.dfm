@@ -1,5 +1,6 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produto'
+  ExplicitTop = -142
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
@@ -9,6 +10,10 @@ inherited frmCadProduto: TfrmCadProduto
   end
   inherited pgcPrincipal: TPageControl
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Height = 55
         ExplicitHeight = 55

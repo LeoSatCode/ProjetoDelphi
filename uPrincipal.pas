@@ -84,9 +84,7 @@ type
     { Private declarations }
     TeclaEnter: TMREnter;
     procedure AtualizacaoBancoDados(aForm: TfrmAtualizaDB);
-    procedure AtualizarDashBoard;
     procedure TrocarUsuario;
-
 
   public
     { Public declarations }
@@ -198,7 +196,7 @@ begin
     frmAtualizaDB.Free; //Sai da memória
     dtmConexao.ConexaoDB.Connected:=true;// Conecta ao Banco de Dados
 
-    AtualizarDashBoard;
+    TFuncao.AtualizarDashBoard;
 
     TeclaEnter:= TMREnter.Create(Self);
     with TeclaEnter do begin
@@ -309,7 +307,7 @@ end;
 
 procedure TfrmPrincipal.tmrAtualizacaoDashBoardTimer(Sender: TObject);
 begin
- AtualizarDashBoard;
+ TFuncao.AtualizarDashBoard;
 end;
 
 procedure TfrmPrincipal.mniPRODUTOSPORCATEGORIA1Click(Sender: TObject);
@@ -399,65 +397,6 @@ begin
     oAtualizarMSSQL.AtualizarBancoDeDadoMSSQL;
   finally
     if Assigned(oAtualizarMSSQL) then FreeAndNil(oAtualizarMSSQL);
-  end;
-
-  {with aForm, dtmConexao do begin
-    chkConexao.Checked:=True;
-    Refresh;
-
-    QryScriptCategorias.ExecSQL;
-    chkCategoria.Checked:=True;
-    Refresh;
-    Sleep(300);
-
-    QryScriptProdutos.ExecSQL;
-    chkProduto.Checked:=True;
-    Sleep(300);
-
-    QryScriptClientes.ExecSQL;
-    chkCliente.Checked:=True;
-    Refresh;
-    Sleep(300);
-
-    QryScriptVendas.ExecSQL;
-    chkVendas.Checked:=True;
-    Refresh;
-    Sleep(300);
-
-    QryScriptItemVendas.ExecSQL;
-    chkItensVenda.Checked:=True;
-    Refresh;
-    Sleep(300);
-
-    QryScriptUsuarios.ExecSQL;
-    chkUsuarios.Checked:=True;
-    Refresh;
-    Sleep(300);
-  end;}
-end;
-
-procedure TfrmPrincipal.AtualizarDashBoard;
-begin
-  try
-    Screen.Cursor:=crSQLWait;
-    if dtmGrafico.QryProdutoEstoque.Active then
-     dtmGrafico.QryProdutoEstoque.Close;
-
-  if dtmGrafico.QryVendaValorPorCliente.Active then
-     dtmGrafico.QryVendaValorPorCliente.Close;
-
-  if dtmGrafico.QryVendasDaUltimaSemana.Active then
-     dtmGrafico.QryVendasDaUltimaSemana.Close;
-
-  if dtmGrafico.QryProdutosMaisVendidos.Active then
-     dtmGrafico.QryProdutosMaisVendidos.Close;
-
-  dtmGrafico.QryProdutoEstoque.Open;
-  dtmGrafico.QryVendaValorPorCliente.Open;
-  dtmGrafico.QryVendasDaUltimaSemana.Open;
-  dtmGrafico.QryProdutosMaisVendidos.Open;
-  finally
-    Screen.Cursor:=crDefault;
   end;
 
 end;

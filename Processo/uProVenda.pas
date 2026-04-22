@@ -376,7 +376,7 @@ begin
     begin
       MessageDlg('Pré-Venda gravada com sucesso!', mtInformation, [mbOK], 0);
       btnCancelar.Click;
-      TRel.MostrarRelatorio(Self, TfrmRelPreVenda, oVenda);
+      TRel.MostrarRelatorio(Self, TfrmRelPreVenda, oVenda.VendaId);
     end
     else
       MessageDlg('Erro ao gravar Pré-Venda.', mtError, [mbOK], 0);

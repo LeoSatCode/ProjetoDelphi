@@ -9,7 +9,7 @@ uses System.Classes,Vcl.Controls,Vcl.ExtCtrls,
      FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
      FireDAC.Stan.Async,FireDAC.Phys, FireDAC.Phys.MSSQL,
      FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB,
-     FireDAC.Comp.Client, System.SysUtils,
+     FireDAC.Comp.Client, System.SysUtils, uDTMGrafico,
      cAcaoAcesso, cUsuarioLogado, RLReport, cProVendas,
 
      Vcl.Imaging.pngimage,
@@ -21,8 +21,8 @@ type
   TFuncao = class
   private
 
-
   public
+    class procedure AtualizarDashBoard; static;
     class procedure CriarForm(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao:TFDConnection); static;
     class procedure CriarRelatorio(aNomeForm: TFormClass; oUsuarioLogado: TUsuarioLogado; aConexao:TFDConnection); static;
     class procedure CarregarImagem(aImage:TImage); static;
@@ -178,6 +178,31 @@ end;
 class procedure TFuncao.LimparImagem(var aImage: TImage);
 begin
   aImage.Picture.Assign(nil);
+end;
+
+class procedure TFuncao.AtualizarDashBoard;
+begin
+  try
+    Screen.Cursor:=crSQLWait;
+    if dtmGrafico.QryProdutoEstoque.Active then
+     dtmGrafico.QryProdutoEstoque.Close;
+
+  if dtmGrafico.QryVendaValorPorCliente.Active then
+     dtmGrafico.QryVendaValorPorCliente.Close;
+
+  if dtmGrafico.QryVendasDaUltimaSemana.Active then
+     dtmGrafico.QryVendasDaUltimaSemana.Close;
+
+  if dtmGrafico.QryProdutosMaisVendidos.Active then
+     dtmGrafico.QryProdutosMaisVendidos.Close;
+
+  dtmGrafico.QryProdutoEstoque.Open;
+  dtmGrafico.QryVendaValorPorCliente.Open;
+  dtmGrafico.QryVendasDaUltimaSemana.Open;
+  dtmGrafico.QryProdutosMaisVendidos.Open;
+  finally
+    Screen.Cursor:=crDefault;
+  end;
 end;
 
 class function TFuncao.SomenteNumeros(const Num:string):string;

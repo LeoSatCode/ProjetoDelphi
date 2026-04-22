@@ -46,9 +46,6 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure gdrListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure btnNovoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure btnAlterarKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-
 
   private
     { Private declarations }
@@ -213,23 +210,6 @@ begin
   LimparEdits;
 end;
 
-procedure TfrmTelaHeranca.btnNovoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_F1 then
-  begin
-    if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-    begin
-      MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-      Abort;
-    end;
-
-      ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
-                  btnNavigator, pgcPrincipal,False);
-
-    EstadoDoCadastro:=ecInserir;
-    LimparEdits;
-  end;
-end;
 
 procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
 var I:Integer;
@@ -317,21 +297,6 @@ begin
   EstadoDoCadastro:=ecAlterar;
 end;
 
-procedure TfrmTelaHeranca.btnAlterarKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
- if Key = VK_F2 then
- begin
-   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-   begin
-      MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-      Abort;
-   end;
-   ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
-                  btnNavigator, pgcPrincipal,False);
-   EstadoDoCadastro:=ecAlterar;
- end;
-end;
-
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
    if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
@@ -368,6 +333,7 @@ end;
 procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
 begin
   Close;
+  TFuncao.AtualizarDashBoard;
 end;
 
 procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
@@ -398,6 +364,7 @@ begin
 
     End; //Finaliza a opereção
 
+    TFuncao.AtualizarDashBoard;
 end;
 
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -420,6 +387,7 @@ begin
   end;
 
   QryListagem.Close;
+  TFuncao.AtualizarDashBoard;
 end;
 
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
