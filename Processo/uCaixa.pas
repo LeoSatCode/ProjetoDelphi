@@ -8,7 +8,7 @@ uses
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes,
-  PngBitBtn;
+  PngBitBtn, cGridUtils;
 
 type
   TfrmCaixa = class(TForm)
@@ -48,6 +48,7 @@ type
     gdrFaturados: TDBGrid;
     btnCancelar: TPngBitBtn;
     btnSair: TPngBitBtn;
+    PngBitBtn1: TPngBitBtn;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -69,7 +70,6 @@ type
     procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
     function RetornarCampoTraduzido(Campo: String): String;
     procedure CentralizarTituloGrid(Grid: TDBGrid);
-    procedure ZebrarGrid(Grid: TDBGrid; State: TGridDrawState; Column: TColumn; Rect: TRect);
   public
     { Public declarations }
     IndiceAtual:string;
@@ -166,13 +166,13 @@ end;
 procedure TfrmCaixa.gdrFaturadosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 begin
-  ZebrarGrid(gdrFaturados, State, Column, Rect);
+  TGrid.ZebrarGrid(gdrFaturados, State, Column, Rect);
 end;
 
 procedure TfrmCaixa.gdrPendentesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 begin
-  ZebrarGrid(gdrPendentes, State, Column, Rect);
+  TGrid.ZebrarGrid(gdrPendentes, State, Column, Rect);
 end;
 
 procedure TfrmCaixa.gdrPendentesTitleClick(Column: TColumn);
@@ -182,85 +182,16 @@ begin
   ExibirLabelIndice(IndiceAtual, lblIndice); //Aqui o Label recebe o Campo Traduzido com o Indice Atual
 end;
 
-procedure TfrmCaixa.ZebrarGrid(Grid: TDBGrid; State:TGridDrawState; Column: TColumn; Rect: TRect);
-var Linha: Integer;
-begin
-  if (gdFixed in State) then
-  begin
-    Grid.Canvas.Brush.Color := clGray;
-    Grid.Canvas.FillRect(Rect);
-
-    Exit;
-  end;
-
-  Linha := Grid.DataSource.DataSet.RecNo;
-
-  if not (gdSelected in State) then
-  begin
-    if (Linha mod 2) = 0 then
-      Grid.Canvas.Brush.Color := clWebLightgrey
-    else
-      Grid.Canvas.Brush.Color := clWhite;
-  end
-  else
-  begin
-    Grid.Canvas.Brush.Color := $00FFCC99;
-    Grid.Canvas.Font.Color := clHighlightText;
-  end;
-
-  Grid.Canvas.FillRect(Rect);
-  Grid.Canvas.TextOut(Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
-end;
-
-procedure SalvarGrid(Grid: TDBGrid; NomeSecao: string);
-var
-  I: Integer;
-  ArquivoINI: TIniFile;
-begin
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'PreferenciasGridCaixa.ini');
-  try
-    for I := 0 to Grid.Columns.Count - 1 do
-    begin
-      ArquivoINI.WriteInteger(
-        NomeSecao,
-        'Coluna_' + IntToStr(I),
-        Grid.Columns[I].Width);
-    end;
-  finally
-    ArquivoINI.Free;
-  end;
-end;
-
 procedure TfrmCaixa.FormClose(Sender: TObject; var Action: TCloseAction);
 
 begin
-  SalvarGrid(gdrPendentes, oUsuarioLogado.nome + '_Pendentes');
-  SalvarGrid(gdrFaturados, oUsuarioLogado.nome + '_Faturados');
+  TGrid.SalvarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
+  TGrid.SalvarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
 
   QryPendentes.Close;
   QryFaturados.Close;
 
   TFuncao.AtualizarDashBoard;
-end;
-
-procedure CarregarGrid(Grid: TDBGrid; NomeSecao: string);
-var
-  I: Integer;
-  ArquivoINI: TIniFile;
-begin
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'PreferenciasGridCaixa.ini');
-  try
-    for I := 0 to Grid.Columns.Count - 1 do
-    begin
-      Grid.Columns[I].Width:=
-       ArquivoINI.ReadInteger(
-        NomeSecao,
-        'Coluna_' + IntToStr(I),
-        Grid.Columns[I].Width);
-    end;
-  finally
-    ArquivoINI.Free;
-  end;
 end;
 
 procedure TfrmCaixa.FormShow(Sender: TObject);
@@ -275,8 +206,8 @@ begin
   QryPendentes.Open;
   QryFaturados.Open;
 
-  CarregarGrid(gdrPendentes, oUsuarioLogado.nome + '_Pendentes');
-  CarregarGrid(gdrFaturados, oUsuarioLogado.nome + '_Faturados');
+  TGrid.CarregarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
+  TGrid.CarregarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
 end;
 
 procedure TfrmCaixa.CentralizarTituloGrid(Grid: TDBGrid);

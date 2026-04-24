@@ -1,7 +1,7 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientWidth = 1011
-  ExplicitTop = 8
+  ExplicitTop = -157
   ExplicitWidth = 1017
   PixelsPerInch = 96
   TextHeight = 13
@@ -22,6 +22,7 @@ inherited frmCadCliente: TfrmCadCliente
   end
   inherited pgcPrincipal: TPageControl
     Width = 1011
+    ActivePage = tabManutencao
     ExplicitWidth = 1011
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1003
@@ -316,6 +317,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitTop = 22
       ExplicitWidth = 1003
       object lbl1: TLabel
         Left = 12
@@ -477,6 +479,7 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 71
         Width = 145
         Height = 21
+        Style = csDropDownList
         TabOrder = 2
         OnChange = cbPessoaChange
         Items.Strings = (

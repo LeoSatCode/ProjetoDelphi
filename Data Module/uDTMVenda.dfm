@@ -63,6 +63,7 @@ object dtmVenda: TdtmVenda
       DisplayLabel = 'Valor'
       FieldName = 'valor'
       Origin = 'valor'
+      DisplayFormat = 'R$##,##0.00'
       Precision = 18
       Size = 5
     end
@@ -95,10 +96,12 @@ object dtmVenda: TdtmVenda
     object cdsItensVendavalorUnitario: TFloatField
       DisplayLabel = 'Valor Unitario'
       FieldName = 'valorUnitario'
+      DisplayFormat = 'R$ ##,##0.00'
     end
     object cdsItensVendavalorTotalProduto: TFloatField
       DisplayLabel = 'Total do Produto'
       FieldName = 'valorTotalProduto'
+      DisplayFormat = 'R$ ##,##0.00'
     end
   end
   object dtsItensVenda: TDataSource

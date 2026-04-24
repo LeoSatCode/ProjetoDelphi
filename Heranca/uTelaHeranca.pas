@@ -8,7 +8,7 @@ uses
   Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, uDTMConexao,
   FireDAC.Comp.Client, uEnum, RxToolEdit, RxCurrEdit, cUsuarioLogado, System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao,
-  PngBitBtn;
+  PngBitBtn, cGridUtils;
 
 type
   TfrmTelaHeranca = class(TForm)
@@ -384,27 +384,8 @@ begin
 end;
 
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
-var ArquivoINI:TIniFile; // Variável para criar o arquivo INI para salvar preferências de Grid por usuário.
-    I: Integer; // Ponteiro para passar por todas as colunas (pastas)
 begin
-  ExtractFilePath(Application.ExeName); // Garante que o INI fique na mesma pasta do .exe
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'PreferenciasGrid.ini'); //Criamos o INI File na pasta do .exe
-
-  try
-    for I := 0 to gdrListagem.Columns.Count - 1 do  // O laço percorre do 0 à ultima coluna desenhada no Grid
-    begin
-      ArquivoINI.WriteInteger(
-      oUsuarioLogado.nome, // Usamos o UsuarioLogado para separar de quem é a preferência.
-      'Coluna_' + IntToStr(I), // Nomeamos a pasta com o Indice da coluna.
-      gdrListagem.Columns[I].Width); //A largura atual da coluna naquele exato segundo.
-      ArquivoINI.WriteString(
-      oUsuarioLogado.nome,
-      'Ordem_' + IntToStr(I),
-      gdrListagem.Columns[I].FieldName);
-    end;
-  finally
-    ArquivoINI.Free;// Independentemente de dar erro ou não, sempre fechamos o caderninho para liberar a memória
-  end;
+  TGrid.SalvarGrid(gdrListagem,'PreferenciasGrid.ini', oUsuarioLogado.nome);
 
   QryListagem.Close;
   TFuncao.AtualizarDashBoard;
@@ -424,7 +405,7 @@ begin
     DataSource:=dtsListagem;
     Options:=[dgTitles,dgIndicator,dgColumnResize,
               dgColLines,dgRowLines,dgTabs,
-              dgRowSelect,dgAlwaysShowSelection,
+              dgAlwaysShowSelection,
               dgCancelOnExit,dgTitleClick,dgTitleHotTrack];
   end;
 end;
@@ -435,50 +416,9 @@ begin
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
-var ArquivoINI: TIniFile ; //Referenciamos novamente nosso Arquivo
-    I:Integer; //Passamos o ponteiro
-    NomeCampo: string;
-    Coluna: TColumn;
 begin
+  TGrid.CarregarGrid(gdrListagem,'PreferenciasGrid.ini',oUsuarioLogado.nome);
 
-   ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+ 'PreferenciasGrid.ini');
-
-  try
-    gdrListagem.Columns.BeginUpdate;
-    try
-
-      for I := 0 to gdrListagem.Columns.Count - 1 do
-      begin
-        gdrListagem.Columns[I].Width :=
-          ArquivoINI.ReadInteger(oUsuarioLogado.nome,
-          'Coluna_' + IntToStr(I),
-          gdrListagem.Columns[I].Width);
-      end;
-
-
-      for I := 0 to gdrListagem.Columns.Count - 1 do
-      begin
-        NomeCampo := ArquivoINI.ReadString(
-          oUsuarioLogado.nome,
-          'Ordem_' + IntToStr(I),
-          ''
-        );
-
-        if NomeCampo <> '' then
-        begin
-          Coluna := GetColumnByFieldName(gdrListagem, NomeCampo);
-          if Assigned(Coluna) then
-            Coluna.Index := I;
-        end;
-      end;
-
-    finally
-      gdrListagem.Columns.EndUpdate;
-    end;
-
-  finally
-    ArquivoINI.Free;
-  end;
   if (QryListagem.SQL.Text<>EmptyStr) then begin
     QryListagem.IndexFieldNames:=IndiceAtual;
     ExibirLabelIndice(IndiceAtual, lblIndice);

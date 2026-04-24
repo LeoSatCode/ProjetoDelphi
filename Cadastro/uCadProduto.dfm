@@ -1,6 +1,5 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produto'
-  ExplicitTop = 8
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
@@ -287,6 +286,7 @@ inherited frmCadProduto: TfrmCadProduto
       DisplayLabel = 'Valor'
       FieldName = 'valor'
       Origin = 'valor'
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end

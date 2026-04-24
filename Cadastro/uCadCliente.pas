@@ -84,6 +84,7 @@ type
     oCliente:TCliente;
     function Excluir:Boolean; override;
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
+    procedure DefinirTipoPessoaPeloDocumento(const ADoc: string);
   public
     { Public declarations }
   end;
@@ -185,6 +186,7 @@ begin
       lkpSituacao.KeyValue   := situacaoId;
       edtEstado.Text         := estado;
       edtObservacao.Text     := observacao;
+      DefinirTipoPessoaPeloDocumento(documento);
     end;
   end
   else begin
@@ -496,6 +498,18 @@ procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
   if Assigned(oCliente) then FreeAndNil(oCliente);
+end;
+
+procedure TfrmCadCliente.DefinirTipoPessoaPeloDocumento(const ADoc: string);
+var
+  DocLimpo: string;
+begin
+  DocLimpo := TFuncao.SomenteNumeros(ADoc);
+
+  if Length(DocLimpo) > 11 then
+    cbPessoa.ItemIndex := cbPessoa.Items.IndexOf('Jurídica')
+  else if Length(DocLimpo) > 0 then
+    cbPessoa.ItemIndex := cbPessoa.Items.IndexOf('Física');
 end;
 
 end.

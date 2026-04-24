@@ -17,6 +17,7 @@ inherited frmProVendas: TfrmProVendas
   end
   inherited pgcPrincipal: TPageControl
     Width = 1003
+    ActivePage = tabManutencao
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
       ExplicitWidth = 995
@@ -211,7 +212,7 @@ inherited frmProVendas: TfrmProVendas
             Font.Height = -11
             Font.Name = 'Tahoma'
             Font.Style = []
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit]
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit]
             ParentFont = False
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
@@ -461,6 +462,7 @@ inherited frmProVendas: TfrmProVendas
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end

@@ -229,7 +229,10 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 933
         Height = 57
         Align = alTop
+        BevelOuter = bvNone
+        BiDiMode = bdLeftToRight
         Color = 16774378
+        ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
         object lblIndice: TLabel

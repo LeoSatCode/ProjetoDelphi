@@ -25,12 +25,8 @@ object frmCaixa: TfrmCaixa
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 304
-    ExplicitHeight = 201
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
-      ExplicitWidth = 296
-      ExplicitHeight = 173
       object pnl2: TPanel
         Left = 0
         Top = 388
@@ -40,8 +36,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = 132
-        ExplicitWidth = 296
         object btnReceber: TPngBitBtn
           Left = 381
           Top = 8
@@ -133,7 +127,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 296
         object lblIndice: TLabel
           Left = 24
           Top = 0
@@ -190,7 +183,7 @@ object frmCaixa: TfrmCaixa
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         ParentFont = False
         TabOrder = 2
         TitleFont.Charset = DEFAULT_CHARSET
@@ -241,7 +234,6 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
-      ExplicitWidth = 878
       object Panel2: TPanel
         Left = 0
         Top = 388
@@ -251,7 +243,29 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 878
+        object PngBitBtn1: TPngBitBtn
+          Left = 888
+          Top = 6
+          Width = 91
+          Height = 25
+          Cancel = True
+          Caption = '&Sair'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI Variable Text Semibold'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          OnClick = btnSairClick
+          PngImage.Data = {
+            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+            61000000097048597300000B1300000B1301009A9C18000000584944415478DA
+            636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
+            2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
+            931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
+            4E44AE426082}
+        end
       end
       object pnlListagemTopo1: TPanel
         Left = 0
@@ -262,7 +276,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 878
         object lblIndice1: TLabel
           Left = 24
           Top = 0
@@ -304,7 +317,7 @@ object frmCaixa: TfrmCaixa
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         ParentFont = False
         TabOrder = 2
         TitleFont.Charset = DEFAULT_CHARSET
@@ -399,8 +412,7 @@ object frmCaixa: TfrmCaixa
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end
@@ -468,8 +480,7 @@ object frmCaixa: TfrmCaixa
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end
