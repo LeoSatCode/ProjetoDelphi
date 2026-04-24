@@ -3,7 +3,7 @@ unit uLogin;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, PngBitBtn,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,uDTMConexao, Vcl.Imaging.pngimage;
 
 type
@@ -13,8 +13,8 @@ type
     img2: TImage;
     lblUSUÁRIO: TLabel;
     lbl1: TLabel;
-    btnFechar: TBitBtn;
-    btnLogin: TBitBtn;
+    btnFechar: TPngBitBtn;
+    btnLogin: TPngBitBtn;
     edtUsuario: TEdit;
     edtSenha: TEdit;
     lbl2: TLabel;

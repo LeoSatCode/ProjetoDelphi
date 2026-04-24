@@ -3,7 +3,7 @@ unit uUsuarioVsAcoes;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, PngBitBtn,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.Buttons, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
@@ -24,7 +24,7 @@ type
     QryAcoesacaoAcessoId: TIntegerField;
     QryAcoesdescricao: TStringField;
     QryAcoesativo: TBooleanField;
-    btnFechar1: TBitBtn;
+    btnFechar1: TPngBitBtn;
     QryUsuariousuarioId: TFDAutoIncField;
     QryUsuarionome: TStringField;
     procedure btnFechar1Click(Sender: TObject);

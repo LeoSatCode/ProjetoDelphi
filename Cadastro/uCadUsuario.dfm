@@ -2,6 +2,7 @@ inherited frmCadUsuario: TfrmCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 332
   ClientWidth = 690
+  ExplicitTop = 8
   ExplicitWidth = 696
   ExplicitHeight = 361
   PixelsPerInch = 96
@@ -11,7 +12,7 @@ inherited frmCadUsuario: TfrmCadUsuario
     Width = 690
     ExplicitTop = 278
     ExplicitWidth = 690
-    inherited btnFechar: TBitBtn
+    inherited btnFechar: TPngBitBtn
       Left = 600
       ExplicitLeft = 600
     end
@@ -22,7 +23,6 @@ inherited frmCadUsuario: TfrmCadUsuario
   inherited pgcPrincipal: TPageControl
     Width = 690
     Height = 278
-    ActivePage = tabManutencao
     ExplicitWidth = 690
     ExplicitHeight = 278
     inherited tabListagem: TTabSheet

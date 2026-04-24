@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask, Data.DB, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Vcl.Buttons, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
-  System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao;
+  System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao, PngBitBtn;
 
 type
   TfrmTelaHerancaConsulta = class(TForm)
@@ -20,7 +20,7 @@ type
     QryListagem: TFDQuery;
     dtsListagem: TDataSource;
 
-    btnFechar: TBitBtn;
+    btnFechar: TPngBitBtn;
     ilimage: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

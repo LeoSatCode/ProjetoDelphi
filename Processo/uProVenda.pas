@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, System.ImageList, Vcl.ImgList, cProVendas, uEnum, JvExComCtrls, JvHotKey,
-   System.IniFiles, System.UITypes, cRelatorio;
+   System.IniFiles, System.UITypes, cRelatorio, PngBitBtn;
 
 type
   TfrmProVendas = class(TfrmTelaHeranca)
@@ -26,8 +26,8 @@ type
     lblQuantidade2: TLabel;
     edtTotalProduto: TCurrencyEdit;
     lblQuantidade3: TLabel;
-    btnAdicionar: TBitBtn;
-    btnRemover: TBitBtn;
+    btnAdicionar: TPngBitBtn;
+    btnRemover: TPngBitBtn;
     dbgridItensVenda: TDBGrid;
     pnl5: TPanel;
     lblCliente: TLabel;

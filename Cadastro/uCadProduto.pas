@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.ExtCtrls, RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uDTMConexao, cFuncao, uCadCategoria, uConCategoria,
-  Vcl.Menus, System.ImageList, Vcl.ImgList;
+  Vcl.Menus, System.ImageList, Vcl.ImgList, PngBitBtn;
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)

@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Data.DB, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
   Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, uDTMConexao,
-  FireDAC.Comp.Client, uEnum, RxToolEdit, RxCurrEdit, cUsuarioLogado, System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao;
+  FireDAC.Comp.Client, uEnum, RxToolEdit, RxCurrEdit, cUsuarioLogado, System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao,
+  PngBitBtn;
 
 type
   TfrmTelaHeranca = class(TForm)
@@ -17,14 +18,14 @@ type
     tabManutencao: TTabSheet;
     pnlListagemTopo: TPanel;
     mskPesquisar: TMaskEdit;
-    btnPesquisar: TBitBtn;
+    btnPesquisar: TPngBitBtn;
     gdrListagem: TDBGrid;
-    btnNovo: TBitBtn;
-    btnAlterar: TBitBtn;
-    btnCancelar: TBitBtn;
-    btnGravar: TBitBtn;
-    btnApagar: TBitBtn;
-    btnFechar: TBitBtn;
+    btnNovo: TPngBitBtn;
+    btnAlterar: TPngBitBtn;
+    btnCancelar: TPngBitBtn;
+    btnGravar: TPngBitBtn;
+    btnApagar: TPngBitBtn;
+    btnFechar: TPngBitBtn;
     btnNavigator: TDBNavigator;
     QryListagem: TFDQuery;
     dtsListagem: TDataSource;
@@ -51,7 +52,7 @@ type
     { Private declarations }
     SelectOriginal:String;
     procedure ControlarBotoes(bntNovo, bntAlterar, btnCancelar,
-              btnGravar, btnApagar:TBitBtn; Navegador:TDBNavigator;
+              btnGravar, btnApagar:TPngBitBtn; Navegador:TDBNavigator;
               pgcPrincipal:TPageControl; Flag:Boolean);
 
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
@@ -66,6 +67,7 @@ type
     EstadoDoCadastro:TEstadoDoCadastro;
     function Excluir:Boolean; virtual;
     function Gravar (EstadoDoCadastro:TEstadoDoCadastro):Boolean; virtual;
+    function GetColumnByFieldName(Grid: TDBGrid; const AFieldName: string): TColumn;
     procedure BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);
 
   end;
@@ -74,6 +76,7 @@ var
   frmTelaHeranca: TfrmTelaHeranca;
 
 implementation
+
 
 {$R *.dfm}
 
@@ -165,6 +168,19 @@ begin
   Result := True;
 end;
 
+function TfrmTelaHeranca.GetColumnByFieldName(Grid: TDBGrid; const AFieldName: string): TColumn;
+var
+  I: Integer;
+begin
+  Result := nil;
+  for I := 0 to Grid.Columns.Count - 1 do
+  begin
+    if SameText(Grid.Columns[I].FieldName, AFieldName) then
+      Exit(Grid.Columns[I]);
+  end;
+
+end;
+
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean;
 begin
   if (EstadoDoCadastro=ecInserir) then
@@ -177,7 +193,7 @@ end;
 {$ENDREGION}
 
 procedure TfrmTelaHeranca.ControlarBotoes(bntNovo, bntAlterar, btnCancelar,
-          btnGravar, btnApagar:TBitBtn; Navegador:TDBNavigator;
+          btnGravar, btnApagar:TPngBitBtn; Navegador:TDBNavigator;
           pgcPrincipal:TPageControl; Flag:Boolean);
 begin
   btnNovo.Enabled       :=Flag;
@@ -197,7 +213,7 @@ end;
 
 procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
 begin
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
     Abort;
@@ -219,7 +235,7 @@ var I:Integer;
     CondicaoSQL: string;
 begin
 
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
     Abort;
@@ -287,7 +303,7 @@ end;
 
 procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
     begin
       MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
       Abort;
@@ -299,7 +315,7 @@ end;
 
 procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
 begin
-   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
     Abort;
@@ -338,7 +354,7 @@ end;
 
 procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
 begin
-     if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+     if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
     Abort;
@@ -381,6 +397,10 @@ begin
       oUsuarioLogado.nome, // Usamos o UsuarioLogado para separar de quem é a preferência.
       'Coluna_' + IntToStr(I), // Nomeamos a pasta com o Indice da coluna.
       gdrListagem.Columns[I].Width); //A largura atual da coluna naquele exato segundo.
+      ArquivoINI.WriteString(
+      oUsuarioLogado.nome,
+      'Ordem_' + IntToStr(I),
+      gdrListagem.Columns[I].FieldName);
     end;
   finally
     ArquivoINI.Free;// Independentemente de dar erro ou não, sempre fechamos o caderninho para liberar a memória
@@ -417,33 +437,59 @@ end;
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
 var ArquivoINI: TIniFile ; //Referenciamos novamente nosso Arquivo
     I:Integer; //Passamos o ponteiro
+    NomeCampo: string;
+    Coluna: TColumn;
 begin
 
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+ 'PreferenciasGrid.ini');// Apontamos para o mesmo endereço que salvamos no FormClose
+   ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+ 'PreferenciasGrid.ini');
 
   try
-    for I := 0 to gdrListagem.Columns.Count - 1 do //Percorremos o grid recem desenhado
-    begin
-      gdrListagem.Columns[I].Width := ArquivoINI.ReadInteger //Redefinimos a largura do grid baseado no que está desenhado
-      (oUsuarioLogado.nome, // Pegamos o UsuarioLogado
-      'Coluna_' + IntToStr(I),//Procuramos a anotação correspondente à coluna atual.
-      gdrListagem.Columns[I].Width); //Se for primeiro acesso, mantém o Width padrão do Delphi.
-    end;
-  finally
-    ArquivoINI.Free; //Liberamos o INI da memória.
-  end;
+    gdrListagem.Columns.BeginUpdate;
+    try
 
+      for I := 0 to gdrListagem.Columns.Count - 1 do
+      begin
+        gdrListagem.Columns[I].Width :=
+          ArquivoINI.ReadInteger(oUsuarioLogado.nome,
+          'Coluna_' + IntToStr(I),
+          gdrListagem.Columns[I].Width);
+      end;
+
+
+      for I := 0 to gdrListagem.Columns.Count - 1 do
+      begin
+        NomeCampo := ArquivoINI.ReadString(
+          oUsuarioLogado.nome,
+          'Ordem_' + IntToStr(I),
+          ''
+        );
+
+        if NomeCampo <> '' then
+        begin
+          Coluna := GetColumnByFieldName(gdrListagem, NomeCampo);
+          if Assigned(Coluna) then
+            Coluna.Index := I;
+        end;
+      end;
+
+    finally
+      gdrListagem.Columns.EndUpdate;
+    end;
+
+  finally
+    ArquivoINI.Free;
+  end;
   if (QryListagem.SQL.Text<>EmptyStr) then begin
     QryListagem.IndexFieldNames:=IndiceAtual;
     ExibirLabelIndice(IndiceAtual, lblIndice);
     SelectOriginal:=QryListagem.SQL.Text;
     QryListagem.Open;
   end;
-  ControlarIndiceTab(pgcPrincipal, 0);
-  DesabilitarEditPK;
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
-                  btnGravar, btnApagar,
-                  btnNavigator, pgcPrincipal,True);
+    ControlarIndiceTab(pgcPrincipal, 0);
+    DesabilitarEditPK;
+    ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
+                    btnGravar, btnApagar,
+                    btnNavigator, pgcPrincipal,True);
 end;
 
 procedure TfrmTelaHeranca.gdrListagemDblClick(Sender: TObject);
@@ -471,13 +517,9 @@ begin
     else
       gdrListagem.Canvas.Brush.Color := $00F0F0F0; // Se não for, pinta de cinza claro
   end
-  else if not (Column.FieldName = 'situacaoId') then //Não destaca a coluna da Situação ID
+  else
   begin
     gdrListagem.Canvas.Brush.Color := $00FFCC99; //Cor da linha selecionada azul Yzidro (acho kkkkkk)
-  end
-  else if (Column.FieldName = 'situacaoId') then
-  begin
-    gdrListagem.Canvas.Brush.Color := clWhite;
   end;
 
   gdrListagem.Canvas.TextOut(

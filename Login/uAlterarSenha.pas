@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, uEnum;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, uEnum, PngBitBtn;
 
 type
   TfrmAlterarSenha = class(TForm)
@@ -14,8 +14,8 @@ type
     edtNovaSenha: TEdit;
     Label2: TLabel;
     edtSenhaNovamente: TEdit;
-    btnAlterar: TBitBtn;
-    btnFechar: TBitBtn;
+    btnAlterar: TPngBitBtn;
+    btnFechar: TPngBitBtn;
     lblUsuarioLogado: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

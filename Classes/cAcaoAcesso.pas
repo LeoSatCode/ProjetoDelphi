@@ -5,7 +5,7 @@ interface
 uses System.Classes,Vcl.Controls,Vcl.ExtCtrls,
      Vcl.Dialogs,Vcl.Forms,Vcl.Buttons,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
-     FireDAC.Stan.Error, FireDAC.UI.Intf,
+     FireDAC.Stan.Error, FireDAC.UI.Intf,PngBitBtn,
      FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
      FireDAC.Stan.Async,FireDAC.Phys, FireDAC.Phys.MSSQL,
      FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB,
@@ -223,12 +223,12 @@ begin
 
     for I := 0 to aForm.ComponentCount - 1 do
     begin
-      if (aForm.Components[i] is TBitBtn) then
+      if (aForm.Components[i] is TPngBitBtn) then
       begin
-        if TBitBtn(aForm.Components[i]).Tag=99 then
+        if TPngBitBtn(aForm.Components[i]).Tag=99 then
         begin
-          oAcaoAcesso.descricao :='   - BOTÃO '+StringReplace(TBitBtn(aForm.Components[i]).Caption,'&','',[rfReplaceAll]);
-          oAcaoAcesso.chave     :=aForm.Name+'_'+TBitBtn(aForm.Components[i]).Name;
+          oAcaoAcesso.descricao :='   - BOTÃO '+StringReplace(TPngBitBtn(aForm.Components[i]).Caption,'&','',[rfReplaceAll]);
+          oAcaoAcesso.chave     :=aForm.Name+'_'+TPngBitBtn(aForm.Components[i]).Name;
           if not oAcaoAcesso.ChaveExiste(oAcaoAcesso.Chave) then
              oAcaoAcesso.Inserir;
         end;

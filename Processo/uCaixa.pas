@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa,
-  uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes;
+  uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes,
+  PngBitBtn;
 
 type
   TfrmCaixa = class(TForm)
@@ -15,7 +16,7 @@ type
     Pendentes: TTabSheet;
     Faturados: TTabSheet;
     pnl2: TPanel;
-    btnReceber: TBitBtn;
+    btnReceber: TPngBitBtn;
     QryPendentes: TFDQuery;
     QryPendentespreVendaId: TFDAutoIncField;
     QryPendentesclienteId: TIntegerField;
@@ -38,15 +39,15 @@ type
     pnlListagemTopo: TPanel;
     lblIndice: TLabel;
     mskPesquisar: TMaskEdit;
-    btnPesquisar: TBitBtn;
+    btnPesquisar: TPngBitBtn;
     pnlListagemTopo1: TPanel;
     lblIndice1: TLabel;
     medt1: TMaskEdit;
-    btnPesquisar1: TBitBtn;
+    btnPesquisar1: TPngBitBtn;
     gdrPendentes: TDBGrid;
     gdrFaturados: TDBGrid;
-    btnCancelar: TBitBtn;
-    btnSair: TBitBtn;
+    btnCancelar: TPngBitBtn;
+    btnSair: TPngBitBtn;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -363,7 +364,7 @@ var I:Integer;
     CondicaoSQL: string;
 begin
 
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
   begin
     MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
     Abort;

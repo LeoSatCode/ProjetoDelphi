@@ -29,10 +29,6 @@ inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 933
-      ExplicitHeight = 433
       object edtAcaoAcessoId: TLabeledEdit
         Tag = 1
         Left = 20

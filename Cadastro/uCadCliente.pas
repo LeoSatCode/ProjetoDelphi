@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls,
   Vcl.DBCtrls, Vcl.Buttons, RxToolEdit, cCadCliente, uEnum, System.IniFiles, System.ImageList, Vcl.ImgList, System.JSON,
-  IPPeerClient, REST.Client,Data.Bind.Components, Data.Bind.ObjectScope, Vcl.Imaging.pngimage, cFuncao;
+  IPPeerClient, REST.Client,Data.Bind.Components, Data.Bind.ObjectScope, Vcl.Imaging.pngimage, cFuncao, PngBitBtn;
 
 type
   TfrmCadCliente = class(TfrmTelaHeranca)
@@ -52,7 +52,6 @@ type
     lblSituacao: TLabel;
     edtObservacao: TLabeledEdit;
     QryListagemobservacao: TStringField;
-    Panel1: TPanel;
     img1: TImage;
     img2: TImage;
     img3: TImage;
