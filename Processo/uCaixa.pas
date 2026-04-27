@@ -185,8 +185,8 @@ end;
 procedure TfrmCaixa.FormClose(Sender: TObject; var Action: TCloseAction);
 
 begin
-  TGrid.SalvarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
-  TGrid.SalvarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
+  TGrid.SalvarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome, Self.ClassName);
+  TGrid.SalvarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome, Self.ClassName);
 
   QryPendentes.Close;
   QryFaturados.Close;
@@ -206,8 +206,8 @@ begin
   QryPendentes.Open;
   QryFaturados.Open;
 
-  TGrid.CarregarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
-  TGrid.CarregarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome);
+  TGrid.CarregarGrid(gdrPendentes,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome, Self.ClassName);
+  TGrid.CarregarGrid(gdrFaturados,'PreferenciasGridCaixa.ini',oUsuarioLogado.nome, Self.ClassName);
 end;
 
 procedure TfrmCaixa.CentralizarTituloGrid(Grid: TDBGrid);

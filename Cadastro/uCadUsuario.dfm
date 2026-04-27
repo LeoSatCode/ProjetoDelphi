@@ -2,7 +2,6 @@ inherited frmCadUsuario: TfrmCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 332
   ClientWidth = 690
-  ExplicitTop = 8
   ExplicitWidth = 696
   ExplicitHeight = 361
   PixelsPerInch = 96

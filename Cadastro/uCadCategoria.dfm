@@ -1,6 +1,5 @@
 inherited frmCadCategoria: TfrmCadCategoria
   Caption = 'Cadastro de Categorias'
-  ExplicitTop = 8
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel

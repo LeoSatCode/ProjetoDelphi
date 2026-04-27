@@ -53,6 +53,7 @@ type
     procedure LimparImagem1Click(Sender: TObject);
     procedure CarregarImagem1Click(Sender: TObject);
     procedure dtsListagemDataChange(Sender: TObject; Field: TField);
+    procedure imgImageClick(Sender: TObject);
   private
     { Private declarations }
     oProduto:TProduto;
@@ -103,11 +104,29 @@ begin
      oProduto.foto.Assign(imgImage.Picture);
 
   if (EstadoDoCadastro=ecInserir) then
-     Result:=oProduto.Inserir
+  begin
+     Result:=oProduto.Inserir;
+     ShowMessage('Inserido');
+  end
   else if (EstadoDoCadastro=ecAlterar) then
+  begin
      Result:=oProduto.Atualizar;
+     ShowMessage('Alterado');
+  end
   end
 end ;
+
+procedure TfrmCadProduto.imgImageClick(Sender: TObject);
+var seta: TPoint;
+begin
+  inherited;
+  GetCursorPos(seta);
+    if Assigned(ppmImage) then
+    begin
+      ppmImage.Popup(seta.X, seta.Y);
+    end;
+
+end;
 
 procedure TfrmCadProduto.LimparImagem1Click(Sender: TObject);
 begin

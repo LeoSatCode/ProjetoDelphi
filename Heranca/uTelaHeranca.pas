@@ -183,10 +183,10 @@ end;
 
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean;
 begin
-  if (EstadoDoCadastro=ecInserir) then
-    ShowMessage('Inserido')
-  else if (EstadoDoCadastro=ecAlterar) then
-    ShowMessage('Alterado');
+//  if (EstadoDoCadastro=ecInserir) then
+//    ShowMessage('Inserido')
+//  else if (EstadoDoCadastro=ecAlterar) then
+//    ShowMessage('Alterado');
     Result := True;
 end;
 
@@ -385,7 +385,7 @@ end;
 
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  TGrid.SalvarGrid(gdrListagem,'PreferenciasGrid.ini', oUsuarioLogado.nome);
+  TGrid.SalvarGrid(gdrListagem,'PreferenciasGrid.ini', oUsuarioLogado.nome, Self.ClassName);
 
   QryListagem.Close;
   TFuncao.AtualizarDashBoard;
@@ -417,7 +417,7 @@ end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
 begin
-  TGrid.CarregarGrid(gdrListagem,'PreferenciasGrid.ini',oUsuarioLogado.nome);
+  TGrid.CarregarGrid(gdrListagem,'PreferenciasGrid.ini',oUsuarioLogado.nome, Self.ClassName);
 
   if (QryListagem.SQL.Text<>EmptyStr) then begin
     QryListagem.IndexFieldNames:=IndiceAtual;
@@ -430,6 +430,7 @@ begin
     ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
                     btnGravar, btnApagar,
                     btnNavigator, pgcPrincipal,True);
+  gdrListagem.SetFocus;
 end;
 
 procedure TfrmTelaHeranca.gdrListagemDblClick(Sender: TObject);

@@ -76,10 +76,16 @@ begin
         Qry.ExecSQL;
         ConexaoDB.Commit;
       except
-        ConexaoDB.Rollback;
-        Result:=False;
+        on E: EFDDBEngineException do
+        begin
+          if E.ErrorCode = 547 then
+             MessageDlg('Não é possível excluir: Categoria possui produtos vinculados.', mtError, [mbOK], 0)
+          else
+             MessageDlg('Erro de BD: ' + E.Message, mtError, [mbOK], 0);
+          Result := False;
+        end;
       end;
-      end;
+    end;
   finally
 
   end;

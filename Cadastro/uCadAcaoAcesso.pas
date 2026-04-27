@@ -104,9 +104,16 @@ end;
 function TfrmCadAcaoAcesso.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   if EstadoDoCadastro=ecInserir then
-    Result:= oAcaoAcesso.Inserir
+  begin
+    Result:= oAcaoAcesso.Inserir;
+    ShowMessage('Inserido');
+  end
+
   else if EstadoDoCadastro=ecAlterar then
+  begin
     Result:= oAcaoAcesso.Atualizar;
+    ShowMessage('Alterado');
+  end;
 end;
 
 end.

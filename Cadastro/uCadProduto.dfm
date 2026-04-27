@@ -8,6 +8,7 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited pgcPrincipal: TPageControl
+    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
       inherited pnlListagemTopo: TPanel
         Height = 55
@@ -242,6 +243,7 @@ inherited frmCadProduto: TfrmCadProduto
           Height = 147
           Align = alClient
           PopupMenu = ppmImage
+          OnClick = imgImageClick
           ExplicitTop = -2
         end
       end
@@ -347,6 +349,7 @@ inherited frmCadProduto: TfrmCadProduto
     Top = 120
   end
   object ppmImage: TPopupMenu
+    TrackButton = tbLeftButton
     Left = 683
     Top = 32
     object CarregarImagem1: TMenuItem

@@ -275,6 +275,7 @@ object frmRelProduto: TfrmRelProduto
     object fmtbcdfldQryProdutosvalor: TFMTBCDField
       FieldName = 'valor'
       Origin = 'valor'
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end

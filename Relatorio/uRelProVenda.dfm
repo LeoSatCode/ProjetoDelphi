@@ -1,5 +1,6 @@
 inherited frmRelProVenda: TfrmRelProVenda
   Caption = 'Relat'#243'rio de Vendas'
+  ExplicitTop = -181
   PixelsPerInch = 96
   TextHeight = 13
   inherited Relatorio: TRLReport
@@ -110,8 +111,7 @@ inherited frmRelProVenda: TfrmRelProVenda
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       ReadOnly = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 3
     end
@@ -162,16 +162,14 @@ inherited frmRelProVenda: TfrmRelProVenda
     object QryDetalhesvalorUnitario: TFMTBCDField
       FieldName = 'valorUnitario'
       Origin = 'valorUnitario'
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end
     object QryDetalhestotalProduto: TFMTBCDField
       FieldName = 'totalProduto'
       Origin = 'totalProduto'
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end

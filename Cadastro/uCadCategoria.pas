@@ -73,9 +73,15 @@ begin
   oCategoria.descricao:=edtDescricao.Text;
 
   if (EstadoDoCadastro=ecInserir) then
-    Result:=oCategoria.Inserir
+  begin
+    Result:=oCategoria.Inserir;
+    ShowMessage('Inserido');
+  end
   else if (EstadoDoCadastro=ecAlterar) then
+  begin
     Result:=oCategoria.Atualizar;
+    ShowMessage('Alterado');
+  end;
 end;
 {$ENDREGION}
 

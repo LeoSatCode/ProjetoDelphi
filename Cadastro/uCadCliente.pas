@@ -79,6 +79,7 @@ type
     procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
     procedure btnFecharClick(Sender: TObject);
+    procedure edtEmailExit(Sender: TObject);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -142,10 +143,24 @@ begin
     observacao      :=edtObservacao.Text;
   end;
 
-  if (EstadoDoCadastro=ecInserir) then
-      Result:=oCliente.Inserir
-  else if (EstadoDoCadastro=ecAlterar) then
-      Result:=oCliente.Atualizar;
+  try
+    if (EstadoDoCadastro=ecInserir) then
+    begin
+      Result := oCliente.Inserir;
+      ShowMessage('Inserido');
+    end
+    else if (EstadoDoCadastro=ecAlterar) then
+    begin
+      Result := oCliente.Atualizar;
+      ShowMessage('Alterado');
+    end;
+  except
+    on E: Exception do
+    begin
+      ShowMessage(E.Message);
+      Result := False;
+    end;
+end;
 end;
 procedure TfrmCadCliente.lkpSituacaoCloseUp(Sender: TObject);
 begin
@@ -381,6 +396,17 @@ procedure TfrmCadCliente.edtDocumentoKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
   if not (Key in ['0'..'9', #8]) then Key:=#0;
+end;
+
+procedure TfrmCadCliente.edtEmailExit(Sender: TObject);
+begin
+  inherited;
+  if (edtEmail.Text <> '') and ((Pos('@', edtEmail.Text) = 0) or (Pos('.', edtEmail.Text) = 0)) then
+    begin
+      MessageDlg('E-mail inválido!', mtError, [mbOK], 0);
+      edtEmail.SetFocus;
+      Abort;
+    end;
 end;
 
 procedure TfrmCadCliente.edtEstadoKeyPress(Sender: TObject; var Key: Char);

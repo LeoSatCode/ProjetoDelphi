@@ -1,4 +1,4 @@
-unit cGridUtils;
+ï»¿unit cGridUtils;
 
 interface
 
@@ -25,8 +25,8 @@ type
 
   public
   class function GetColumnByFieldName(Grid: TDBGrid; const AFieldName: string): TColumn; static;
-  class procedure SalvarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario: string);static;
-  class procedure CarregarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario: string); static;
+  class procedure SalvarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string);static;
+  class procedure CarregarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string); static;
   class procedure ZebrarGrid(Grid: TDBGrid; State:TGridDrawState; Column: TColumn; Rect: TRect);
 
   end;
@@ -50,66 +50,73 @@ begin
   end;
 end;
 
-class procedure TGrid.SalvarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario: string);
-var ArquivoINI:TIniFile; // Variável para criar o arquivo INI para salvar preferências de Grid por usuário.
-    I: Integer; // Ponteiro para passar por todas as colunas (pastas)
+class procedure TGrid.SalvarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string);
+var
+  ArquivoINI: TIniFile;
+  I: Integer;
+  Secao: string;
 begin
-  ExtractFilePath(Application.ExeName); // Garante que o INI fique na mesma pasta do .exe
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + NomeINI); //Criamos o INI File na pasta do .exe
-
+  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + NomeINI);
   try
-    for I := 0 to Grid.Columns.Count - 1 do  // O laço percorre do 0 à ultima coluna desenhada no Grid
+    Secao := NomeUsuario + '_' + NomeForm;
+
+    for I := 0 to Grid.Columns.Count - 1 do
     begin
       ArquivoINI.WriteInteger(
-      NomeUsuario, // Usamos o UsuarioLogado para separar de quem é a preferência.
-      'Coluna_' + IntToStr(I), // Nomeamos a pasta com o Indice da coluna.
-      Grid.Columns[I].Width); //A largura atual da coluna naquele exato segundo.
-      ArquivoINI.WriteString(
-      NomeUsuario,
-      'Ordem_' + IntToStr(I),
-      Grid.Columns[I].FieldName);
+        Secao,
+        Grid.Columns[I].FieldName + '.Width',
+        Grid.Columns[I].Width
+      );
+
+      ArquivoINI.WriteInteger(
+        Secao,
+        Grid.Columns[I].FieldName + '.Index',
+        Grid.Columns[I].Index
+      );
     end;
+
   finally
-    ArquivoINI.Free;// Independentemente de dar erro ou não, sempre fechamos o caderninho para liberar a memória
+    ArquivoINI.Free;
   end;
 end;
 
-class procedure TGrid.CarregarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario: string);
-var ArquivoINI: TIniFile ; //Referenciamos novamente nosso Arquivo
-    I:Integer; //Passamos o ponteiro
-    NomeCampo: string;
-    Coluna: TColumn;
+class procedure TGrid.CarregarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string);
+var
+  ArquivoINI: TIniFile;
+  I, NewIndex: Integer;
+  Col: TColumn;
+  Secao: string;
 begin
-
-   ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+ NomeINI);
-
+  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + NomeINI);
   try
+    Secao := NomeUsuario + '_' + NomeForm;
+
     Grid.Columns.BeginUpdate;
     try
 
       for I := 0 to Grid.Columns.Count - 1 do
       begin
-        Grid.Columns[I].Width :=
-          ArquivoINI.ReadInteger(NomeUsuario,
-          'Coluna_' + IntToStr(I),
-          Grid.Columns[I].Width);
+        Col := Grid.Columns[I];
+
+        NewIndex := ArquivoINI.ReadInteger(
+          Secao,
+          Col.FieldName + '.Index',
+          Col.Index
+        );
+
+        Col.Index := NewIndex;
       end;
 
 
       for I := 0 to Grid.Columns.Count - 1 do
       begin
-        NomeCampo := ArquivoINI.ReadString(
-          NomeUsuario,
-          'Ordem_' + IntToStr(I),
-          ''
-        );
+        Col := Grid.Columns[I];
 
-        if NomeCampo <> '' then
-        begin
-          Coluna := GetColumnByFieldName(Grid, NomeCampo);
-          if Assigned(Coluna) then
-            Coluna.Index := I;
-        end;
+        Col.Width := ArquivoINI.ReadInteger(
+          Secao,
+          Col.FieldName + '.Width',
+          Col.Width
+        );
       end;
 
     finally

@@ -116,8 +116,7 @@ inherited frmRelPreVenda: TfrmRelPreVenda
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       ReadOnly = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 3
     end
@@ -169,8 +168,7 @@ inherited frmRelPreVenda: TfrmRelPreVenda
       FieldName = 'valorUnitario'
       Origin = 'valorUnitario'
       Required = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end
@@ -178,8 +176,7 @@ inherited frmRelPreVenda: TfrmRelPreVenda
       FieldName = 'totalProduto'
       Origin = 'totalProduto'
       Required = True
-      DisplayFormat = '##,##0.00'
-      currency = True
+      DisplayFormat = 'R$ ##,##0.00'
       Precision = 18
       Size = 5
     end

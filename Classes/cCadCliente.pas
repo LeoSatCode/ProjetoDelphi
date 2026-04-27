@@ -120,8 +120,15 @@ begin
         Qry.ExecSQL;
         ConexaoDB.Commit;
       except
-        ConexaoDB.Rollback;
-        Result:=False;
+        on E: EFDDBEngineException do
+        begin
+          ConexaoDB.Rollback;
+          // Verifica erro de violação de chave única
+        if E.Kind = ekUKViolated then
+          raise Exception.Create('Já existe um cliente com este CPF/CNPJ!')
+        else
+          raise; // outros erros sobem normal
+        end;
       end;
     end;
   finally
@@ -175,8 +182,15 @@ try
       Qry.ExecSQL;
       ConexaoDB.Commit;
     except
-      ConexaoDB.Rollback;
-      Result:=False;
+      on E: EFDDBEngineException do
+      begin
+        ConexaoDB.Rollback;
+          // Verifica erro de violação de chave única
+        if E.Kind = ekUKViolated then
+          raise Exception.Create('Já existe um cliente com este CPF/CNPJ!')
+        else
+          raise; // outros erros sobem normal
+      end;
     end;
   end;
 finally

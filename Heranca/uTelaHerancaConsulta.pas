@@ -61,7 +61,7 @@ end;
 
 procedure TfrmTelaHerancaConsulta.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  TGrid.SalvarGrid(grdPesquisa, 'PreferenciasGridConsulta.ini', oUsuarioLogado.nome);
+  TGrid.SalvarGrid(grdPesquisa, 'PreferenciasGridConsulta.ini', oUsuarioLogado.nome, Self.ClassName);
   if QryListagem.Active then QryListagem.Close;
 end;
 
@@ -78,7 +78,7 @@ end;
 
 procedure TfrmTelaHerancaConsulta.FormShow(Sender: TObject);
 begin
-  TGrid.CarregarGrid(grdPesquisa, 'PreferenciasGridConsulta.ini', oUsuarioLogado.nome);
+  TGrid.CarregarGrid(grdPesquisa, 'PreferenciasGridConsulta.ini', oUsuarioLogado.nome, Self.ClassName);
 
   if (aIniciarPesquisaId<>Unassigned) then
   begin

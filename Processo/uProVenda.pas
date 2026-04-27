@@ -3,7 +3,7 @@ unit uProVenda;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, cGridUtils,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
@@ -104,10 +104,12 @@ begin
     if (EstadoDoCadastro=ecInserir) then
     begin
        oVenda.InserirPreVenda(dtmVendas.cdsItensVenda);
+       ShowMessage('Pré-Venda gerada');
     end
     else if (EstadoDoCadastro=ecAlterar) then
     begin
        oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda);
+       ShowMessage('');
     end;
 
   Result:=True;
@@ -407,29 +409,8 @@ begin
 end;
 
 procedure TfrmProVendas.FormClose(Sender: TObject; var Action: TCloseAction);
-var ArquivoINI:TIniFile; // Variável para criar o arquivo INI para salvar preferências de Grid por usuário.
-    I: Integer; // Ponteiro para passar por todas as colunas (pastas)
 begin
-  inherited;
-  if Assigned(dtmVendas) then FreeAndNil(dtmVendas);
-
-  if Assigned(oVenda)    then FreeAndNil(oVenda);
-
-  ExtractFilePath(Application.ExeName); // Garante que o INI fique na mesma pasta do .exe
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'PreferenciasGridVendas.ini'); //Criamos o INI File na pasta do .exe
-
-  try
-    for I := 0 to dbgridItensVenda.Columns.Count - 1 do  // O laço percorre do 0 à ultima coluna desenhada no Grid
-    begin
-      ArquivoINI.WriteInteger(
-      oUsuarioLogado.nome, // Usamos o UsuarioLogado para separar de quem é a preferência.
-      'Coluna_' + IntToStr(I), // Nomeamos a pasta com o Indice da coluna.
-      dbgridItensVenda.Columns[I].Width); //A largura atual da coluna naquele exato segundo.
-    end;
-  finally
-    ArquivoINI.Free;// Independentemente de dar erro ou não, sempre fechamos o caderninho para liberar a memória
-  end;
-
+  TGrid.SalvarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
   QryListagem.Close;
 
 end;
@@ -448,24 +429,8 @@ begin
 end;
 
 procedure TfrmProVendas.FormShow(Sender: TObject);
-var ArquivoINI: TIniFile ; //Referenciamos novamente nosso Arquivo
-    I:Integer; //Passamos o ponteiro
 begin
-  inherited;
-  ArquivoINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+ 'PreferenciasGridVendas.ini');// Apontamos para o mesmo endereço que salvamos no FormClose
-
-  try
-    for I := 0 to dbgridItensVenda.Columns.Count - 1 do //Percorremos o grid recem desenhado
-    begin
-      dbgridItensVenda.Columns[I].Width := ArquivoINI.ReadInteger //Redefinimos a largura do grid baseado no que está desenhado
-      (oUsuarioLogado.nome, // Pegamos o UsuarioLogado
-      'Coluna_' + IntToStr(I),//Procuramos a anotação correspondente à coluna atual.
-      dbgridItensVenda.Columns[I].Width); //Se for primeiro acesso, mantém o Width padrão do Delphi.
-    end;
-  finally
-    ArquivoINI.Free; //Liberamos o INI da memória.
-  end;
-
+  TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
 end;
 
 procedure TfrmProVendas.btnNovoClick(Sender: TObject);

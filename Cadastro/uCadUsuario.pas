@@ -106,9 +106,15 @@ end;
 function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
 begin
   if EstadoDoCadastro=ecInserir then
-     Result:= oUsuario.Inserir
+  begin
+     Result:= oUsuario.Inserir;
+     ShowMessage('Inserido');
+  end
   else if EstadoDoCadastro=ecAlterar then
+  begin
      Result:= oUsuario.Atualizar;
+     ShowMessage('Alterado');
+  end;
 
   TAcaoAcesso.PreencherUsuariosVsAcoes(dtmConexao.ConexaoDB);
 end;
