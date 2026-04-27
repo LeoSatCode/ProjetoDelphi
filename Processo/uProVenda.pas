@@ -43,10 +43,11 @@ type
     QryListagemdataEmissao: TSQLTimeStampField;
     QryListagemtotalVenda: TFMTBCDField;
     QryListagemstatus: TStringField;
+    lblData1: TLabel;
+    edtDataValidade: TDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
-    procedure dbgrd1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnNovoClick(Sender: TObject);
     procedure btnAdicionarClick(Sender: TObject);
     procedure lkpProdutoExit(Sender: TObject);
@@ -62,6 +63,8 @@ type
     procedure dbgridItensVendaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure bntConClienteClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+
 
 
   private
@@ -99,6 +102,7 @@ begin
 
   oVenda.ClienteId        :=lkpCliente.KeyValue;
   oVenda.DataVenda        :=edtDataVenda.Date;
+  oVenda.DataValidade     :=edtDataValidade.Date;
   oVenda.TotalVenda       :=edtValorTotalProduto.Value;
 
     if (EstadoDoCadastro=ecInserir) then
@@ -327,6 +331,7 @@ begin
     edtVendaId.Text               :=IntToStr(oVenda.VendaId);
     lkpCliente.KeyValue           :=oVenda.ClienteId;
     edtDataVenda.Date             :=oVenda.DataVenda;
+    edtDataValidade.Date          :=oVenda.DataValidade;
     edtValorTotalProduto.Value    :=oVenda.TotalVenda;
   end
   else begin
@@ -401,11 +406,24 @@ end;
 
 
 procedure TfrmProVendas.btnCadClienteClick(Sender: TObject);
+var
+  frm: TfrmCadCliente;
 begin
   inherited;
-  TFuncao.CriarForm(TfrmCadCliente, oUsuarioLogado, dtmConexao.ConexaoDB);
-  dtmVendas.QryCliente.close;
-  dtmVendas.QryCliente.Open;
+
+  frm := TfrmCadCliente.Create(nil);
+  try
+    if frm.ShowModal = mrOk then
+    begin
+      dtmVendas.QryCliente.Close;
+      dtmVendas.QryCliente.Open;
+      dtmVendas.QryCliente.Last;
+      lkpCliente.KeyValue := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+    end;
+  finally
+    frm.Free;
+    lkpCliente.SetFocus;
+  end;
 end;
 
 procedure TfrmProVendas.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -428,9 +446,22 @@ begin
   IndiceAtual:='clienteId';
 end;
 
+procedure TfrmProVendas.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_DELETE then
+  begin
+    Key := 0;
+    Abort; // corta qualquer fluxo
+  end;
+  inherited;
+
+end;
+
 procedure TfrmProVendas.FormShow(Sender: TObject);
 begin
+  QryListagem.Open;
   TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
+  btnNovo.SetFocus;
 end;
 
 procedure TfrmProVendas.btnNovoClick(Sender: TObject);
@@ -439,7 +470,9 @@ begin
   dtmVendas.QryProdutos.Close;
   dtmVendas.QryProdutos.Open;
   edtDataVenda.Date:=Date;
+  edtDataValidade.Date := Date + 5;
   lkpCliente.SetFocus;
+
   LimparCds;
 end;
 
@@ -481,12 +514,6 @@ begin
      LimparComponenteItem;
   end;
 
-end;
-
-procedure TfrmProVendas.dbgrd1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  inherited;
-  BloqueiaCTRL_DEL_DBGrid(Key, Shift);
 end;
 
 procedure TfrmProVendas.dbgridItensVendaDblClick(Sender: TObject);

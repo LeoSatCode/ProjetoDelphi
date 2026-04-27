@@ -16,6 +16,7 @@ type
     ConexaoDB:TFDConnection;
     F_vendaId:Integer;
     F_clienteId:Integer;
+    F_dataValidade: TDateTime;
     F_dataVenda:TDateTime;
     F_totalVenda: Double;
     function InserirItens(cds: TClientDataSet; IdVenda: Integer): Boolean;
@@ -44,6 +45,7 @@ type
     property VendaId:Integer        read F_vendaId        write F_vendaId;
     property ClienteId:Integer      read F_clienteId      write F_clienteId;
     property DataVenda:TDateTime    read F_dataVenda      write F_dataVenda;
+    property DataValidade:TDateTime read F_dataValidade   write F_dataValidade;
     property TotalVenda:Double      read F_totalVenda     write F_totalVenda;
   end;
 
@@ -420,7 +422,7 @@ begin
     try
       // GRAVAR PRÉ-VENDA
       Qry.SQL.Clear;
-      Qry.SQL.Add('INSERT INTO preVenda (clienteId, dataEmissao, totalVenda, status) ');
+      Qry.SQL.Add('INSERT INTO preVenda (clienteId, dataEmissao, dataValidade, totalVenda, status) ');
       Qry.SQL.Add('OUTPUT INSERTED.preVendaId '); // O SQL Server devolve o ID gerado instantaneamente
       Qry.SQL.Add('VALUES (:clienteId, GETDATE(), :totalVenda, ''PENDENTE'')');
 
@@ -488,7 +490,7 @@ begin
 
     //Carrega a Pré-Venda
     Qry.SQL.Clear;
-    Qry.SQL.Add('SELECT preVendaId, clienteId, dataEmissao, totalVenda FROM preVenda WHERE preVendaId = :id');
+    Qry.SQL.Add('SELECT preVendaId, clienteId, dataEmissao,dataValidade, totalVenda FROM preVenda WHERE preVendaId = :id');
     Qry.ParamByName('id').AsInteger := id;
     Qry.Open;
 
@@ -501,6 +503,7 @@ begin
     Self.F_vendaId      := Qry.FieldByName('preVendaId').AsInteger;
     Self.F_clienteId    := Qry.FieldByName('clienteId').AsInteger;
     Self.F_dataVenda    := Qry.FieldByName('dataEmissao').AsDateTime;
+    Self.F_dataValidade := Qry.FieldByName('dataValidade').AsDateTime;
     Self.F_totalVenda   := Qry.FieldByName('totalVenda').AsFloat;
 
     //Limpa o carrinho da tela

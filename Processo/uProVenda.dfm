@@ -1,11 +1,13 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Vendas'
   ClientWidth = 1003
+  ExplicitTop = -142
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
     Width = 1003
+    TabOrder = 1
     ExplicitWidth = 1003
     inherited btnFechar: TPngBitBtn
       Left = 912
@@ -17,6 +19,8 @@ inherited frmProVendas: TfrmProVendas
   end
   inherited pgcPrincipal: TPageControl
     Width = 1003
+    TabOrder = 0
+    ExplicitTop = 0
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
       ExplicitWidth = 995
@@ -73,7 +77,7 @@ inherited frmProVendas: TfrmProVendas
         Width = 995
         Height = 350
         Align = alBottom
-        TabOrder = 0
+        TabOrder = 1
         object pnl2: TPanel
           Left = 1
           Top = 1
@@ -82,7 +86,7 @@ inherited frmProVendas: TfrmProVendas
           Align = alTop
           Color = 16774378
           ParentBackground = False
-          TabOrder = 0
+          TabOrder = 1
           object lblCliente1: TLabel
             Left = 11
             Top = 8
@@ -196,7 +200,7 @@ inherited frmProVendas: TfrmProVendas
           Width = 993
           Height = 242
           Align = alClient
-          TabOrder = 1
+          TabOrder = 2
           object dbgridItensVenda: TDBGrid
             Left = 1
             Top = 1
@@ -258,7 +262,7 @@ inherited frmProVendas: TfrmProVendas
           Width = 993
           Height = 41
           Align = alBottom
-          TabOrder = 2
+          TabOrder = 0
           object lblValor: TLabel
             Left = 771
             Top = 14
@@ -299,7 +303,7 @@ inherited frmProVendas: TfrmProVendas
         Align = alClient
         Color = 16774378
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 0
         object lblCliente: TLabel
           Left = 160
           Top = 37
@@ -382,17 +386,26 @@ inherited frmProVendas: TfrmProVendas
             A4FF14A4FF14A4FF14A4FF14A4FF14A4FFFF00FFFF00FFFF00FF}
           OnClick = bntConClienteClick
         end
+        object lblData1: TLabel
+          Left = 777
+          Top = 37
+          Width = 66
+          Height = 13
+          Caption = 'Data Validade'
+        end
         object edtVendaId: TLabeledEdit
           Tag = 1
-          Left = 2
+          Left = 1
           Top = 56
           Width = 121
           Height = 21
+          Color = clSilver
           EditLabel.Width = 70
           EditLabel.Height = 13
           EditLabel.Caption = 'N'#250'mero Venda'
           MaxLength = 10
           NumbersOnly = True
+          ReadOnly = True
           TabOrder = 0
         end
         object lkpCliente: TDBLookupComboBox
@@ -417,6 +430,17 @@ inherited frmProVendas: TfrmProVendas
           CalendarStyle = csDialog
           TabOrder = 2
         end
+        object edtDataValidade: TDateEdit
+          Left = 777
+          Top = 56
+          Width = 121
+          Height = 21
+          ClickKey = 114
+          DialogTitle = 'Selecione a Data'
+          NumGlyphs = 2
+          CalendarStyle = csDialog
+          TabOrder = 3
+        end
       end
     end
   end
@@ -431,6 +455,7 @@ inherited frmProVendas: TfrmProVendas
       '    pv.status'
       'FROM preVenda pv'
       'INNER JOIN clientes c ON c.clienteId = pv.clienteId')
+    Left = 588
     object QryListagempreVendaId: TFDAutoIncField
       DisplayLabel = 'C'#243'd. Pr'#233' Venda'
       FieldName = 'preVendaId'
@@ -472,7 +497,10 @@ inherited frmProVendas: TfrmProVendas
       Required = True
     end
   end
+  inherited dtsListagem: TDataSource
+    Left = 652
+  end
   inherited ilimage: TImageList
-    Left = 796
+    Left = 524
   end
 end

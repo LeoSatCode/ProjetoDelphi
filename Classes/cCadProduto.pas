@@ -169,18 +169,27 @@ begin
       ParamByName('quantidade').AsFloat           :=Self.F_quantidade;
       ParamByName('categoriaId').AsInteger        :=Self.F_categoriaId;
 
-      if Self.F_Foto.Empty then
-         Qry.ParamByName('foto').Clear
-      else
-         Qry.ParamByName('foto').Assign(Self.F_Foto);
+      with Qry.ParamByName('foto') do
+      begin
+        DataType := ftBlob;
+
+        if Self.F_Foto.Empty then
+          Clear
+        else
+          Assign(Self.F_Foto);
+      end;
 
       try
         ConexaoDB.StartTransaction;
         Qry.ExecSQL;
         ConexaoDB.Commit;
       except
-        ConexaoDB.Rollback;
-        Result:=False;
+        on E: Exception do begin
+          ConexaoDB.Rollback;
+          ShowMessage('Erro ' + E.Message);
+          Result:=False;
+        end;
+
       end;
     end;
   finally

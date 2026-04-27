@@ -263,6 +263,7 @@ begin
       '   preVendaId INT IDENTITY(1,1) NOT NULL, '+
       '   clienteId INT NOT NULL, '+
       '   dataEmissao DATETIME NOT NULL, '+
+      '   dataValidade DATETIME NOT NULL, '+
       '   totalVenda DECIMAL(18,5) NOT NULL, '+
       '   status VARCHAR(20) NOT NULL DEFAULT ''PENDENTE'', '+
       '   PRIMARY KEY (preVendaId), '+

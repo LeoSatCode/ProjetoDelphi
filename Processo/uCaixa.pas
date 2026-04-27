@@ -8,7 +8,7 @@ uses
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes,
-  PngBitBtn, cGridUtils;
+  PngBitBtn, cGridUtils, System.ImageList, Vcl.ImgList;
 
 type
   TfrmCaixa = class(TForm)
@@ -49,6 +49,8 @@ type
     btnCancelar: TPngBitBtn;
     btnSair: TPngBitBtn;
     PngBitBtn1: TPngBitBtn;
+    QryPendentessituacaoId: TIntegerField;
+    ilimage: TImageList;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -62,6 +64,7 @@ type
       State: TGridDrawState);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     dtmVendas:TdtmVenda;
@@ -171,8 +174,40 @@ end;
 
 procedure TfrmCaixa.gdrPendentesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
+var id: Integer;
+    imgIndex: Integer;
 begin
   TGrid.ZebrarGrid(gdrPendentes, State, Column, Rect);
+
+  // AGORA decide o que desenhar
+
+  if Column.FieldName = 'situacaoId' then
+  begin
+    id := QryPendentes.FieldByName('situacaoId').AsInteger;
+
+    case id of
+      1: imgIndex := 1;
+      2: imgIndex := 2;
+      3: imgIndex := 0;
+      4: imgIndex := 3;
+      5: imgIndex := 4;
+    else
+      Exit; //Se não tiver ID válido, não desenha nada
+    end;
+
+    // Desenha a imagem centralizada na célula
+    ilimage.Draw(
+      gdrPendentes.Canvas,
+      Rect.Left + (Rect.Width - ilimage.Width) div 2,
+      Rect.Top + (Rect.Height - ilimage.Height) div 2,
+      imgIndex
+    );
+  end
+  else
+  begin
+    // Outras colunas continuam com comportamento padrão
+    gdrPendentes.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
 end;
 
 procedure TfrmCaixa.gdrPendentesTitleClick(Column: TColumn);
@@ -221,6 +256,11 @@ procedure TfrmCaixa.FormCreate(Sender: TObject);
 begin
   CentralizarTituloGrid(gdrPendentes);
   CentralizarTituloGrid(gdrFaturados);
+end;
+
+procedure TfrmCaixa.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  BloqueiaCTRL_DEL_DBGrid(Key, Shift);
 end;
 
 procedure TfrmCaixa.mskPesquisarChange(Sender: TObject);

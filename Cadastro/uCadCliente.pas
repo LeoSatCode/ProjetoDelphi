@@ -88,6 +88,7 @@ type
     procedure DefinirTipoPessoaPeloDocumento(const ADoc: string);
   public
     { Public declarations }
+    ClienteIdGerado: Integer;
   end;
 
 var
@@ -96,7 +97,7 @@ var
 implementation
 
 uses
-  uDTMConexao;
+  uDTMConexao, uDTMVenda;
 
 {$R *.dfm}
 
@@ -147,7 +148,13 @@ begin
     if (EstadoDoCadastro=ecInserir) then
     begin
       Result := oCliente.Inserir;
-      ShowMessage('Inserido');
+
+      if Result then begin
+        ClienteIdGerado := oCliente.codigo;
+        ShowMessage('Inserido');
+
+        ModalResult := mrOk;
+      end;
     end
     else if (EstadoDoCadastro=ecAlterar) then
     begin
@@ -160,7 +167,8 @@ begin
       ShowMessage(E.Message);
       Result := False;
     end;
-end;
+  end;
+
 end;
 procedure TfrmCadCliente.lkpSituacaoCloseUp(Sender: TObject);
 begin
@@ -440,7 +448,7 @@ begin
 
   if TextoLimpo = '' then Exit;
 
-  if TextoLimpo[1]='0' then begin
+  if (TextoLimpo[1]='0') and (TextoLimpo[1]='3') and (TextoLimpo[1]='4') then begin
     if Length(TextoLimpo) > 11 then
         TextoLimpo := Copy(TextoLimpo, 1, 11);
       // SUPER IMPORTANTE: Desliga a "escuta" desse evento temporariamente!

@@ -24,10 +24,7 @@ inherited frmCadCliente: TfrmCadCliente
     ActivePage = tabManutencao
     ExplicitWidth = 1011
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1003
-      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 1003
         ExplicitWidth = 1003
@@ -319,10 +316,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1003
-      ExplicitHeight = 433
       object lbl1: TLabel
         Left = 12
         Top = 101
