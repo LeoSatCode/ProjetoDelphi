@@ -3,7 +3,7 @@ object frmCaixa: TfrmCaixa
   Top = 0
   Caption = 'Caixa'
   ClientHeight = 457
-  ClientWidth = 999
+  ClientWidth = 1000
   Color = 16774378
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,22 +21,25 @@ object frmCaixa: TfrmCaixa
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 999
+    Width = 1000
     Height = 457
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 999
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
+      ExplicitWidth = 991
       object pnl2: TPanel
         Left = 0
         Top = 388
-        Width = 991
+        Width = 992
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 991
         object btnReceber: TPngBitBtn
           Left = 381
           Top = 8
@@ -122,13 +125,13 @@ object frmCaixa: TfrmCaixa
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 991
+        Width = 992
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitTop = -6
+        ExplicitWidth = 991
         object lblIndice: TLabel
           Left = 24
           Top = 0
@@ -149,7 +152,7 @@ object frmCaixa: TfrmCaixa
         object btnPesquisar: TPngBitBtn
           Tag = 99
           Left = 295
-          Top = 15
+          Top = 17
           Width = 114
           Height = 25
           Cursor = crHandPoint
@@ -174,7 +177,7 @@ object frmCaixa: TfrmCaixa
       object gdrPendentes: TDBGrid
         Left = 0
         Top = 57
-        Width = 991
+        Width = 992
         Height = 331
         Align = alClient
         DataSource = dtsPendentes
@@ -208,14 +211,8 @@ object frmCaixa: TfrmCaixa
           end
           item
             Expanded = False
-            FieldName = 'situacaoId'
-            Title.Caption = 'Situa'#231#227'o'
-            Visible = True
-          end
-          item
-            Expanded = False
             FieldName = 'nome'
-            Width = 362
+            Width = 249
             Visible = True
           end
           item
@@ -226,6 +223,7 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'dataEmissao'
+            Width = 186
             Visible = True
           end
           item
@@ -236,6 +234,13 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'status'
+            Width = 81
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'situacaoId'
+            Title.Caption = 'Situa'#231#227'o'
             Visible = True
           end>
       end
@@ -243,15 +248,17 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
+      ExplicitWidth = 991
       object Panel2: TPanel
         Left = 0
         Top = 388
-        Width = 991
+        Width = 992
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 991
         object PngBitBtn1: TPngBitBtn
           Left = 888
           Top = 6
@@ -275,16 +282,32 @@ object frmCaixa: TfrmCaixa
             931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
             4E44AE426082}
         end
+        object btnExtornar: TPngBitBtn
+          Left = 448
+          Top = 6
+          Width = 75
+          Height = 25
+          Caption = 'Extornar'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI Variable Text Semibold'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          OnClick = btnExtornarClick
+        end
       end
       object pnlListagemTopo1: TPanel
         Left = 0
         Top = 0
-        Width = 991
+        Width = 992
         Height = 57
         Align = alTop
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 991
         object lblIndice1: TLabel
           Left = 24
           Top = 0
@@ -304,7 +327,7 @@ object frmCaixa: TfrmCaixa
         object btnPesquisar1: TPngBitBtn
           Tag = 99
           Left = 295
-          Top = 15
+          Top = 17
           Width = 114
           Height = 25
           Cursor = crHandPoint
@@ -315,7 +338,7 @@ object frmCaixa: TfrmCaixa
       object gdrFaturados: TDBGrid
         Left = 0
         Top = 57
-        Width = 991
+        Width = 992
         Height = 331
         Align = alClient
         DataSource = dtsFaturados
@@ -350,6 +373,7 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'nome'
+            Width = 274
             Visible = True
           end
           item
@@ -370,6 +394,7 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'status'
+            Width = 97
             Visible = True
           end>
       end
@@ -462,7 +487,7 @@ object frmCaixa: TfrmCaixa
       '    pv.status'
       'FROM preVenda pv'
       'INNER JOIN clientes c ON c.clienteId = pv.clienteId'
-      'WHERE pv.status IN ('#39'PAGO'#39', '#39'CANCELADO'#39')')
+      'WHERE pv.status IN ('#39'PAGO'#39', '#39'CANCELADO'#39', '#39'RETORNADO'#39')')
     Left = 168
     Top = 248
     object FDAutoIncField1: TFDAutoIncField

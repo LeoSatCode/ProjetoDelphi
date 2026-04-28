@@ -155,7 +155,8 @@ begin
   end;
 
   Grid.Canvas.FillRect(Rect);
-  Grid.Canvas.TextOut(Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
+  //Grid.Canvas.TextOut(Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
+
 
 end;
 

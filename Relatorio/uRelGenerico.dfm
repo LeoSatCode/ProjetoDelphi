@@ -194,8 +194,8 @@ object frmGenerico: TfrmGenerico
           Text = ''
         end
         object rldbtxtvalor: TRLDBText
-          Left = 646
-          Top = 5
+          Left = 508
+          Top = 4
           Width = 66
           Height = 16
           DataSource = dsMaster
@@ -216,7 +216,7 @@ object frmGenerico: TfrmGenerico
           Transparent = False
         end
         object rlbl6: TRLLabel
-          Left = 531
+          Left = 380
           Top = 4
           Width = 102
           Height = 16
@@ -260,7 +260,7 @@ object frmGenerico: TfrmGenerico
             Transparent = False
           end
           object rlbl4: TRLLabel
-            Left = 411
+            Left = 380
             Top = 4
             Width = 82
             Height = 16
@@ -274,7 +274,7 @@ object frmGenerico: TfrmGenerico
             Transparent = False
           end
           object rlbl8: TRLLabel
-            Left = 646
+            Left = 632
             Top = 3
             Width = 63
             Height = 16
@@ -288,7 +288,7 @@ object frmGenerico: TfrmGenerico
             Transparent = False
           end
           object rlbl11: TRLLabel
-            Left = 531
+            Left = 508
             Top = 3
             Width = 66
             Height = 16
@@ -302,7 +302,7 @@ object frmGenerico: TfrmGenerico
             Transparent = False
           end
           object rldbtxtvendaId: TRLDBText
-            Left = 603
+            Left = 580
             Top = 3
             Width = 48
             Height = 16
@@ -333,7 +333,7 @@ object frmGenerico: TfrmGenerico
             Text = ''
           end
           object rldbtxtNome1: TRLDBText
-            Left = 413
+            Left = 380
             Top = 4
             Width = 82
             Height = 16
@@ -342,7 +342,7 @@ object frmGenerico: TfrmGenerico
             Text = ''
           end
           object rldbtxtvalorUnitario: TRLDBText
-            Left = 646
+            Left = 632
             Top = 4
             Width = 110
             Height = 16
@@ -359,7 +359,7 @@ object frmGenerico: TfrmGenerico
       Height = 24
       BandType = btSummary
       object rldbrsltTotalVenda: TRLDBResult
-        Left = 646
+        Left = 632
         Top = 5
         Width = 43
         Height = 16
@@ -375,7 +375,7 @@ object frmGenerico: TfrmGenerico
         DrawKind = dkLine
       end
       object rlbl7: TRLLabel
-        Left = 531
+        Left = 521
         Top = 6
         Width = 105
         Height = 16

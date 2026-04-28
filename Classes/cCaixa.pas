@@ -18,7 +18,8 @@ type
     constructor Create(aConexao: TFDConnection);
 
     function FaturarVenda(aPreVendaId: Integer): Boolean;
-    function CancelarVenda(aPreVendaId: Integer): Boolean;
+    function CancelarPreVenda(aPreVendaId: Integer): Boolean;
+    function ExtornarVenda(aPreVendaId: Integer): Boolean;
 
   published
     property VendaId:Integer        read F_vendaId        write F_vendaId;
@@ -137,7 +138,7 @@ begin
   end;
 end;
 
-function TCaixa.CancelarVenda(aPreVendaId: Integer): Boolean;
+function TCaixa.CancelarPreVenda(aPreVendaId: Integer): Boolean;
 var Qry:TFDQuery;
 begin
   Result := True;
@@ -173,12 +174,91 @@ begin
         Exit;
       end;
 
+      if Qry.FieldByName('status').AsString = 'RETORNADO' then
+      begin
+        ConexaoDB.Rollback;
+        Result := False;
+        Exit;
+      end;
+
       Qry.Close;
 
       Qry.SQL.Clear;
       Qry.SQL.Add('UPDATE preVenda SET status = ''CANCELADO'' WHERE preVendaId = :id');
       Qry.ParamByName('id').AsInteger := aPreVendaId;
       Qry.ExecSQL;
+
+      ConexaoDB.Commit;
+    except
+      on E: Exception do
+      begin
+        ConexaoDB.Rollback;
+        ShowMessage('Ocorreu um erro '+ E.Message);
+        Result := False
+      end;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TCaixa.ExtornarVenda(aPreVendaId: Integer): Boolean;
+var Qry: TFDQuery;
+    oEstoque: TControleEstoque;
+begin
+  Result := True;
+  Qry := TFDQuery.Create(nil);
+  try
+    Qry.Connection := ConexaoDB;
+    ConexaoDB.StartTransaction;
+
+    try
+      Qry.SQL.Clear;
+      Qry.SQL.Add('SELECT status FROM preVenda WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.Open;
+
+      if Qry.FieldByName('status').AsString = 'CANCELADO' then
+      begin
+        ConexaoDB.Rollback;
+        Result := False;
+        MessageDlg('Não é possível extornar uma Venda NÃO Faturada.', mtInformation, [mbOK],0);
+        Exit;
+      end;
+
+      if Qry.FieldByName('status').AsString = 'RETORNADO' then
+      begin
+        ConexaoDB.Rollback;
+        MessageDlg('Venda já foi EXTORNADA.', mtInformation, [mbOK],0);
+        Result := False;
+        Exit;
+      end;
+
+      Qry.Close;
+
+      Qry.SQL.Clear;
+      Qry.SQL.Add('UPDATE preVenda SET status = ''RETORNADO'' WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.ExecSQL;
+
+      Qry.SQL.Clear;
+      Qry.SQL.Add('SELECT produtoId, quantidade FROM preVendaItens WHERE preVendaId = :id');
+      Qry.ParamByName('id').AsInteger := aPreVendaId;
+      Qry.Open;
+
+      oEstoque := TControleEstoque.Create(ConexaoDB);
+      try
+        Qry.First;
+        while not Qry.Eof do
+        begin
+          oEstoque.ProdutoId  := Qry.FieldByName('produtoId').AsInteger;
+          oEstoque.Quantidade := Qry.FieldByName('quantidade').AsFloat;
+          oEstoque.RetornarEstoque;
+          Qry.Next;
+        end;
+      finally
+        FreeAndNil(oEstoque);
+      end;
 
       ConexaoDB.Commit;
     except

@@ -51,6 +51,7 @@ type
     PngBitBtn1: TPngBitBtn;
     QryPendentessituacaoId: TIntegerField;
     ilimage: TImageList;
+    btnExtornar: TPngBitBtn;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -65,6 +66,7 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnExtornarClick(Sender: TObject);
   private
     { Private declarations }
     dtmVendas:TdtmVenda;
@@ -97,6 +99,12 @@ begin
   begin
     MessageDlg('Selecione uma pré-venda na lista para receber!', mtWarning, [mbOK], 0);
     Exit; // Sai da rotina sem fazer nada
+  end;
+
+  if QryPendentes.FieldByName('situacaoId').AsInteger = 2 then
+  begin
+    MessageDlg('Não é possível receber. Cliente está BLOQUEADO.', mtWarning, [mbOK],0);
+    Abort;
   end;
 
   // Instancia a classe de vendas conectada ao banco
@@ -137,7 +145,7 @@ begin
 
   oCaixa := TCaixa.Create(dtmConexao.ConexaoDB);
   try
-    if oCaixa.CancelarVenda(QryPendentes.FieldByName('preVendaId').AsInteger) then
+    if oCaixa.CancelarPreVenda(QryPendentes.FieldByName('preVendaId').AsInteger) then
     begin
       MessageDlg('Venda cancelada com sucesso!', mtInformation, [mbOK], 0);
 
@@ -146,6 +154,34 @@ begin
 
       QryFaturados.Close;
       QryFaturados.Open;
+    end;
+  finally
+    FreeAndNil(oCaixa);
+  end;
+  TFuncao.AtualizarDashBoard;
+end;
+
+procedure TfrmCaixa.btnExtornarClick(Sender: TObject);
+var oCaixa:TCaixa;
+begin
+  if QryFaturados.IsEmpty then
+  begin
+    MessageDlg('Selecione uma venda do tipo PAGO na lista para extornar!', mtWarning, [mbOK], 0);
+    Exit; // Sai da rotina sem fazer nada
+  end;
+
+  oCaixa := TCaixa.Create(dtmConexao.ConexaoDB);
+  try
+
+    if MessageDlg('Deseja extornar essa venda?', mtInformation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      if oCaixa.ExtornarVenda(QryFaturados.FieldByName('preVendaId').AsInteger) then
+      begin
+        MessageDlg('Venda extornada com sucesso!Estoque atualizado.', mtInformation, [mbOK], 0);
+
+        QryFaturados.Close;
+        QryFaturados.Open;
+      end;
     end;
   finally
     FreeAndNil(oCaixa);
@@ -170,6 +206,7 @@ procedure TfrmCaixa.gdrFaturadosDrawColumnCell(Sender: TObject; const Rect: TRec
   State: TGridDrawState);
 begin
   TGrid.ZebrarGrid(gdrFaturados, State, Column, Rect);
+  gdrFaturados.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TfrmCaixa.gdrPendentesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;

@@ -1,7 +1,7 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Vendas'
   ClientWidth = 1003
-  ExplicitTop = -142
+  ExplicitTop = -7
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
@@ -23,7 +23,10 @@ inherited frmProVendas: TfrmProVendas
     ExplicitTop = 0
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 995
+      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 995
         ExplicitWidth = 995
@@ -70,7 +73,10 @@ inherited frmProVendas: TfrmProVendas
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 995
+      ExplicitHeight = 433
       object pnl1: TPanel
         Left = 0
         Top = 83
@@ -86,7 +92,7 @@ inherited frmProVendas: TfrmProVendas
           Align = alTop
           Color = 16774378
           ParentBackground = False
-          TabOrder = 1
+          TabOrder = 0
           object lblCliente1: TLabel
             Left = 11
             Top = 8
@@ -200,7 +206,7 @@ inherited frmProVendas: TfrmProVendas
           Width = 993
           Height = 242
           Align = alClient
-          TabOrder = 2
+          TabOrder = 1
           object dbgridItensVenda: TDBGrid
             Left = 1
             Top = 1
@@ -262,7 +268,8 @@ inherited frmProVendas: TfrmProVendas
           Width = 993
           Height = 41
           Align = alBottom
-          TabOrder = 0
+          TabOrder = 2
+          TabStop = True
           object lblValor: TLabel
             Left = 771
             Top = 14
