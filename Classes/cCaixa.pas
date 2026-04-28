@@ -218,18 +218,10 @@ begin
       Qry.ParamByName('id').AsInteger := aPreVendaId;
       Qry.Open;
 
-      if Qry.FieldByName('status').AsString = 'CANCELADO' then
+      if Qry.FieldByName('status').AsString <> 'PAGO' then
       begin
         ConexaoDB.Rollback;
-        Result := False;
-        MessageDlg('Não é possível extornar uma Venda NÃO Faturada.', mtInformation, [mbOK],0);
-        Exit;
-      end;
-
-      if Qry.FieldByName('status').AsString = 'RETORNADO' then
-      begin
-        ConexaoDB.Rollback;
-        MessageDlg('Venda já foi EXTORNADA.', mtInformation, [mbOK],0);
+        MessageDlg('Só é possível extornar uma venda PAGA.', mtWarning, [mbOK],0);
         Result := False;
         Exit;
       end;
