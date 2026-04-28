@@ -26,10 +26,8 @@ object frmCaixa: TfrmCaixa
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 999
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
-      ExplicitWidth = 991
       object pnl2: TPanel
         Left = 0
         Top = 388
@@ -39,7 +37,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 991
         object btnReceber: TPngBitBtn
           Left = 381
           Top = 8
@@ -131,7 +128,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 991
         object lblIndice: TLabel
           Left = 24
           Top = 0
@@ -228,13 +224,13 @@ object frmCaixa: TfrmCaixa
           end
           item
             Expanded = False
-            FieldName = 'totalVenda'
+            FieldName = 'status'
+            Width = 81
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'status'
-            Width = 81
+            FieldName = 'totalVenda'
             Visible = True
           end
           item
@@ -248,7 +244,6 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
-      ExplicitWidth = 991
       object Panel2: TPanel
         Left = 0
         Top = 388
@@ -258,7 +253,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 991
         object PngBitBtn1: TPngBitBtn
           Left = 888
           Top = 6
@@ -307,7 +301,6 @@ object frmCaixa: TfrmCaixa
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 991
         object lblIndice1: TLabel
           Left = 24
           Top = 0
@@ -388,13 +381,13 @@ object frmCaixa: TfrmCaixa
           end
           item
             Expanded = False
-            FieldName = 'totalVenda'
+            FieldName = 'status'
+            Width = 97
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'status'
-            Width = 97
+            FieldName = 'totalVenda'
             Visible = True
           end>
       end
@@ -419,7 +412,7 @@ object frmCaixa: TfrmCaixa
     Left = 168
     Top = 184
     object QryPendentespreVendaId: TFDAutoIncField
-      DisplayLabel = 'C'#243'd. Pr'#233' Venda'
+      DisplayLabel = 'Pr'#233' Venda'
       FieldName = 'preVendaId'
       Origin = 'preVendaId'
       ProviderFlags = [pfInWhere, pfInKey]
@@ -491,7 +484,7 @@ object frmCaixa: TfrmCaixa
     Left = 168
     Top = 248
     object FDAutoIncField1: TFDAutoIncField
-      DisplayLabel = 'C'#243'd. Pr'#233' Venda'
+      DisplayLabel = 'Pr'#233' Venda'
       FieldName = 'preVendaId'
       Origin = 'preVendaId'
       ProviderFlags = [pfInWhere, pfInKey]

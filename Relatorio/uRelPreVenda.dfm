@@ -51,11 +51,9 @@ inherited frmRelPreVenda: TfrmRelPreVenda
             ExplicitWidth = 38
           end
           inherited rldbtxtNome1: TRLDBText
-            Left = 420
-            Width = 68
+            Width = 50
             DataField = 'quantidade'
-            ExplicitLeft = 420
-            ExplicitWidth = 68
+            ExplicitWidth = 50
           end
           inherited rldbtxtvalorUnitario: TRLDBText
             Width = 74

@@ -1,7 +1,6 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Vendas'
   ClientWidth = 1003
-  ExplicitTop = -7
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
@@ -20,13 +19,9 @@ inherited frmProVendas: TfrmProVendas
   inherited pgcPrincipal: TPageControl
     Width = 1003
     TabOrder = 0
-    ExplicitTop = 0
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 995
-      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 995
         ExplicitWidth = 995
@@ -73,10 +68,7 @@ inherited frmProVendas: TfrmProVendas
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 995
-      ExplicitHeight = 433
       object pnl1: TPanel
         Left = 0
         Top = 83

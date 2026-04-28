@@ -27,7 +27,7 @@ type
   class function GetColumnByFieldName(Grid: TDBGrid; const AFieldName: string): TColumn; static;
   class procedure SalvarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string);static;
   class procedure CarregarGrid(Grid: TDBGrid; const NomeINI, NomeUsuario, NomeForm: string); static;
-  class procedure ZebrarGrid(Grid: TDBGrid; State:TGridDrawState; Column: TColumn; Rect: TRect);
+  class procedure ZebrarGrid(Grid: TDBGrid; State:TGridDrawState; Column: TColumn; Qry:TFDQuery; Rect: TRect; ilimage:TImageList; DataCol: Integer);
 
   end;
 
@@ -128,8 +128,10 @@ begin
   end;
 end;
 
-class procedure TGrid.ZebrarGrid(Grid: TDBGrid; State: TGridDrawState; Column: TColumn; Rect: TRect);
+class procedure TGrid.ZebrarGrid(Grid: TDBGrid; State: TGridDrawState; Column: TColumn; Qry:TFDQuery; Rect: TRect; ilimage:TImageList; DataCol: Integer);
 var Linha: Integer;
+    id: Integer;
+    imgIndex: Integer;
 begin
   if (gdFixed in State) then
   begin
@@ -156,7 +158,52 @@ begin
 
   Grid.Canvas.FillRect(Rect);
   //Grid.Canvas.TextOut(Rect.Left + 2, Rect.Top + 2, Column.Field.AsString);
+  if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'PENDENTE') then
+  begin
+    Grid.Canvas.Brush.Color := RGB(255, 243, 176);
+  end
+  else if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'PAGO') then
+  begin
+    Grid.Canvas.Brush.Color := RGB(183, 228, 199);
+  end
+  else if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'CANCELADO') then
+  begin
+    Grid.Canvas.Brush.Color := RGB(245, 183, 177);
+  end
+  else if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'RETORNADO') then
+  begin
+    Grid.Canvas.Brush.Color := RGB(169, 214, 229);
+  end;
 
+   // Desenhando a imagem
+
+  if Column.FieldName = 'situacaoId' then
+  begin
+    id := Qry.FieldByName('situacaoId').AsInteger;
+
+    case id of
+      1: imgIndex := 1;
+      2: imgIndex := 2;
+      3: imgIndex := 0;
+      4: imgIndex := 3;
+      5: imgIndex := 4;
+    else
+      Exit; //Se não tiver ID válido, não desenha nada
+    end;
+
+    // Desenha a imagem centralizada na célula
+    ilimage.Draw(
+      Grid.Canvas,
+      Rect.Left + (Rect.Width - ilimage.Width) div 2,
+      Rect.Top + (Rect.Height - ilimage.Height) div 2,
+      imgIndex
+    );
+  end
+  else
+  begin
+    // Outras colunas continuam com comportamento padrão
+    Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
 
 end;
 

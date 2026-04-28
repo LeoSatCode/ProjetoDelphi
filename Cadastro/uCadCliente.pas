@@ -448,11 +448,9 @@ begin
 
   if TextoLimpo = '' then Exit;
 
-  if (TextoLimpo[1]='0') and (TextoLimpo[1]='3') and (TextoLimpo[1]='4') then begin
+  if (TextoLimpo[1]='0') and (TextoLimpo[3]='0') and (TextoLimpo[4]='0') then begin
     if Length(TextoLimpo) > 11 then
         TextoLimpo := Copy(TextoLimpo, 1, 11);
-      // SUPER IMPORTANTE: Desliga a "escuta" desse evento temporariamente!
-      // Se não fizermos isso, quando alterarmos o texto abaixo, ele vai chamar o evento de novo, gerando um Loop Infinito (trava tudo)
       Edit.OnChange := nil;
       try
         if  Length(TextoLimpo) > 7 then

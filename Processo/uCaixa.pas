@@ -205,46 +205,13 @@ end;
 procedure TfrmCaixa.gdrFaturadosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 begin
-  TGrid.ZebrarGrid(gdrFaturados, State, Column, Rect);
-  gdrFaturados.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  TGrid.ZebrarGrid(gdrFaturados, State, Column,QryFaturados, Rect, ilimage, DataCol);
 end;
 
 procedure TfrmCaixa.gdrPendentesDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
-var id: Integer;
-    imgIndex: Integer;
 begin
-  TGrid.ZebrarGrid(gdrPendentes, State, Column, Rect);
-
-  // AGORA decide o que desenhar
-
-  if Column.FieldName = 'situacaoId' then
-  begin
-    id := QryPendentes.FieldByName('situacaoId').AsInteger;
-
-    case id of
-      1: imgIndex := 1;
-      2: imgIndex := 2;
-      3: imgIndex := 0;
-      4: imgIndex := 3;
-      5: imgIndex := 4;
-    else
-      Exit; //Se não tiver ID válido, não desenha nada
-    end;
-
-    // Desenha a imagem centralizada na célula
-    ilimage.Draw(
-      gdrPendentes.Canvas,
-      Rect.Left + (Rect.Width - ilimage.Width) div 2,
-      Rect.Top + (Rect.Height - ilimage.Height) div 2,
-      imgIndex
-    );
-  end
-  else
-  begin
-    // Outras colunas continuam com comportamento padrão
-    gdrPendentes.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-  end;
+  TGrid.ZebrarGrid(gdrPendentes, State, Column, QryPendentes, Rect, ilimage, DataCol);
 end;
 
 procedure TfrmCaixa.gdrPendentesTitleClick(Column: TColumn);
