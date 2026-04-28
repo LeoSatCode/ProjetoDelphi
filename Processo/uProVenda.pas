@@ -365,8 +365,9 @@ begin
     Abort;
   end;
 
-  oVenda.clienteId  := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
-  oVenda.totalVenda := edtValorTotalProduto.Value;
+  oVenda.clienteId    := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+  oVenda.totalVenda   := edtValorTotalProduto.Value;
+  oVenda.DataValidade := edtDataValidade.Date;
 
    if edtVendaId.Text <> '' then
     oVenda.VendaId := StrToInt(edtVendaId.Text)

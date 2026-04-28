@@ -424,9 +424,10 @@ begin
       Qry.SQL.Clear;
       Qry.SQL.Add('INSERT INTO preVenda (clienteId, dataEmissao, dataValidade, totalVenda, status) ');
       Qry.SQL.Add('OUTPUT INSERTED.preVendaId '); // O SQL Server devolve o ID gerado instantaneamente
-      Qry.SQL.Add('VALUES (:clienteId, GETDATE(), :totalVenda, ''PENDENTE'')');
+      Qry.SQL.Add('VALUES (:clienteId, GETDATE(), :dataValidade, :totalVenda, ''PENDENTE'')');
 
       Qry.ParamByName('clienteId').AsInteger := Self.F_clienteId;
+      Qry.ParamByName('dataValidade').AsDateTime := Self.F_dataValidade;
       Qry.ParamByName('totalVenda').AsFloat  := Self.F_totalVenda;
 
       // Open em vez de ExecSQL porque o OUTPUT devolve um resultado (o ID)
@@ -558,12 +559,14 @@ begin
       Qry.SQL.Clear;
       Qry.SQL.Add('UPDATE preVenda SET');
       Qry.SQL.Add('clienteId = :clienteId, ');
+      Qry.SQL.Add('dataValidade = :dataValidade, ');
       Qry.SQL.Add('totalVenda = :totalVenda ');
       Qry.SQL.Add('WHERE preVendaId = :id');
 
-      Qry.ParamByName('id').AsInteger       :=Self.F_vendaId;
-      Qry.ParamByName('clienteId').AsInteger:=Self.F_clienteId;
-      Qry.ParamByName('totalVenda').AsFloat :=Self.F_totalVenda;
+      Qry.ParamByName('id').AsInteger           := Self.F_vendaId;
+      Qry.ParamByName('clienteId').AsInteger    := Self.F_clienteId;
+      Qry.ParamByName('dataValidade').AsDateTime:= Self.F_dataValidade;
+      Qry.ParamByName('totalVenda').AsFloat     := Self.F_totalVenda;
 
       Qry.ExecSQL;
 

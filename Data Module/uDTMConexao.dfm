@@ -4,13 +4,11 @@ object dtmConexao: TdtmConexao
   Width = 394
   object ConexaoDB: TFDConnection
     Params.Strings = (
-      'Server=DC-TR-05-VM\SERVERCURSO'
+      'DriverID=MSSQL'
       'Database=vendas'
-      'User_Name=sa'
-      'Password=domtec@10'
-      'DriverID=mssql'
-      ''
-      '')
+      'User_Name=VM-TreinoDomTec\Leonardo'
+      'Server=VM-TREINODOMTEC'
+      'OSAuthent=Yes')
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
     Connected = True
