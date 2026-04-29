@@ -18,6 +18,7 @@ type
   private
     function TabelaExiste(aNomeTabela:string):Boolean;
     procedure Categoria;
+    procedure situacaoCliente;
     procedure Cliente;
     procedure Produto;
     procedure Usuario;
@@ -25,7 +26,6 @@ type
     procedure VendasItens;
     procedure AcaoAcesso;
     procedure UsuariosAcaoAcesso;
-    procedure situacaoCliente;
     procedure PreVenda;
     procedure PreVendaItens;
 
@@ -42,15 +42,17 @@ implementation
 
 constructor TAtualizacaoTableMSSQL.Create(aConexao: TFDConnection);
 begin
-  ConexaoDB:=aConexao;
+  ConexaoDB := aConexao;
+
   Categoria;
+  situacaoCliente;
   Cliente;
   Produto;
-  Vendas;
-  VendasItens;
   Usuario;
   AcaoAcesso;
   UsuariosAcaoAcesso;
+  Vendas;
+  VendasItens;
   PreVenda;
   PreVendaItens;
 end;
@@ -122,11 +124,20 @@ begin
   if not TabelaExiste('situacao') then
   begin
     ExecutaDiretoBancoDeDados(
-    ' CREATE TABLE situacao ( '+
-	  '   situacaoId INT IDENTITY, '+
-    '   situacaoCliente VARCHAR (20)' +
-    ' ) '
-  );
+    'CREATE TABLE situacao ( '+
+    '  situacaoId INT IDENTITY(1,1) PRIMARY KEY, '+
+    '  situacaoCliente VARCHAR(20) '+
+    ')'
+    );
+
+    ExecutaDiretoBancoDeDados(
+    'INSERT INTO situacao (situacaoCliente) VALUES '+
+    ' (''ATIVO''), '+
+    ' (''BLOQUEADO''), '+
+    ' (''ATENÇÃO''), '+
+    ' (''INATIVO''), '+
+    ' (''PROSPECTO'')'
+    );
   end;
 end;
 
@@ -165,7 +176,7 @@ begin
     '  CREATE TABLE clientes ( '+
     '   clienteId INT IDENTITY(1,1) NOT NULL, '+
     '   nome varchar(60) NULL, '+
-    '   documento varchar (18) unique '+
+    '   documento varchar (18) unique, '+
     '   endereco varchar(60) NULL, '+
     '   cidade varchar(50) NULL, '+
     '   bairro varchar(40) NULL, '+
@@ -174,8 +185,12 @@ begin
     '   numero varchar(5) NULL, '+
     '   telefone varchar(14) NULL, '+
     '   email varchar(100) NULL, '+
-    '   dataNascimento datetime NULL '+
+    '   observacao varchar(200) NULL, '+
+    '   dataNascimento datetime NULL, '+
+    '   situacaoId INT NULL, '+
     '   PRIMARY KEY (clienteId), '+
+    '   CONSTRAINT FK_clientes_situacao FOREIGN KEY (situacaoId) '+
+    '     REFERENCES situacao(situacaoId) '+
     ' ) '
   );
   end;
@@ -247,7 +262,7 @@ begin
       '   CONSTRAINT FK_UsuarioAcaoAcessoUsuario '+
       '   FOREIGN KEY (usuarioId) REFERENCES usuarios(usuarioId), '+
       '   CONSTRAINT FK_UsuarioAcaoAcessoAcaoAcesso '+
-      '   FOREIGN KEY (acaoAcessoId) REFERENCES acaoAcesso(acaoAcessoId), '+
+      '   FOREIGN KEY (acaoAcessoId) REFERENCES acaoAcesso(acaoAcessoId) '+
       ' ) '
       //NOTA: Esses Foreign Key's, são para garantir que na tabela só existam usuários já cadastrados
       //e ações que já estão cadastradas nas tabelas referenciadas à ação.
