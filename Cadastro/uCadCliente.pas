@@ -80,6 +80,7 @@ type
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
     procedure btnFecharClick(Sender: TObject);
     procedure edtEmailExit(Sender: TObject);
+    procedure edtCEPChange(Sender: TObject);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -272,6 +273,30 @@ begin
  end;
 end;
 
+procedure TfrmCadCliente.edtCEPChange(Sender: TObject);
+var TextoLimpo: string;
+    Edit: TEdit;
+begin
+  inherited;
+  TextoLimpo:=edtCEP.Text;
+
+  TextoLimpo:=TFuncao.SomenteNumeros(edtCEP.Text);
+
+  Edit := TEdit(Sender);
+
+  if TextoLimpo = '' then Exit;
+
+  try
+     // Se tiver até 5 números, não coloca o traço ainda
+    if Length(TextoLimpo) > 5 then Edit.Text := Copy(TextoLimpo,1,5) + '-' + Copy(TextoLimpo,6,3);
+
+    Edit.SelStart := Length(Edit.Text);
+  finally
+
+  end;
+
+
+end;
 
 procedure TfrmCadCliente.edtCEPExit(Sender: TObject);
 var
@@ -282,7 +307,13 @@ var
 begin
   CEPDigitado := StringReplace(edtCEP.Text, '-', '', [rfReplaceAll]);
 
-  if Length(CEPDigitado) <> 8 then Exit;
+  if Length(CEPDigitado) <> 8 then
+  begin
+    MessageDlg('CEP não encontrado. Verifique o número digitado.', mtWarning,[mbOK], 0);
+    edtCEP.Clear;
+    edtCEP.SetFocus;
+    Exit;
+  end;
 
   RESTClient1.BaseURL := 'https://viacep.com.br/ws/' + CEPDigitado + '/json/';
 
@@ -294,7 +325,12 @@ begin
       ObjetoJSON := RESTResponse1.JSONValue as TJSONObject;
 
       if ObjetoJSON.TryGetValue<Boolean>('erro', Erro) and Erro then
+      begin
+        MessageDlg('CEP não encontrado. Verifique o número digitado.', mtWarning,[mbOK], 0);
+        edtCEP.Clear;
+        edtCEP.SetFocus;
         Exit;
+      end;
 
       if ObjetoJSON.TryGetValue('logradouro', Valor) then
         edtEndereco.Text := Valor;
@@ -309,7 +345,11 @@ begin
         edtEstado.Text := Valor;
     end;
   except
-
+    on E: Exception do
+    begin
+      MessageDlg('Erro ao consultar o ViaCep. Verifique sua conexão com a internet.' + sLineBreak + E.Message, mtError, [mbOK], 0);
+      edtCEP.SetFocus;
+    end;
   end;
 end;
 

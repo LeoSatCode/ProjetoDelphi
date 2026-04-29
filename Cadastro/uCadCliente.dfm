@@ -21,6 +21,7 @@ inherited frmCadCliente: TfrmCadCliente
   end
   inherited pgcPrincipal: TPageControl
     Width = 1011
+    ActivePage = tabManutencao
     ExplicitWidth = 1011
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1003
@@ -324,8 +325,6 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 8
-      ExplicitTop = 22
       ExplicitWidth = 1003
       object lbl1: TLabel
         Left = 12
@@ -441,8 +440,10 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 120
         Width = 267
         Height = 21
+        MaxLength = 10
         TabOrder = 4
         Text = ''
+        OnChange = edtCEPChange
         OnExit = edtCEPExit
         OnKeyPress = edtCEPKeyPress
       end
@@ -935,17 +936,17 @@ inherited frmCadCliente: TfrmCadCliente
     Params = <>
     Response = RESTResponse1
     SynchronizedEvents = False
-    Left = 556
-    Top = 152
+    Left = 508
+    Top = 40
   end
   object RESTResponse1: TRESTResponse
-    Left = 620
-    Top = 152
+    Left = 580
+    Top = 40
   end
   object RESTClient1: TRESTClient
     Params = <>
     HandleRedirects = True
-    Left = 492
-    Top = 152
+    Left = 436
+    Top = 40
   end
 end
