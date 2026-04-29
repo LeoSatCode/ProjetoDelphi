@@ -20,6 +20,7 @@ type
      F_bairro:string;
      F_estado:string;
      F_cep:string;
+     F_numero:string;
      F_telefone:string;
      F_email:string;
      F_situacaoId: Integer;
@@ -42,6 +43,7 @@ type
      property bairro               :String     read F_bairro            write F_bairro;
      property estado               :String     read F_estado            write F_estado;
      property cep                  :String     read F_cep               write F_cep;
+     property numero               :String     read F_numero            write F_numero;
      property telefone             :String     read F_telefone          write F_telefone;
      property email                :String     read F_email             write F_email;
      property situacaoId           :Integer    read F_situacaoId        write F_situacaoId;
@@ -84,6 +86,7 @@ begin
               '                      bairro, '+
               '                      estado, '+
               '                      cep, '+
+              '                      numero, '+
               '                      telefone, '+
               '                      email, '+
               '                      situacaoId, '+
@@ -96,6 +99,7 @@ begin
               '                       :bairro, '+
               '                       :estado, '+
               '                       :cep, '+
+              '                       :numero, '+
               '                       :telefone, '+
               '                       :email, '+
               '                       :situacaoId, '+
@@ -109,6 +113,7 @@ begin
       ParamByName('bairro').AsString                        :=Self.F_bairro;
       ParamByName('estado').AsString                        :=Self.F_estado;
       ParamByName('cep').AsString                           :=Self.F_cep;
+      ParamByName('numero').AsString                        :=Self.F_numero;
       ParamByName('telefone').AsString                      :=Self.F_telefone;
       ParamByName('email').AsString                         :=Self.F_email;
       ParamByName('situacaoId').AsInteger                   :=Self.F_situacaoId;
@@ -157,6 +162,7 @@ try
             '       ,bairro           =:bairro ' +
             '       ,estado           =:estado '+
             '       ,cep              =:cep '+
+            '       ,numero           =:numero '+
             '       ,telefone         =:telefone '+
             '       ,email            =:email '+
             '       ,situacaoId       =:situacaoId '+
@@ -171,6 +177,7 @@ try
     ParamByName('bairro').AsString                  :=Self.F_bairro;
     ParamByName('estado').AsString                  :=Self.F_estado;
     ParamByName('cep').AsString                     :=Self.F_cep;
+    ParamByName('numero').AsString                  :=Self.F_numero;
     ParamByName('telefone').AsString                :=Self.telefone;
     ParamByName('email').AsString                   :=Self.F_email;
     ParamByName('situacaoId').AsInteger             :=Self.F_situacaoId;
@@ -248,6 +255,7 @@ begin
               '       bairro, '+
               '       estado, ' +
               '       cep, ' +
+              '       numero, ' +
               '       telefone, '+
               '       email, '+
               '       situacaoId, '+
@@ -266,11 +274,13 @@ begin
         Self.F_bairro             := FieldByName('bairro').AsString;
         Self.F_estado             := FieldByName('estado').AsString;
         Self.F_cep                := FieldByName('cep').AsString;
+        Self.F_numero             := FieldByName('numero').AsString;
         Self.F_telefone           := FieldByName('telefone').AsString;
         Self.F_observacao         := FieldByName('observacao').AsString;
         Self.F_email              := FieldByName('email').AsString;
+        Self.F_dataNascimento     := FieldByName('dataNascimento').AsDateTime;
         if not FieldByName('situacaoId').IsNull then
-          Self.F_situacaoId := FieldByName('situacaoId').AsInteger;
+          Self.F_situacaoId       := FieldByName('situacaoId').AsInteger;
         Self.F_dataNascimento     := FieldByName('dataNascimento').AsDateTime;
       except
       Result:=False;

@@ -171,6 +171,7 @@ begin
     '   bairro varchar(40) NULL, '+
     '   estado varchar(2) NULL, '+
     '   cep varchar(10) NULL, '+
+    '   numero varchar(5) NULL, '+
     '   telefone varchar(14) NULL, '+
     '   email varchar(100) NULL, '+
     '   dataNascimento datetime NULL '+

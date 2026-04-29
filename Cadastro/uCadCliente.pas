@@ -62,6 +62,7 @@ type
     lbl7: TLabel;
     lbl8: TLabel;
     lbl9: TLabel;
+    edtNumero: TLabeledEdit;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -134,6 +135,7 @@ begin
     nome            :=edtNome.Text;
     documento       :=edtDocumento.Text;
     cep             :=edtCEP.Text;
+    numero          :=edtNumero.Text;
     endereco        :=edtEndereco.Text;
     bairro          :=edtBairro.Text;
     cidade          :=edtCidade.Text;
@@ -201,6 +203,7 @@ begin
       edtNome.Text           := nome;
       edtDocumento.Text      := documento;
       edtCEP.Text            := cep;
+      edtNumero.Text         := numero;
       edtEndereco.Text       := endereco;
       edtBairro.Text         := bairro;
       edtCidade.Text         := cidade;

@@ -21,7 +21,10 @@ inherited frmProVendas: TfrmProVendas
     TabOrder = 0
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 995
+      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 995
         ExplicitWidth = 995
@@ -68,7 +71,10 @@ inherited frmProVendas: TfrmProVendas
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 995
+      ExplicitHeight = 433
       object pnl1: TPanel
         Left = 0
         Top = 83
@@ -177,7 +183,6 @@ inherited frmProVendas: TfrmProVendas
             Height = 25
             Caption = 'R&EMOVER'
             TabOrder = 5
-            TabStop = False
             OnClick = btnRemoverClick
             PngImage.Data = {
               89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
@@ -280,6 +285,7 @@ inherited frmProVendas: TfrmProVendas
             Top = 6
             Width = 121
             Height = 21
+            TabStop = False
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11

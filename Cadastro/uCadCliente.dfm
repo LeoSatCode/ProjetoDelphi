@@ -21,7 +21,6 @@ inherited frmCadCliente: TfrmCadCliente
   end
   inherited pgcPrincipal: TPageControl
     Width = 1011
-    ActivePage = tabManutencao
     ExplicitWidth = 1011
     inherited tabListagem: TTabSheet
       ExplicitWidth = 1003
@@ -325,7 +324,10 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 22
       ExplicitWidth = 1003
+      ExplicitHeight = 433
       object lbl1: TLabel
         Left = 12
         Top = 101
@@ -362,22 +364,22 @@ inherited frmCadCliente: TfrmCadCliente
         Caption = 'CPF/CNPJ'
       end
       object lblSituacao: TLabel
-        Left = 160
+        Left = 148
         Top = 207
         Width = 41
         Height = 13
         Caption = 'Situac'#227'o'
       end
       object edtEmail: TLabeledEdit
-        Left = 212
+        Left = 208
         Top = 168
-        Width = 358
+        Width = 362
         Height = 21
         EditLabel.Width = 24
         EditLabel.Height = 13
         EditLabel.Caption = 'Email'
         MaxLength = 100
-        TabOrder = 9
+        TabOrder = 10
         OnExit = edtEmailExit
       end
       object edtDataNascimento: TDateEdit
@@ -389,7 +391,7 @@ inherited frmCadCliente: TfrmCadCliente
         DialogTitle = 'Selecione a Data'
         NumGlyphs = 2
         CalendarStyle = csDialog
-        TabOrder = 11
+        TabOrder = 12
       end
       object edtTelefone: TMaskEdit
         Left = 576
@@ -397,7 +399,7 @@ inherited frmCadCliente: TfrmCadCliente
         Width = 161
         Height = 21
         MaxLength = 14
-        TabOrder = 10
+        TabOrder = 11
         Text = ''
         OnChange = edtTelefoneChange
         OnKeyPress = edtTelefoneKeyPress
@@ -407,32 +409,36 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 168
         Width = 121
         Height = 21
+        TabStop = False
         EditLabel.Width = 33
         EditLabel.Height = 13
         EditLabel.Caption = 'Cidade'
         MaxLength = 50
-        TabOrder = 7
+        TabOrder = 8
       end
       object edtBairro: TLabeledEdit
         Left = 576
         Top = 120
         Width = 161
         Height = 21
+        TabStop = False
         EditLabel.Width = 28
         EditLabel.Height = 13
         EditLabel.Caption = 'Bairro'
         MaxLength = 40
-        TabOrder = 6
+        TabOrder = 7
       end
       object edtEndereco: TLabeledEdit
         Left = 292
         Top = 120
-        Width = 278
+        Width = 222
         Height = 21
+        TabStop = False
         EditLabel.Width = 45
         EditLabel.Height = 13
         EditLabel.Caption = 'Endere'#231'o'
-        MaxLength = 60
+        MaxLength = 4
+        ReadOnly = True
         TabOrder = 5
       end
       object edtCEP: TMaskEdit
@@ -478,11 +484,12 @@ inherited frmCadCliente: TfrmCadCliente
         Top = 168
         Width = 42
         Height = 21
+        TabStop = False
         EditLabel.Width = 33
         EditLabel.Height = 13
         EditLabel.Caption = 'Estado'
         MaxLength = 2
-        TabOrder = 8
+        TabOrder = 9
         OnKeyPress = edtEstadoKeyPress
       end
       object cbPessoa: TComboBox
@@ -508,7 +515,7 @@ inherited frmCadCliente: TfrmCadCliente
         OnKeyPress = edtDocumentoKeyPress
       end
       object lkpSituacao: TDBLookupComboBox
-        Left = 160
+        Left = 148
         Top = 226
         Width = 145
         Height = 21
@@ -517,7 +524,7 @@ inherited frmCadCliente: TfrmCadCliente
         KeyField = 'situacaoId'
         ListField = 'situacaoCliente'
         ListSource = dtsSituacao
-        TabOrder = 12
+        TabOrder = 13
         OnCloseUp = lkpSituacaoCloseUp
       end
       object edtObservacao: TLabeledEdit
@@ -530,8 +537,19 @@ inherited frmCadCliente: TfrmCadCliente
         EditLabel.Height = 13
         EditLabel.Caption = 'Observa'#231#245'es'
         MaxLength = 1000
-        TabOrder = 13
+        TabOrder = 14
         Visible = False
+      end
+      object edtNumero: TLabeledEdit
+        Left = 520
+        Top = 120
+        Width = 50
+        Height = 21
+        EditLabel.Width = 37
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero'
+        MaxLength = 5
+        TabOrder = 6
       end
     end
   end
