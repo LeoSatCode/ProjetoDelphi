@@ -10,13 +10,8 @@ uses System.Classes,Vcl.Controls,Vcl.ExtCtrls, Vcl.Mask,
      FireDAC.Stan.Async,FireDAC.Phys, FireDAC.Phys.MSSQL,
      FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB,
      FireDAC.Comp.Client, System.SysUtils,
-     RLReport, Winapi.Windows,
-
-     Vcl.Imaging.pngimage,
-     Vcl.Imaging.jpeg,
-     Vcl.Graphics,
-     Vcl.ExtDlgs,
-     Vcl.DBGrids;
+     Winapi.Windows,
+     Vcl.ExtDlgs;
 
 type
   TConsultaCEP = class

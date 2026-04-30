@@ -3,7 +3,7 @@ object frmCaixa: TfrmCaixa
   Top = 0
   Caption = 'Caixa'
   ClientHeight = 457
-  ClientWidth = 1000
+  ClientWidth = 976
   Color = 16774378
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object frmCaixa: TfrmCaixa
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 1000
+    Width = 976
     Height = 457
     ActivePage = Pendentes
     Align = alClient
@@ -31,17 +31,20 @@ object frmCaixa: TfrmCaixa
       object pnl2: TPanel
         Left = 0
         Top = 388
-        Width = 992
+        Width = 968
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        DesignSize = (
+          968
+          41)
         object btnReceber: TPngBitBtn
-          Left = 381
-          Top = 8
+          Left = 3
+          Top = 7
           Width = 84
-          Height = 25
+          Height = 26
           Caption = '&Receber'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -64,8 +67,8 @@ object frmCaixa: TfrmCaixa
             62338F11BFFFBFBC0000000049454E44AE426082}
         end
         object btnCancelar: TPngBitBtn
-          Left = 505
-          Top = 8
+          Left = 93
+          Top = 7
           Width = 89
           Height = 25
           Caption = '&Cancelar'
@@ -96,10 +99,11 @@ object frmCaixa: TfrmCaixa
             4CFF7D3A06FC00BBBAE611379FF1D70000000049454E44AE426082}
         end
         object btnSair: TPngBitBtn
-          Left = 888
-          Top = 6
+          Left = 866
+          Top = 7
           Width = 91
           Height = 25
+          Anchors = [akTop, akRight]
           Cancel = True
           Caption = '&Sair'
           Font.Charset = ANSI_CHARSET
@@ -122,7 +126,7 @@ object frmCaixa: TfrmCaixa
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 992
+        Width = 968
         Height = 57
         Align = alTop
         Color = 16774378
@@ -173,7 +177,7 @@ object frmCaixa: TfrmCaixa
       object gdrPendentes: TDBGrid
         Left = 0
         Top = 57
-        Width = 992
+        Width = 968
         Height = 331
         Align = alClient
         DataSource = dtsPendentes
@@ -247,17 +251,21 @@ object frmCaixa: TfrmCaixa
       object Panel2: TPanel
         Left = 0
         Top = 388
-        Width = 992
+        Width = 968
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
+        DesignSize = (
+          968
+          41)
         object PngBitBtn1: TPngBitBtn
-          Left = 888
-          Top = 6
+          Left = 866
+          Top = 7
           Width = 91
           Height = 25
+          Anchors = [akTop, akRight]
           Cancel = True
           Caption = '&Sair'
           Font.Charset = ANSI_CHARSET
@@ -277,10 +285,10 @@ object frmCaixa: TfrmCaixa
             4E44AE426082}
         end
         object btnExtornar: TPngBitBtn
-          Left = 448
-          Top = 6
-          Width = 75
-          Height = 25
+          Left = 3
+          Top = 7
+          Width = 84
+          Height = 26
           Caption = 'Extornar'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -290,12 +298,25 @@ object frmCaixa: TfrmCaixa
           ParentFont = False
           TabOrder = 1
           OnClick = btnExtornarClick
+          PngImage.Data = {
+            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+            61000000097048597300000B1300000B1301009A9C18000001244944415478DA
+            A5D3BB4A034114C6F10D825A9874DA782B425EC0DA0B8295E20B443B110921A8
+            88C4423B2FA0B5A56F602762AF269D8D9D441B1114AD442B51E2FFE0271C8671
+            89E4C08F9D99DD3D3B67663693B419195DF3B8537B0C258CA3172FB8C0212EFF
+            4A708F29AC601A7B38C313FA34B6A1B1657C86099AF8401DB3788FCCB607C79A
+            693996C0E20193B855DFBED4852FF5B3B8C63C6A3E4118BB584367F0218B254C
+            A09896E00D236844EE0DA9D4019FE01433EEA16DAC6B06B63607D8D43D2BE915
+            DD6933F051C01572EA0F6B3B07D312345DDB66B08F2DF5ED8C8C62CE27B0BDDE
+            C1629028DC859C76A1A87568A984C4BD6CE7E00695DFC15882232CA8DD817E2D
+            701527584D2227D18795F3EC4A78C479F2F32FD4C387FF534234DA4EF00D0B69
+            391169DDCE8D0000000049454E44AE426082}
         end
       end
       object pnlListagemTopo1: TPanel
         Left = 0
         Top = 0
-        Width = 992
+        Width = 968
         Height = 57
         Align = alTop
         Color = 16774378
@@ -331,7 +352,7 @@ object frmCaixa: TfrmCaixa
       object gdrFaturados: TDBGrid
         Left = 0
         Top = 57
-        Width = 992
+        Width = 968
         Height = 331
         Align = alClient
         DataSource = dtsFaturados

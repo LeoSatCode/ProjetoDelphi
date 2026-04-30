@@ -70,9 +70,11 @@ inherited frmCadProduto: TfrmCadProduto
           Width = 183
           Height = 376
           Align = alClient
-          ExplicitLeft = 0
-          ExplicitTop = 29
-          ExplicitHeight = 225
+          Center = True
+          ExplicitLeft = 14
+          ExplicitTop = 6
+          ExplicitWidth = 157
+          ExplicitHeight = 185
         end
       end
     end
