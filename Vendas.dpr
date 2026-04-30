@@ -61,7 +61,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmRelPreVenda, frmRelPreVenda);
-  Application.CreateForm(TfrmRelProVenda, frmRelProVenda);
   Application.Run;
 end.

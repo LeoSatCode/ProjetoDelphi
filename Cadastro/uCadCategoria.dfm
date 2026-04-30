@@ -8,9 +8,13 @@ inherited frmCadCategoria: TfrmCadCategoria
     end
   end
   inherited pgcPrincipal: TPageControl
-    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       inherited gdrListagem: TDBGrid
+        ReadOnly = True
         Columns = <
           item
             Expanded = False
@@ -27,6 +31,10 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       object edtCategoriaId: TLabeledEdit
         Tag = 1
         Left = 20

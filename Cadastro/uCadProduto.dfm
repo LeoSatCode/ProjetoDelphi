@@ -8,8 +8,11 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited pgcPrincipal: TPageControl
-    ActivePage = tabManutencao
     inherited tabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Height = 55
         ExplicitHeight = 55
@@ -18,6 +21,7 @@ inherited frmCadProduto: TfrmCadProduto
         Top = 55
         Width = 748
         Height = 378
+        ReadOnly = True
         Columns = <
           item
             Expanded = False
@@ -73,6 +77,10 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       object lblDescricao: TLabel
         Left = 12
         Top = 149
