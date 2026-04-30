@@ -743,27 +743,27 @@
     end
     object lblUSUÁRIO: TLabel
       Left = 180
-      Top = 267
-      Width = 56
-      Height = 18
+      Top = 270
+      Width = 47
+      Height = 20
       Caption = 'LOGIN:'
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
-      Font.Name = 'Tahoma'
+      Font.Name = 'Segoe UI Variable Text Semibold'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object lbl2: TLabel
       Left = 180
-      Top = 352
-      Width = 57
-      Height = 18
+      Top = 350
+      Width = 53
+      Height = 20
       Caption = 'SENHA:'
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
-      Font.Name = 'Tahoma'
+      Font.Name = 'Segoe UI Variable Text Semibold'
       Font.Style = [fsBold]
       ParentFont = False
     end
@@ -773,8 +773,15 @@
     Top = 432
     Width = 75
     Height = 25
+    Cursor = crHandPoint
     Cancel = True
     Caption = 'FECHAR'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI Variable Text Semibold'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 2
     OnClick = btnFecharClick
     PngImage.Data = {
@@ -790,7 +797,14 @@
     Top = 432
     Width = 75
     Height = 25
+    Cursor = crHandPoint
     Caption = 'LOGIN'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI Variable Text Semibold'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 1
     OnClick = btnLoginClick
     PngImage.Data = {

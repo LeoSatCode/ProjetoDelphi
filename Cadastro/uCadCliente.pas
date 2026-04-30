@@ -46,9 +46,6 @@ type
     dtsSituacao: TDataSource;
     QrySituacaosituacaoId: TFDAutoIncField;
     QrySituacaosituacaoCliente: TStringField;
-    RESTRequest1: TRESTRequest;
-    RESTResponse1: TRESTResponse;
-    RESTClient1: TRESTClient;
     lblSituacao: TLabel;
     edtObservacao: TLabeledEdit;
     QryListagemobservacao: TStringField;
@@ -99,7 +96,7 @@ var
 implementation
 
 uses
-  uDTMConexao, uDTMVenda;
+  uDTMConexao, uDTMVenda, cConsultaCEP;
 
 {$R *.dfm}
 
@@ -303,56 +300,25 @@ end;
 
 procedure TfrmCadCliente.edtCEPExit(Sender: TObject);
 var
-  CEPDigitado: string;
-  ObjetoJSON: TJSONObject;
-  Erro: Boolean;
-  Valor: string;
+  Consulta: TConsultaCEP;
 begin
-  CEPDigitado := StringReplace(edtCEP.Text, '-', '', [rfReplaceAll]);
-
-  if Length(CEPDigitado) <> 8 then
-  begin
-    MessageDlg('CEP não encontrado. Verifique o número digitado.', mtWarning,[mbOK], 0);
-    edtCEP.Clear;
-    edtCEP.SetFocus;
-    Exit;
-  end;
-
-  RESTClient1.BaseURL := 'https://viacep.com.br/ws/' + CEPDigitado + '/json/';
-
+  Consulta := TConsultaCEP.Create;
   try
-    RESTRequest1.Execute;
-
-    if Assigned(RESTResponse1.JSONValue) then
+    if Consulta.BuscarCEP(edtCEP.Text) then
     begin
-      ObjetoJSON := RESTResponse1.JSONValue as TJSONObject;
-
-      if ObjetoJSON.TryGetValue<Boolean>('erro', Erro) and Erro then
-      begin
-        MessageDlg('CEP não encontrado. Verifique o número digitado.', mtWarning,[mbOK], 0);
-        edtCEP.Clear;
-        edtCEP.SetFocus;
-        Exit;
-      end;
-
-      if ObjetoJSON.TryGetValue('logradouro', Valor) then
-        edtEndereco.Text := Valor;
-
-      if ObjetoJSON.TryGetValue('bairro', Valor) then
-        edtBairro.Text := Valor;
-
-      if ObjetoJSON.TryGetValue('localidade', Valor) then
-        edtCidade.Text := Valor;
-
-      if ObjetoJSON.TryGetValue('uf', Valor) then
-        edtEstado.Text := Valor;
-    end;
-  except
-    on E: Exception do
+      edtEndereco.Text := Consulta.Logradouro;
+      edtBairro.Text   := Consulta.Bairro;
+      edtCidade.Text   := Consulta.Cidade;
+      edtEstado.Text   := Consulta.Estado;
+    end
+    else
     begin
-      MessageDlg('Erro ao consultar o ViaCep. Verifique sua conexão com a internet.' + sLineBreak + E.Message, mtError, [mbOK], 0);
+      ShowMessage('CEP não encontrado. Verifique o número digitado.');
+      edtCEP.Clear;
       edtCEP.SetFocus;
     end;
+  finally
+    Consulta.Free;
   end;
 end;
 

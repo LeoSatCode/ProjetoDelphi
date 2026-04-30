@@ -110,9 +110,16 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       Top = 10
       Width = 85
       Height = 24
+      Cursor = crHandPoint
       Anchors = [akTop, akRight]
       Cancel = True
       Caption = '&SAIR'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
+      ParentFont = False
       TabOrder = 0
       OnClick = btnFecharClick
       PngImage.Data = {

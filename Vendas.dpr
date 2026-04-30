@@ -52,7 +52,8 @@ uses
   uRelPreVenda in 'Relatorio\uRelPreVenda.pas' {frmRelPreVenda},
   uRelProVenda in 'Relatorio\uRelProVenda.pas' {frmRelProVenda},
   cCaixa in 'Classes\cCaixa.pas',
-  cGridUtils in 'Classes\cGridUtils.pas';
+  cGridUtils in 'Classes\cGridUtils.pas',
+  cConsultaCEP in 'Classes\cConsultaCEP.pas';
 
 {$R *.res}
 

@@ -241,6 +241,7 @@
         </DCCReference>
         <DCCReference Include="Classes\cCaixa.pas"/>
         <DCCReference Include="Classes\cGridUtils.pas"/>
+        <DCCReference Include="Classes\cConsultaCEP.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

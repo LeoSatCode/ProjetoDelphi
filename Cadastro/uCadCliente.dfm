@@ -324,10 +324,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 22
       ExplicitWidth = 1003
-      ExplicitHeight = 433
       object lbl1: TLabel
         Left = 12
         Top = 101
@@ -948,23 +945,5 @@ inherited frmCadCliente: TfrmCadCliente
       80010000000000008001000000000000C003000000000000E007000000000000
       F00F000000000000FFFF00000000000000000000000000000000000000000000
       000000000000}
-  end
-  object RESTRequest1: TRESTRequest
-    Client = RESTClient1
-    Params = <>
-    Response = RESTResponse1
-    SynchronizedEvents = False
-    Left = 508
-    Top = 40
-  end
-  object RESTResponse1: TRESTResponse
-    Left = 580
-    Top = 40
-  end
-  object RESTClient1: TRESTClient
-    Params = <>
-    HandleRedirects = True
-    Left = 436
-    Top = 40
   end
 end
