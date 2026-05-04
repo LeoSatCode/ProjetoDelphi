@@ -79,6 +79,8 @@ type
     procedure btnFecharClick(Sender: TObject);
     procedure edtEmailExit(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
+    procedure mskPesquisarChange(Sender: TObject);
+    procedure mskPesquisarExit(Sender: TObject);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -180,6 +182,32 @@ begin
   else
   begin
     edtObservacao.Visible:=false;
+  end;
+
+end;
+
+procedure TfrmCadCliente.mskPesquisarChange(Sender: TObject);
+begin
+  if IndiceAtual = 'situacaoId' then begin
+    if mskPesquisar.Text <> '' then begin
+      mskPesquisar.Text := '';
+      ShowMessage('Não é possivel realizar pesquisas nesse campo');
+      mskPesquisar.SetFocus;
+    end;
+  end;
+  inherited;
+end;
+
+procedure TfrmCadCliente.mskPesquisarExit(Sender: TObject);
+var date:TDateTime;
+begin
+  if IndiceAtual = 'dataVenda' then begin
+   if mskPesquisar.Text <> '' then begin
+    if (Length(TFuncao.SomenteNumeros(mskPesquisar.Text)) < 8)  or (not TryStrToDate(mskPesquisar.Text, date)) then begin
+      ShowMessage('Digite uma data válida ou completa');
+      mskPesquisar.SetFocus;
+    end;
+   end;
   end;
 
 end;

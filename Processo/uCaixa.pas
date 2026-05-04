@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, System.IniFiles, uDTMVenda,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa,
+  FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa, cPesquisar,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes,
   PngBitBtn, cGridUtils, System.ImageList, Vcl.ImgList;
 
@@ -18,12 +18,6 @@ type
     pnl2: TPanel;
     btnReceber: TPngBitBtn;
     QryPendentes: TFDQuery;
-    QryPendentespreVendaId: TFDAutoIncField;
-    QryPendentesclienteId: TIntegerField;
-    QryPendentesnome: TStringField;
-    QryPendentesdataEmissao: TSQLTimeStampField;
-    QryPendentestotalVenda: TFMTBCDField;
-    QryPendentesstatus: TStringField;
     dtsPendentes: TDataSource;
     Panel2: TPanel;
     QryFaturados: TFDQuery;
@@ -34,7 +28,6 @@ type
     FMTBCDField1: TFMTBCDField;
     StringField2: TStringField;
     dtsFaturados: TDataSource;
-    strngfldQryPendentesdocumento: TStringField;
     strngfldQryFaturadosdocumento: TStringField;
     pnlListagemTopo: TPanel;
     lblIndice: TLabel;
@@ -49,9 +42,16 @@ type
     btnCancelar: TPngBitBtn;
     btnSair: TPngBitBtn;
     PngBitBtn1: TPngBitBtn;
-    QryPendentessituacaoId: TIntegerField;
     ilimage: TImageList;
     btnExtornar: TPngBitBtn;
+    QryPendentespreVendaId: TFDAutoIncField;
+    QryPendentesclienteId: TIntegerField;
+    QryPendentesnome: TStringField;
+    QryPendentessituacaoId: TIntegerField;
+    QryPendentesdocumento: TStringField;
+    QryPendentesdataEmissao: TSQLTimeStampField;
+    QryPendentestotalVenda: TFMTBCDField;
+    QryPendentesstatus: TStringField;
     procedure btnReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
@@ -268,67 +268,8 @@ begin
 end;
 
 procedure TfrmCaixa.mskPesquisarChange(Sender: TObject);
-var Date:TDateTime;
-    Texto, N: string;
-    poscursor: Integer;
 begin
-  if(trim(TMaskEdit(Sender).Text) = '')then
-    Exit;
-
-  if IndiceAtual = 'documento' then begin
-  PosCursor := mskPesquisar.SelStart;
-  mskPesquisar.OnChange := nil;
-  try
-    N := TFuncao.SomenteNumeros(mskPesquisar.Text);
-    Texto := N;
-
-    if Length(N) <= 11 then
-    begin
-      if Length(N) > 3 then Texto := Copy(N,1,3) + '.' + Copy(N,4,Length(N)-3);
-      if Length(N) > 6 then Texto := Copy(N,1,3) + '.' + Copy(N,4,3) + '.' + Copy(N,7,Length(N)-6);
-      if Length(N) > 9 then Texto := Copy(N,1,3) + '.' + Copy(N,4,3) + '.' + Copy(N,7,3) + '-' + Copy(N,10,Length(N)-9);
-    end
-    else
-    begin
-      if Length(N) > 2 then Texto := Copy(N,1,2) + '.' + Copy(N,3,Length(N)-2);
-      if Length(N) > 5 then Texto := Copy(N,1,2) + '.' + Copy(N,3,3) + '.' + Copy(N,6,Length(N)-5);
-      if Length(N) > 8 then Texto := Copy(N,1,2) + '.' + Copy(N,3,3) + '.' + Copy(N,6,3) + '/' + Copy(N,9,Length(N)-8);
-      if Length(N) > 12 then Texto := Copy(N,1,2) + '.' + Copy(N,3,3) + '.' + Copy(N,6,3) + '/' + Copy(N,9,4) + '-' + Copy(N,13,Length(N)-12);
-    end;
-
-    mskPesquisar.Text := Texto;
-    mskPesquisar.SelStart := Length(Texto);
-  finally
-    mskPesquisar.OnChange := mskPesquisarChange;
-  end;
-  end;
-
-  if(QryPendentes.FieldByName(IndiceAtual).DataType in [ftString, ftWideString] )then
-  begin
-    QryPendentes.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey])
-  end
-
-  else if(QryPendentes.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd]) then
-  begin
-    try
-      QryPendentes.Locate(IndiceAtual, TMaskEdit(Sender).Text,[])
-    except
-
-    end;
-
-  end
-
-  else if(QryPendentes.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp] )then
-  begin
-    if TryStrToDate(TMaskEdit(Sender).Text, Date) then
-    begin
-      QryPendentes.Locate(IndiceAtual, Date, []);
-    end;
-
-  end
-
-  else
-    QryPendentes.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
+  TPesquisa.PesquisaCampo(Sender,mskPesquisar,QryPendentes,IndiceAtual);
 end;
 
 procedure TfrmCaixa.btnPesquisarClick(Sender: TObject);

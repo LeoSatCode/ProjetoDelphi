@@ -453,37 +453,63 @@ begin
 end;
 
 procedure TfrmTelaHeranca.mskPesquisarChange(Sender: TObject);
-var Date:TDateTime;
+var
+  Date: TDateTime;
+  N, Texto: string;
+  PosCursor: Integer;
 begin
-  if(trim(TMaskEdit(Sender).Text) = '')then
+  if Trim(TMaskEdit(Sender).Text) = '' then
     Exit;
 
-  if(QryListagem.FieldByName(IndiceAtual).DataType in [ftString, ftWideString] )then
+  if (QryListagem.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp]) then
   begin
-    QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey])
+    PosCursor := mskPesquisar.SelStart;
+    mskPesquisar.OnChange := nil;
+    try
+      N := TFuncao.SomenteNumeros(mskPesquisar.Text);
+      Texto := N;
+
+      if Length(N) <= 8 then
+      begin
+        if Length(N) > 2 then
+          Texto := Copy(N,1,2) + '/' + Copy(N,3,Length(N)-2);
+
+        if Length(N) > 4 then
+          Texto := Copy(N,1,2) + '/' + Copy(N,3,2) + '/' + Copy(N,5,Length(N)-4);
+      end;
+
+      mskPesquisar.MaxLength := 10;
+      mskPesquisar.Text := Texto;
+      mskPesquisar.SelStart := Length(Texto);
+    finally
+      mskPesquisar.OnChange := mskPesquisarChange;
+    end;
+
+    // Depois de formatar, tenta localizar
+    if TryStrToDate(mskPesquisar.Text, Date) then
+      QryListagem.Locate(IndiceAtual, Date, []);
+
+    Exit; // importante pra não cair nos outros casos
+  end;
+
+  if (QryListagem.FieldByName(IndiceAtual).DataType in [ftString, ftWideString]) then
+  begin
+    QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [loPartialKey]);
   end
 
-  else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd]) then
+  else if (QryListagem.FieldByName(IndiceAtual).DataType in [ftFloat, ftCurrency, ftFMTBcd]) then
   begin
     try
-      QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text,[])
+      QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, []);
     except
-
+      // evita erro de conversão
     end;
-
-  end
-
-  else if(QryListagem.FieldByName(IndiceAtual).DataType in [ftDate, ftDateTime, ftTimeStamp] )then
-  begin
-    if TryStrToDate(TMaskEdit(Sender).Text, Date) then
-    begin
-      QryListagem.Locate(IndiceAtual, Date, []);
-    end;
-
   end
 
   else
-    QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, [])
+  begin
+    QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, []);
+  end;
 end;
 
 procedure TfrmTelaHeranca.BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);

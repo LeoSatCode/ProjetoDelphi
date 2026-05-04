@@ -198,10 +198,12 @@ object frmCaixa: TfrmCaixa
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = [fsBold]
         OnDrawColumnCell = gdrPendentesDrawColumnCell
+        OnTitleClick = gdrPendentesTitleClick
         Columns = <
           item
             Expanded = False
             FieldName = 'preVendaId'
+            Width = 64
             Visible = True
           end
           item
@@ -235,12 +237,12 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'totalVenda'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'situacaoId'
-            Title.Caption = 'Situa'#231#227'o'
             Visible = True
           end>
       end
@@ -433,7 +435,7 @@ object frmCaixa: TfrmCaixa
     Left = 168
     Top = 184
     object QryPendentespreVendaId: TFDAutoIncField
-      DisplayLabel = 'Pr'#233' Venda'
+      DisplayLabel = 'Pre Venda ID'
       FieldName = 'preVendaId'
       Origin = 'preVendaId'
       ProviderFlags = [pfInWhere, pfInKey]
@@ -450,6 +452,17 @@ object frmCaixa: TfrmCaixa
       FieldName = 'nome'
       Origin = 'nome'
       Size = 60
+    end
+    object QryPendentessituacaoId: TIntegerField
+      DisplayLabel = 'Situa'#231#227'o'
+      FieldName = 'situacaoId'
+      Origin = 'situacaoId'
+    end
+    object QryPendentesdocumento: TStringField
+      DisplayLabel = 'Documento'
+      FieldName = 'documento'
+      Origin = 'documento'
+      Size = 18
     end
     object QryPendentesdataEmissao: TSQLTimeStampField
       DisplayLabel = 'Data Emiss'#227'o'
@@ -471,16 +484,6 @@ object frmCaixa: TfrmCaixa
       FieldName = 'status'
       Origin = 'status'
       Required = True
-    end
-    object strngfldQryPendentesdocumento: TStringField
-      DisplayLabel = 'Documento'
-      FieldName = 'documento'
-      Origin = 'documento'
-      Size = 18
-    end
-    object QryPendentessituacaoId: TIntegerField
-      FieldName = 'situacaoId'
-      Origin = 'situacaoId'
     end
   end
   object dtsPendentes: TDataSource
