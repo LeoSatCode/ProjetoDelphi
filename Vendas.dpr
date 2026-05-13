@@ -54,7 +54,8 @@ uses
   cCaixa in 'Classes\cCaixa.pas',
   cGridUtils in 'Classes\cGridUtils.pas',
   cConsultaCEP in 'Classes\cConsultaCEP.pas',
-  cPesquisar in 'Classes\cPesquisar.pas';
+  cPesquisar in 'Classes\cPesquisar.pas',
+  uConOrcVen in 'Consulta\uConOrcVen.pas' {frmConOrcVen};
 
 {$R *.res}
 
@@ -62,5 +63,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmConOrcVen, frmConOrcVen);
   Application.Run;
 end.

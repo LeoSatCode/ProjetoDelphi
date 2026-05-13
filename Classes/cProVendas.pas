@@ -32,6 +32,7 @@ type
   public
     constructor Create(aConexao:TFDConnection);
     destructor  Destroy; override;
+    procedure AtualizarStatusVencidos;
     function Inserir(cds:TClientDataSet):Integer;
     function Atualizar(cds:TClientDataSet):Boolean;
     function Apagar:Boolean;
@@ -592,6 +593,24 @@ begin
     FreeAndNil(Qry);
   end;
 end;
+
+
+procedure TVenda.AtualizarStatusVencidos;
+var Qry: TFDQuery;
+begin
+  Qry := TFDQuery.Create(nil);
+  try
+    Qry.Connection := ConexaoDB;
+    // Cast para DATE ignora a hora exata e compara só o dia!
+    Qry.SQL.Clear;
+    Qry.SQL.Add('UPDATE preVenda SET status = ''VENCIDA'' ');
+    Qry.SQL.Add('WHERE status = ''PENDENTE'' AND CAST(dataValidade AS DATE) < CAST(GETDATE() AS DATE)');
+    Qry.ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 
 procedure TVenda.InserirPreVendaItens(Qry: TFDQuery; cds: TClientDataSet);
 begin

@@ -173,6 +173,10 @@ begin
   else if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'RETORNADO') then
   begin
     Grid.Canvas.Brush.Color := RGB(169, 214, 229);
+  end
+  else if (Column.FieldName = 'status') and (Qry.FieldByName('status').AsString = 'VENCIDA') then
+  begin
+    Grid.Canvas.Brush.Color := RGB(255, 204, 153);
   end;
 
    // Desenhando a imagem

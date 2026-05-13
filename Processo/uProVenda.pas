@@ -37,14 +37,16 @@ type
     edtVendaId: TLabeledEdit;
     lkpCliente: TDBLookupComboBox;
     edtDataVenda: TDateEdit;
+    lblData1: TLabel;
+    edtDataValidade: TDateEdit;
+    btnConOrcVenc: TSpeedButton;
+    lblIndice1: TLabel;
     QryListagempreVendaId: TFDAutoIncField;
     QryListagemclienteId: TIntegerField;
     QryListagemnome: TStringField;
     QryListagemdataEmissao: TSQLTimeStampField;
     QryListagemtotalVenda: TFMTBCDField;
     QryListagemstatus: TStringField;
-    lblData1: TLabel;
-    edtDataValidade: TDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnAlterarClick(Sender: TObject);
@@ -64,6 +66,7 @@ type
       State: TGridDrawState);
     procedure bntConClienteClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnConOrcVencClick(Sender: TObject);
 
 
 
@@ -90,7 +93,7 @@ implementation
 
 {$R *.dfm}
 
-uses uCadCliente, cFuncao, uPrincipal, uConCliente, uRelPreVenda;
+uses uCadCliente, cFuncao, uPrincipal, uConCliente, uRelPreVenda, uConOrcVen;
 
 {$REGION 'Overrides'}
 function TfrmProVendas.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
@@ -349,6 +352,19 @@ begin
   LimparCds;
 end;
 
+procedure TfrmProVendas.btnConOrcVencClick(Sender: TObject);
+begin
+  inherited;
+   Try
+   frmConOrcVen:=TfrmConOrcVen.Create(Self);
+
+   frmConOrcVen.ShowModal;
+
+  Finally
+   frmConOrcVen.Release;
+  end;
+end;
+
 procedure TfrmProVendas.btnGravarClick(Sender: TObject);
 begin
 
@@ -405,10 +421,12 @@ begin
   QryListagem.Open;
 end;
 
-
 procedure TfrmProVendas.btnCadClienteClick(Sender: TObject);
 var
   frm: TfrmCadCliente;
+  vSituacaoId: Integer;
+  vClienteId: Integer;
+  vNomeSituacao: string; // <-- A nossa variável tradutora
 begin
   inherited;
 
@@ -419,7 +437,46 @@ begin
       dtmVendas.QryCliente.Close;
       dtmVendas.QryCliente.Open;
       dtmVendas.QryCliente.Last;
-      lkpCliente.KeyValue := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+
+      vClienteId  := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+      vSituacaoId := dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger;
+
+      // "Tradutor" de IDs para a interface
+      case vSituacaoId of
+        2: vNomeSituacao := 'BLOQUEADO';
+        3: vNomeSituacao := 'ATENÇÃO';
+        4: vNomeSituacao := 'INATIVO';
+      else
+        vNomeSituacao := 'RESTRITO';
+      end;
+
+      // Verifica o status do cliente novo
+      if vSituacaoId in [2, 3, 4] then
+      begin
+        // Passando uma String amigável!
+        MessageDlg('O cliente recém-cadastrado possui um status de restrição (' + vNomeSituacao + '). Ele não será vinculado à Pré-Venda automaticamente.', mtWarning, [mbOK], 0);
+        lkpCliente.KeyValue := Null;
+      end
+      else if vSituacaoId = 5 then // 5=Prospecto
+      begin
+        MessageDlg('Cliente cadastrado como Prospecto. O sistema irá ativá-lo automaticamente para efetuar esta Pré-Venda!', mtInformation, [mbOK], 0);
+
+        with dtmVendas.QryClienteUpdate do
+        begin
+          SQL.Text := 'UPDATE clientes SET situacaoId = 1 WHERE clienteId = :id';
+          ParamByName('id').AsInteger := vClienteId;
+          ExecSQL;
+        end;
+
+        dtmVendas.QryCliente.Close;
+        dtmVendas.QryCliente.Open;
+        dtmVendas.QryCliente.Locate('clienteId', vClienteId, []);
+        lkpCliente.KeyValue := vClienteId;
+      end
+      else // É Ativo (1)
+      begin
+        lkpCliente.KeyValue := vClienteId;
+      end;
     end;
   finally
     frm.Free;
@@ -460,6 +517,8 @@ end;
 
 procedure TfrmProVendas.FormShow(Sender: TObject);
 begin
+  oVenda.AtualizarStatusVencidos;
+
   QryListagem.Open;
   TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
   btnNovo.SetFocus;

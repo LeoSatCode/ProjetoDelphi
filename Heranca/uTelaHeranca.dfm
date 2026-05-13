@@ -94,7 +94,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         00228FB6115BBA0A080000000049454E44AE426082}
     end
     object btnCancelar: TPngBitBtn
-      Left = 235
+      Left = 340
       Top = 15
       Width = 113
       Height = 25
@@ -106,7 +106,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Font.Name = 'Segoe UI Variable Text Semibold'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 3
       OnClick = btnCancelarClick
       PngImage.Data = {
         89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
@@ -128,7 +128,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     end
     object btnGravar: TPngBitBtn
       Tag = 99
-      Left = 354
+      Left = 235
       Top = 15
       Width = 99
       Height = 25
@@ -140,7 +140,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Font.Name = 'Segoe UI Variable Text Semibold'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnGravarClick
       PngImage.Data = {
         89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF

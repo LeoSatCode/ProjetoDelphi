@@ -2,12 +2,9 @@ inherited frmConCategoria: TfrmConCategoria
   Caption = 'Consulta de Categorias'
   PixelsPerInch = 96
   TextHeight = 13
-  inherited pnl1: TPanel
-    Color = 16774378
-    ParentBackground = False
-  end
   inherited pnl2: TPanel
     inherited grdPesquisa: TDBGrid
+      OnDblClick = grdPesquisaDblClick
       Columns = <
         item
           Expanded = False

@@ -21,13 +21,56 @@ inherited frmProVendas: TfrmProVendas
     TabOrder = 0
     ExplicitWidth = 1003
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 995
-      ExplicitHeight = 433
       inherited pnlListagemTopo: TPanel
         Width = 995
         ExplicitWidth = 995
+        inherited lblIndice: TLabel
+          Width = 78
+          Caption = 'Campo Pesquisa'
+          ExplicitWidth = 78
+        end
+        object btnConOrcVenc: TSpeedButton [1]
+          Left = 842
+          Top = 25
+          Width = 34
+          Height = 25
+          Glyph.Data = {
+            36030000424D3603000000000000360000002800000010000000100000000100
+            18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+            FF00FF26B7FF26B7FF26B7FF26B7FF26B7FF26B7FF26B7FF26B7FF26B7FF26B7
+            FF85969EB2B2B2949393FF00FFFF00FF26B7FF22B4FF34BDFF64D4FF77DCFF6E
+            DCFF61DDFF67E1FF64DFFF44CFFF5AA9CCBDBEBE9495959B9B9BFF00FFFF00FF
+            26B7FF4EC8FF64D4FF9EE8FFB8F0FFA5EEFF8CECFF90EEFF8DEDFF75D1EAA4AD
+            B1999A9A9D9E9EFF00FFFF00FFFF00FF26B7FF73D6FF61D3FF9AE6FFB5EFFF9E
+            EBFF80E7FF82E8FF81E1F892A9AFA0A0A087A4B2FF00FFFF00FFFF00FFFF00FF
+            26B7FF8CDEFF5ED3FF95E0F89FB9C1838A8C848A8C909FA38AA8B09FA0A0829E
+            AB2DB4F8FF00FFFF00FFFF00FFFF00FF26B7FFA5E5FF5CCEF8889295AEADACE4
+            E3E2DBDAD9D1CFCFAAA9AA9094972EB6F826B7FFFF00FFFF00FFFF00FFFF00FF
+            26B7FFBEECFF7EA5B2ABA6A1EFEAE4E5E1DCDAD6D1D9D5D1D8D5D0AEABAC69BA
+            DD26B7FFFF00FFFF00FFFF00FFFF00FF26B7FF96DBFF8B8C8CFFF6EDFEF6ECFE
+            F6EDFDF6ECFDF6EDFEF6EDE8E0DCA3B0B626B7FFFF00FFFF00FFFF00FFFF00FF
+            26B7FF22B2FF878C8BE6D1B9E2D6C7E3D7C9E4D8CAE7DBCEE4D9CCD9CFC393A3
+            AA26B7FFFF00FFFF00FFFF00FFFF00FF26B7FF47C4FF848C8EFFECD6FFF1E2FF
+            EFDCFCEBD8FDEEDCF9EBDBE2D7CC90A5AE26B7FFFF00FFFF00FFFF00FFFF00FF
+            26B7FF70D5FF7E9DA8DACAB8FFF1E1FBEDDCF5E7D6F7E9D8F5E7D7BDB7B45DAE
+            D126B7FFFF00FFFF00FFFF00FFFF00FF26B7FF88DCFF63C9F18B9091DDD4C9F7
+            EADBEFE2D3EEE2D3CCC6C191A5AB2EBEFF26B7FFFF00FFFF00FFFF00FFFF00FF
+            26B7FFA1E4FF59D2FF90D3EA99A5A99DA3A5A9AFB29FA7A987B2BF57CFF829BA
+            FF26B7FFFF00FFFF00FFFF00FFFF00FF26B7FFBAEBFF54D2FF8CE3FFA7E9FF88
+            E2FF5CD7FF5AD7FF58D7FF48CEFF39C0FF26B7FFFF00FFFF00FFFF00FFFF00FF
+            26B7FFAAE5FFC6F0FFC1F0FFCBF3FFC1F0FFB3ECFFB2ECFFB1ECFFBDEEFF9FE4
+            FF26B7FFFF00FFFF00FFFF00FFFF00FFFF00FF26B7FF26B7FF26B7FF26B7FF26
+            B7FF26B7FF26B7FF26B7FF26B7FF26B7FFFF00FFFF00FFFF00FF}
+          OnClick = btnConOrcVencClick
+        end
+        object lblIndice1: TLabel [2]
+          Left = 807
+          Top = 6
+          Width = 103
+          Height = 13
+          Caption = 'Or'#231'amentos Vencidos'
+        end
       end
       inherited gdrListagem: TDBGrid
         Width = 995
@@ -35,15 +78,11 @@ inherited frmProVendas: TfrmProVendas
           item
             Expanded = False
             FieldName = 'preVendaId'
-            Title.Caption = 'N'#250'mero Pr'#233' Venda'
-            Width = 117
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'clienteId'
-            Title.Caption = 'C'#243'd Cliente'
-            Width = 101
             Visible = True
           end
           item
@@ -54,8 +93,6 @@ inherited frmProVendas: TfrmProVendas
           item
             Expanded = False
             FieldName = 'dataEmissao'
-            Title.Caption = 'Data Emissao'
-            Width = 107
             Visible = True
           end
           item
@@ -71,10 +108,7 @@ inherited frmProVendas: TfrmProVendas
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 995
-      ExplicitHeight = 433
       object pnl1: TPanel
         Left = 0
         Top = 83
@@ -459,7 +493,8 @@ inherited frmProVendas: TfrmProVendas
       '    pv.totalVenda,'
       '    pv.status'
       'FROM preVenda pv'
-      'INNER JOIN clientes c ON c.clienteId = pv.clienteId')
+      'INNER JOIN clientes c ON c.clienteId = pv.clienteId'
+      'WHERE status <> '#39'VENCIDA'#39)
     Left = 588
     object QryListagempreVendaId: TFDAutoIncField
       DisplayLabel = 'C'#243'd. Pr'#233' Venda'
@@ -471,7 +506,7 @@ inherited frmProVendas: TfrmProVendas
     object QryListagemclienteId: TIntegerField
       DisplayLabel = 'C'#243'd. Cliente'
       FieldName = 'clienteId'
-      Origin = 'clienteId'
+      Origin = 'pv.clienteId'
       Required = True
     end
     object QryListagemnome: TStringField
@@ -481,7 +516,7 @@ inherited frmProVendas: TfrmProVendas
       Size = 60
     end
     object QryListagemdataEmissao: TSQLTimeStampField
-      DisplayLabel = 'Data Emiss'#227'o'
+      DisplayLabel = 'Data Emissao'
       FieldName = 'dataEmissao'
       Origin = 'dataEmissao'
       Required = True
@@ -491,7 +526,7 @@ inherited frmProVendas: TfrmProVendas
       FieldName = 'totalVenda'
       Origin = 'totalVenda'
       Required = True
-      DisplayFormat = 'R$ ##,##0.00'
+      DisplayFormat = 'R$##,##0.00'
       Precision = 18
       Size = 5
     end

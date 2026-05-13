@@ -40,12 +40,11 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object mskPesquisa: TMaskEdit
+    object mskPesquisar: TMaskEdit
       Left = 1
       Top = 24
-      Width = 825
+      Width = 296
       Height = 24
-      Align = alBottom
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -55,7 +54,16 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       TabOrder = 0
       Text = ''
       TextHint = 'Digite sua Pesquisa'
-      OnChange = mskPesquisaChange
+      OnChange = mskPesquisarChange
+    end
+    object btnPesquisar: TPngBitBtn
+      Left = 303
+      Top = 23
+      Width = 75
+      Height = 25
+      Caption = 'btnPesquisar'
+      TabOrder = 1
+      OnClick = btnPesquisarClick
     end
   end
   object pnl2: TPanel
@@ -79,8 +87,9 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
-      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
+      ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWhite
@@ -88,7 +97,6 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = [fsBold]
       OnDrawColumnCell = grdPesquisaDrawColumnCell
-      OnDblClick = grdPesquisaDblClick
       OnKeyDown = grdPesquisaKeyDown
       OnTitleClick = grdPesquisaTitleClick
     end

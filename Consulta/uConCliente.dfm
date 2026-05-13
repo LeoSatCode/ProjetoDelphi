@@ -227,8 +227,11 @@ inherited frmConCliente: TfrmConCliente
   inherited pnl2: TPanel
     Top = 51
     Height = 376
+    ExplicitTop = 51
+    ExplicitHeight = 376
     inherited grdPesquisa: TDBGrid
       Height = 374
+      OnDblClick = grdPesquisaDblClick
       Columns = <
         item
           Expanded = False

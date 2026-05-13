@@ -254,7 +254,9 @@ begin
     if QryListagem.Fields[i].FieldName=IndiceAtual then
     begin
       TipoCampo := QryListagem.Fields[i].DataType;
-      NomeCampo := QryListagem.Fields[i].FieldName;
+      NomeCampo := QryListagem.Fields[i].Origin;
+      if Trim(NomeCampo) = '' then
+        NomeCampo := QryListagem.Fields[i].FieldName;
       Break;
     end;
   end;
@@ -294,6 +296,7 @@ begin
   QryListagem.SQL.Clear;
   QryListagem.SQL.Add(SelectOriginal);
   QryListagem.SQL.Add(CondicaoSQL);
+  //ShowMessage(QryListagem.SQL.Text);
   QryListagem.Open;
 
   mskPesquisar.Text:='';
@@ -394,7 +397,7 @@ end;
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 var I:Integer; //Variavel para percorrer a lista
 begin
-
+  SelectOriginal := QryListagem.SQL.Text;
   for I := 0 to gdrListagem.Columns.Count - 1 do
     gdrListagem.Columns[I].Title.Alignment := taCenter; //Percorre as colunas do grid e centraliza o titulo de cada uma
 
