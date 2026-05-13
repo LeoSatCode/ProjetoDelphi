@@ -55,7 +55,8 @@ uses
   cGridUtils in 'Classes\cGridUtils.pas',
   cConsultaCEP in 'Classes\cConsultaCEP.pas',
   cPesquisar in 'Classes\cPesquisar.pas',
-  uConOrcVen in 'Consulta\uConOrcVen.pas' {frmConOrcVen};
+  uConOrcVen in 'Consulta\uConOrcVen.pas' {frmConOrcVen},
+  uRelCanVenda in 'Relatorio\uRelCanVenda.pas' {frmExtorno};
 
 {$R *.res}
 
@@ -64,5 +65,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmConOrcVen, frmConOrcVen);
+  Application.CreateForm(TfrmExtorno, frmExtorno);
   Application.Run;
 end.

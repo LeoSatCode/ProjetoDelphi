@@ -1,5 +1,5 @@
 inherited frmProVendas: TfrmProVendas
-  Caption = 'Vendas'
+  Caption = 'Pr'#233' Venda'
   ClientWidth = 1003
   ExplicitWidth = 1009
   PixelsPerInch = 96

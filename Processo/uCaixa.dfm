@@ -203,7 +203,6 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'preVendaId'
-            Width = 64
             Visible = True
           end
           item
@@ -237,7 +236,6 @@ object frmCaixa: TfrmCaixa
           item
             Expanded = False
             FieldName = 'totalVenda'
-            Width = 64
             Visible = True
           end
           item

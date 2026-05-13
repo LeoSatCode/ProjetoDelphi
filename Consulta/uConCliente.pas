@@ -11,11 +11,6 @@ uses
 
 type
   TfrmConCliente = class(TfrmTelaHerancaConsulta)
-    QryListagemclienteId: TFDAutoIncField;
-    QryListagemnome: TStringField;
-    QryListagemdocumento: TStringField;
-    QryListagemsituacaoId: TIntegerField;
-    QryListagemtelefone: TStringField;
     img1: TImage;
     img2: TImage;
     img3: TImage;
@@ -26,6 +21,18 @@ type
     lbl7: TLabel;
     lbl8: TLabel;
     lbl9: TLabel;
+    QryListagemclienteId: TFDAutoIncField;
+    QryListagemnome: TStringField;
+    QryListagemdocumento: TStringField;
+    QryListagemendereco: TStringField;
+    QryListagemcidade: TStringField;
+    QryListagembairro: TStringField;
+    QryListagemestado: TStringField;
+    QryListagemcep: TStringField;
+    QryListagemtelefone: TStringField;
+    QryListagememail: TStringField;
+    QryListagemdatanascimento: TSQLTimeStampField;
+    QryListagemsituacaoId: TIntegerField;
     QryListagemobservacao: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure grdPesquisaDblClick(Sender: TObject);

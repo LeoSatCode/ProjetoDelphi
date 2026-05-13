@@ -1,17 +1,13 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientWidth = 1011
-  ExplicitTop = -35
+  ExplicitTop = -159
   ExplicitWidth = 1017
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
     Width = 1011
     ExplicitWidth = 1011
-    inherited btnNovo: TPngBitBtn
-      Top = 14
-      ExplicitTop = 14
-    end
     inherited btnFechar: TPngBitBtn
       Left = 921
       ExplicitLeft = 921
@@ -328,10 +324,7 @@ inherited frmCadCliente: TfrmCadCliente
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
       ExplicitWidth = 1003
-      ExplicitHeight = 433
       object lbl1: TLabel
         Left = 12
         Top = 101

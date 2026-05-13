@@ -28,6 +28,7 @@ object frmTelaHeranca: TfrmTelaHeranca
     Color = 16774378
     ParentBackground = False
     TabOrder = 0
+    OnClick = pnlRodapeClick
     DesignSize = (
       941
       54)

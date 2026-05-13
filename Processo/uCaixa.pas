@@ -86,7 +86,7 @@ var
 implementation
 
 uses
-  uPrincipal, cUsuarioLogado,cFuncao, uRelProVenda;
+  uPrincipal, cUsuarioLogado,cFuncao, uRelProVenda, uRelCanVenda;
 
 {$R *.dfm}
 
@@ -179,6 +179,7 @@ begin
       begin
         MessageDlg('Venda extornada com sucesso!Estoque atualizado.', mtInformation, [mbOK], 0);
 
+        TRel.MostrarRelatorio(Self, TfrmExtorno, oCaixa.VendaId);
         QryFaturados.Close;
         QryFaturados.Open;
       end;

@@ -235,6 +235,7 @@ object frmPrincipal: TfrmPrincipal
         Top = 1
         Width = 457
         Height = 205
+        Cursor = crHandPoint
         Title.Text.Strings = (
           'Vendas da '#218'ltima Semana')
         Legend.Alignment = laBottom
@@ -286,6 +287,7 @@ object frmPrincipal: TfrmPrincipal
         Top = 1
         Width = 458
         Height = 205
+        Cursor = crHandPoint
         Title.Text.Strings = (
           'Os 10 Produtos Mais Vendidos')
         Legend.Alignment = laBottom
@@ -454,6 +456,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object mniCAIXA1: TMenuItem
         Caption = 'CAIXA'
+        ShortCut = 8259
         OnClick = mniCAIXA1Click
       end
     end
@@ -462,7 +465,7 @@ object frmPrincipal: TfrmPrincipal
       OnClick = RELATRIO1Click
       object mniCategoria2: TMenuItem
         Caption = 'CATEGORIA'
-        ShortCut = 8259
+        ShortCut = 8276
         OnClick = mniCategoria2Click
       end
       object CLIENTE2: TMenuItem

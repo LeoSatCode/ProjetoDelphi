@@ -47,6 +47,7 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure gdrListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure pnlRodapeClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -332,9 +333,6 @@ begin
       LimparEdits;
       QryListagem.Refresh;
     end
-    else begin
-      MessageDlg('Erro na Exclusão', mtError, [mbOK], 0)
-    end;
   finally
       EstadoDoCadastro:=ecNenhum;
   end;

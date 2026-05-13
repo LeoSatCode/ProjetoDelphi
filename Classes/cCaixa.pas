@@ -251,7 +251,7 @@ begin
       finally
         FreeAndNil(oEstoque);
       end;
-
+      Self.F_vendaId := aPreVendaId;
       ConexaoDB.Commit;
     except
       on E: Exception do
