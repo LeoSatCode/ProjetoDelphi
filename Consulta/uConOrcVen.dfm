@@ -1,33 +1,15 @@
 inherited frmConOrcVen: TfrmConOrcVen
   Caption = 'Or'#231'amentos Vencidos'
   ClientWidth = 950
+  ExplicitTop = -95
   ExplicitWidth = 956
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnl1: TPanel
     Width = 950
     ExplicitWidth = 950
-    inherited btnPesquisar: TPngBitBtn
-      Width = 98
-      Caption = 'PESQUISAR'
-      Font.Charset = ANSI_CHARSET
-      Font.Name = 'Segoe UI Variable Text Semibold'
-      Font.Style = [fsBold]
-      ParentFont = False
-      PngImage.Data = {
-        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-        61000000097048597300000B1300000B1301009A9C180000011B4944415478DA
-        6364A01030E293949494E4025215401C05C4B240FC188897323333773C79F2E4
-        3B5E03A09AF702F19BFFFFFF3701F1354646462D20AE038A09010D71011982CF
-        80262065F8FCF9735F2C729B81069D79F6EC59233E03EE006D8D78F1E2C51974
-        3909090953A001CB8086ABE233E0DBAF5FBFC4DFBE7DFB195D4E585898978D8D
-        ED35D0000E7C065C02BA20098F0B96020D50C3698094945431D000073C61701A
-        18064DF85CE00654B41368C816502CFCFDFBF73A30E43541B100C482ACACAC2E
-        0F1F3EFC81D50069696907A0A695401C0B54AC0BA4E380C2AA40FC14C85F0CD4
-        DC05D28C351D006DB6012A5A0BC4914F9F3EDDC740003052A219C5007234A318
-        000CF54540CDF3809A0F10AB196B18900A283600001D378411B9615874000000
-        0049454E44AE426082}
-      ExplicitWidth = 98
+    inherited pnlPesquisar: TPanel
+      OnClick = nil
     end
   end
   inherited pnl2: TPanel
@@ -85,9 +67,14 @@ inherited frmConOrcVen: TfrmConOrcVen
   inherited pnl3: TPanel
     Width = 950
     ExplicitWidth = 950
-    inherited btnFechar: TPngBitBtn
-      Left = 864
-      ExplicitLeft = 864
+    inherited pnlFechar: TPanel
+      Left = 838
+      OnClick = nil
+      OnEnter = nil
+      OnExit = nil
+      OnMouseEnter = nil
+      OnMouseLeave = nil
+      ExplicitLeft = 838
     end
   end
   inherited QryListagem: TFDQuery

@@ -1,5 +1,6 @@
 inherited frmCadCategoria: TfrmCadCategoria
   Caption = 'Cadastro de Categorias'
+  ExplicitTop = 8
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
@@ -9,10 +10,6 @@ inherited frmCadCategoria: TfrmCadCategoria
   end
   inherited pgcPrincipal: TPageControl
     inherited tabListagem: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 933
-      ExplicitHeight = 433
       inherited gdrListagem: TDBGrid
         ReadOnly = True
         Columns = <
@@ -31,10 +28,6 @@ inherited frmCadCategoria: TfrmCadCategoria
       end
     end
     inherited tabManutencao: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 933
-      ExplicitHeight = 433
       object edtCategoriaId: TLabeledEdit
         Tag = 1
         Left = 20

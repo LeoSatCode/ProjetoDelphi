@@ -8,7 +8,7 @@ uses
   Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, uDTMConexao,
   FireDAC.Comp.Client, uEnum, RxToolEdit, RxCurrEdit, cUsuarioLogado, System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao,
-  PngBitBtn, cGridUtils;
+  PngBitBtn, cGridUtils, Vcl.Imaging.pngimage;
 
 type
   TfrmTelaHeranca = class(TForm)
@@ -18,42 +18,57 @@ type
     tabManutencao: TTabSheet;
     pnlListagemTopo: TPanel;
     mskPesquisar: TMaskEdit;
-    btnPesquisar: TPngBitBtn;
     gdrListagem: TDBGrid;
-    btnNovo: TPngBitBtn;
-    btnAlterar: TPngBitBtn;
-    btnCancelar: TPngBitBtn;
-    btnGravar: TPngBitBtn;
-    btnApagar: TPngBitBtn;
-    btnFechar: TPngBitBtn;
     btnNavigator: TDBNavigator;
     QryListagem: TFDQuery;
     dtsListagem: TDataSource;
     lblIndice: TLabel;
     ilimage: TImageList;
+    pnlNovo: TPanel;
+    img1sw: TImage;
+    pnlAlterar: TPanel;
+    imgss: TImage;
+    pnlGravar: TPanel;
+    imgq: TImage;
+    pnlCancelar: TPanel;
+    imgj: TImage;
+    pnlApagar: TPanel;
+    imgr: TImage;
+    pnlFechar: TPanel;
+    Image5: TImage;
+    img6: TImage;
+    Image1: TImage;
+    Image2: TImage;
+    Image3: TImage;
+    Image4: TImage;
+    pnlPesquisar: TPanel;
+    Image6: TImage;
     procedure FormCreate(Sender: TObject);
-    procedure btnFecharClick(Sender: TObject);
-    procedure btnNovoClick(Sender: TObject);
-    procedure btnCancelarClick(Sender: TObject);
-    procedure btnGravarClick(Sender: TObject);
-    procedure btnApagarClick(Sender: TObject);
-    procedure btnAlterarClick(Sender: TObject);
+    procedure pnlFecharClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
+    procedure pnlCancelarClick(Sender: TObject);
+    procedure pnlGravarClick(Sender: TObject);
+    procedure pnlApagarClick(Sender: TObject);
+    procedure pnlAlterarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure gdrListagemTitleClick(Column: TColumn);
     procedure mskPesquisarChange(Sender: TObject);
     procedure gdrListagemDblClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure btnPesquisarClick(Sender: TObject);
+    procedure pnlPesquisarClick(Sender: TObject);
     procedure gdrListagemDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure pnlRodapeClick(Sender: TObject);
+    procedure OnMouseEnter(Sender: TObject);
+    procedure OnMouseLeave(Sender: TObject);
+    procedure OnTabEnter(Sender: TObject);
+    procedure OnTabExit(Sender: TObject);
 
   private
     { Private declarations }
     SelectOriginal:String;
-    procedure ControlarBotoes(bntNovo, bntAlterar, btnCancelar,
-              btnGravar, btnApagar:TPngBitBtn; Navegador:TDBNavigator;
+    procedure ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar,
+              pnlGravar, pnlApagar:TPanel; Navegador:TDBNavigator;
               pgcPrincipal:TPageControl; Flag:Boolean);
 
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
@@ -193,17 +208,44 @@ end;
 
 {$ENDREGION}
 
-procedure TfrmTelaHeranca.ControlarBotoes(bntNovo, bntAlterar, btnCancelar,
-          btnGravar, btnApagar:TPngBitBtn; Navegador:TDBNavigator;
+procedure TfrmTelaHeranca.ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar,
+          pnlGravar, pnlApagar:TPanel; Navegador:TDBNavigator;
           pgcPrincipal:TPageControl; Flag:Boolean);
+
+  // Criamos uma procedure interna (Sub-rotina) só para trocar o visual e estado!
+  procedure MudarVisualPainel(Painel: TPanel; Img: TImage; Ativo: Boolean);
+  begin
+    Painel.Enabled := Ativo;
+    Img.Enabled := Ativo;
+
+    if Ativo then
+    begin
+      Painel.Color := clWhite;
+      Img.Visible := True;
+      Painel.Font.Color := clBlack;
+    end
+    else
+    begin
+      Painel.Color := $00EBE2DA;
+      Img.Visible := False;
+      Painel.Font.Color := $006B6B6B;
+
+      Painel.Width := 109;
+      Painel.Height := 23;
+    end;
+  end;
+
 begin
-  btnNovo.Enabled       :=Flag;
-  btnApagar.Enabled     :=Flag;
-  btnAlterar.Enabled    :=Flag;
-  Navegador.Enabled     :=Flag;
-  pgcPrincipal.Pages[0].TabVisible    :=Flag;
-  btnCancelar.Enabled   :=not(Flag);
-  btnGravar.Enabled     :=not(Flag);
+
+  MudarVisualPainel(pnlNovo, img6, Flag);
+  MudarVisualPainel(pnlApagar, Image4, Flag);
+  MudarVisualPainel(pnlAlterar, Image1, Flag);
+
+  MudarVisualPainel(pnlCancelar, Image3, not Flag);
+  MudarVisualPainel(pnlGravar, Image2, not Flag);
+
+  Navegador.Enabled := Flag;
+  pgcPrincipal.Pages[0].TabVisible := Flag;
 end;
 
 procedure TfrmTelaHeranca.ControlarIndiceTab(pgcPrincipal: TPageControl; Indice: Integer);
@@ -212,15 +254,10 @@ begin
       pgcPrincipal.TabIndex:=Indice;
 end;
 
-procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlNovoClick(Sender: TObject);
 begin
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-    Abort;
-  end;
 
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+  ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,False);
 
   EstadoDoCadastro:=ecInserir;
@@ -228,7 +265,7 @@ begin
 end;
 
 
-procedure TfrmTelaHeranca.btnPesquisarClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlPesquisarClick(Sender: TObject);
 var I:Integer;
     TipoCampo:TFieldType;
     NomeCampo: string;
@@ -236,11 +273,6 @@ var I:Integer;
     CondicaoSQL: string;
 begin
 
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-    Abort;
-  end;
   if mskPesquisar.Text='' then
   begin
     QryListagem.Close;
@@ -305,29 +337,38 @@ begin
 
 end;
 
-procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlAlterarClick(Sender: TObject);
 begin
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-    begin
-      MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-      Abort;
-    end;
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+  if QryListagem.IsEmpty then
+  begin
+    MessageDlg('Não há registros para serem alterados.', mtWarning, [mbOK], 0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
+    Exit;
+  end;
+
+  ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,False);
   EstadoDoCadastro:=ecAlterar;
+
 end;
 
-procedure TfrmTelaHeranca.btnApagarClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlApagarClick(Sender: TObject);
 begin
-   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
+
+  if QryListagem.IsEmpty then
   begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-    Abort;
+    MessageDlg('Não há registros para serem deletados.', mtWarning, [mbOK], 0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
+    Exit;
   end;
 
   try
     if (Excluir) then begin
-      ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+      ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                       btnNavigator, pgcPrincipal,True);
       ControlarIndiceTab(pgcPrincipal, 0);
       LimparEdits;
@@ -336,37 +377,33 @@ begin
   finally
       EstadoDoCadastro:=ecNenhum;
   end;
+
 end;
 
-procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlCancelarClick(Sender: TObject);
 begin
-  ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+  ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,True);
   ControlarIndiceTab(pgcPrincipal, 0);
   EstadoDoCadastro:=ecNenhum;
   LimparEdits;
 end;
 
-procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlFecharClick(Sender: TObject);
 begin
   Close;
   TFuncao.AtualizarDashBoard;
 end;
 
-procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+procedure TfrmTelaHeranca.pnlGravarClick(Sender: TObject);
 begin
-     if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPngBitBtn(Sender).Name, dtmConexao.ConexaoDB) then
-  begin
-    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
-    Abort;
-  end;
 
     if (ExisteCampoObrigatorio) then Abort; //Quando é uma unica linha de instrução, não precisamos de begin e end
 
     //Podemos usar o Try, Finally e Catch para garantir o funcionamento do código.
     Try //Tenta executar o bloco de código abaixo
       if Gravar (EstadoDoCadastro) then begin
-        ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar,
+        ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                         btnNavigator, pgcPrincipal,True);
         ControlarIndiceTab(pgcPrincipal, 0);
         EstadoDoCadastro:=ecNenhum;
@@ -382,6 +419,7 @@ begin
     End; //Finaliza a opereção
 
     TFuncao.AtualizarDashBoard;
+
 end;
 
 procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -395,7 +433,9 @@ end;
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 var I:Integer; //Variavel para percorrer a lista
 begin
+
   SelectOriginal := QryListagem.SQL.Text;
+
   for I := 0 to gdrListagem.Columns.Count - 1 do
     gdrListagem.Columns[I].Title.Alignment := taCenter; //Percorre as colunas do grid e centraliza o titulo de cada uma
 
@@ -413,7 +453,38 @@ end;
 
 procedure TfrmTelaHeranca.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  BloqueiaCTRL_DEL_DBGrid(Key, Shift);
+
+  if Key = VK_ESCAPE then
+  begin
+    pnlFecharClick(pnlFechar);
+  end;
+
+  if (ActiveControl is TCustomEdit) or (ActiveControl is TCustomComboBox) then
+    Exit;
+
+  if (Shift = []) then
+  begin
+    case Key of
+      Ord('N'):
+        if pnlNovo.Enabled then pnlNovoClick(pnlNovo);
+
+      Ord('A'):
+        if pnlAlterar.Enabled then pnlAlterarClick(pnlAlterar);
+
+      Ord('G'):
+        if pnlGravar.Enabled then pnlGravarClick(pnlGravar);
+
+      Ord('C'):
+        if pnlCancelar.Enabled then pnlCancelarClick(pnlCancelar);
+
+      Ord('D'):
+        if pnlApagar.Enabled then pnlApagarClick(pnlApagar);
+    end;
+
+    // Zera a tecla APENAS se foi uma das nossas letras, para não apitar erro no Windows
+    if Key in [Ord('N'), Ord('A'), Ord('G'), Ord('C'), Ord('D')] then
+      Key := 0;
+  end;
 end;
 
 procedure TfrmTelaHeranca.FormShow(Sender: TObject);
@@ -428,15 +499,15 @@ begin
   end;
     ControlarIndiceTab(pgcPrincipal, 0);
     DesabilitarEditPK;
-    ControlarBotoes(btnNovo, btnAlterar, btnCancelar,
-                    btnGravar, btnApagar,
+    ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar,
+                    pnlGravar, pnlApagar,
                     btnNavigator, pgcPrincipal,True);
-  gdrListagem.SetFocus;
+  pnlNovo.SetFocus;
 end;
 
 procedure TfrmTelaHeranca.gdrListagemDblClick(Sender: TObject);
 begin
-  btnAlterar.Click;
+  pnlAlterarClick(Sender);
 end;
 
 procedure TfrmTelaHeranca.gdrListagemDrawColumnCell(
@@ -511,6 +582,46 @@ begin
   begin
     QryListagem.Locate(IndiceAtual, TMaskEdit(Sender).Text, []);
   end;
+end;
+
+procedure TfrmTelaHeranca.OnMouseEnter(Sender: TObject);
+begin
+  TPanel(Sender).Color := $00D6E8FF;
+  TPanel(Sender).Width := 111;
+  TPanel(Sender).Height:= 25;
+end;
+
+procedure TfrmTelaHeranca.OnMouseLeave(Sender: TObject);
+var
+  Painel: TPanel;
+  PontoMouse: TPoint;
+begin
+  // Garante que quem chamou é o Painel
+  if not (Sender is TPanel) then Exit;
+  Painel := TPanel(Sender);
+
+  // Pega a posição global do mouse (na tela do PC) e traduz para as coordenadas do Painel
+  PontoMouse := Painel.ScreenToClient(Mouse.CursorPos);
+
+  // Se a coordenada X e Y do mouse ainda estiver dentro do quadrado do Painel, aborta!
+  if PtInRect(Painel.ClientRect, PontoMouse) then
+    Exit;
+
+  TPanel(Sender).Color := clWhite;
+  TPanel(Sender).Width := 109;
+  TPanel(Sender).Height:= 23;
+end;
+
+procedure TfrmTelaHeranca.OnTabEnter(Sender: TObject);
+begin
+  TPanel(Sender).BevelOuter := bvRaised;
+  TPanel(Sender).Color := $0078AEEB;
+end;
+
+procedure TfrmTelaHeranca.OnTabExit(Sender: TObject);
+begin
+  TPanel(Sender).BorderStyle := bsNone;
+  OnMouseLeave(Sender);
 end;
 
 procedure TfrmTelaHeranca.BloqueiaCTRL_DEL_DBGrid(var Key: Word; Shift: TShiftState);

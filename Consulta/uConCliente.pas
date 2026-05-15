@@ -68,7 +68,7 @@ if not Assigned(frmCadCliente) then
   frmCadCliente.QryListagem.Open;
   frmCadCliente.QryListagem.Locate('clienteId', AClienteId, []);
 
-  frmCadCliente.btnAlterar.Click;
+  frmCadCliente.pnlAlterarClick(Self);
 end;
 
 procedure TfrmConCliente.FormCreate(Sender: TObject);

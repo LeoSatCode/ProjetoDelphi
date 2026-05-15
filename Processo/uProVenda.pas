@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.ExtCtrls, uDTMConexao, uDTMVenda, RxToolEdit, RxCurrEdit, System.ImageList, Vcl.ImgList, cProVendas, uEnum, JvExComCtrls, JvHotKey,
-   System.IniFiles, System.UITypes, cRelatorio, PngBitBtn;
+   System.IniFiles, System.UITypes, cRelatorio, PngBitBtn, Vcl.Imaging.pngimage;
 
 type
   TfrmProVendas = class(TfrmTelaHeranca)
@@ -26,8 +26,6 @@ type
     lblQuantidade2: TLabel;
     edtTotalProduto: TCurrencyEdit;
     lblQuantidade3: TLabel;
-    btnAdicionar: TPngBitBtn;
-    btnRemover: TPngBitBtn;
     dbgridItensVenda: TDBGrid;
     pnl5: TPanel;
     lblCliente: TLabel;
@@ -47,17 +45,21 @@ type
     QryListagemdataEmissao: TSQLTimeStampField;
     QryListagemtotalVenda: TFMTBCDField;
     QryListagemstatus: TStringField;
+    pnlAdicionar: TPanel;
+    img1sw1: TImage;
+    pnlRemover: TPanel;
+    imgr1: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnAlterarClick(Sender: TObject);
-    procedure btnNovoClick(Sender: TObject);
-    procedure btnAdicionarClick(Sender: TObject);
+    procedure pnlAlterarClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
+    procedure pnlAdicionarClick(Sender: TObject);
     procedure lkpProdutoExit(Sender: TObject);
     procedure edtQuantidadeEnter(Sender: TObject);
     procedure edtQuantidadeExit(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
-    procedure btnRemoverClick(Sender: TObject);
+    procedure pnlRemoverClick(Sender: TObject);
     procedure dbgridItensVendaDblClick(Sender: TObject);
     procedure lkpClienteCloseUp(Sender: TObject);
     procedure btnCadClienteClick(Sender: TObject);
@@ -67,6 +69,9 @@ type
     procedure bntConClienteClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnConOrcVencClick(Sender: TObject);
+    procedure gdrListagemDblClick(Sender: TObject);
+
+
 
 
 
@@ -153,7 +158,7 @@ begin
 end;
 {$ENDREGION}
 
-procedure TfrmProVendas.btnAdicionarClick(Sender: TObject);
+procedure TfrmProVendas.pnlAdicionarClick(Sender: TObject);
 var Estoque:Integer;
     QntdDigitada:Integer;
 begin
@@ -162,17 +167,20 @@ begin
   Estoque := dtmVendas.QryProdutos.FieldByName('quantidade').AsInteger;
   QntdDigitada:= StrToInt(edtQuantidade.Text);
 
-  if(QntdDigitada > Estoque) then begin
-     MessageDlg('Quantidade Digitada maior que o estoque atual.',mtInformation,[mbOK],0);
-     Abort;
-  end
-  else begin
-    dtmVendas.QryProdutos.Close;
-    dtmVendas.QryProdutos.Open;
-  end;
+//  if(QntdDigitada > Estoque) then begin
+//     MessageDlg('Quantidade Digitada maior que o estoque atual.',mtInformation,[mbOK],0);
+//     Abort;
+//  end
+//  else begin
+//    dtmVendas.QryProdutos.Close;
+//    dtmVendas.QryProdutos.Open;
+//  end;
 
   if VarIsNull(lkpProduto.KeyValue) then begin
     MessageDlg('Produto é um campo obrigatório' ,mtInformation,[mbOK],0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     lkpProduto.SetFocus;
     Abort;
   end;
@@ -301,7 +309,7 @@ begin
   frmCadCliente.QryListagem.Open;
   frmCadCliente.QryListagem.Locate('clienteId', AClienteId, []);
 
-  frmCadCliente.btnAlterar.Click;
+  frmCadCliente.pnlAlterarClick(Self);
 end;
 
 function TfrmProVendas.TotalizarProduto(valorUnitario, Quantidade:Double):Double;
@@ -318,7 +326,7 @@ begin
   edtValorTotalProduto.Value := 0;
 end;
 
-procedure TfrmProVendas.btnAlterarClick(Sender: TObject);
+procedure TfrmProVendas.pnlAlterarClick(Sender: TObject);
 var vStatus:string;
 begin
   //Não deixa alterar pedidos faturados no Caixa
@@ -338,7 +346,7 @@ begin
     edtValorTotalProduto.Value    :=oVenda.TotalVenda;
   end
   else begin
-    btnCancelar.Click;
+    pnlCancelarClick(Sender);
     MessageDlg('Erro ao carregar Pré-Venda', mtError, [mbOK],0);
     Abort;
   end;
@@ -399,7 +407,7 @@ begin
     if oVenda.InserirPreVenda(dtmVendas.cdsItensVenda) then
     begin
       MessageDlg('Pré-Venda gravada com sucesso!', mtInformation, [mbOK], 0);
-      btnCancelar.Click;
+      pnlCancelarClick(Sender);
       TRel.MostrarRelatorio(Self, TfrmRelPreVenda, oVenda.VendaId);
     end
     else
@@ -411,7 +419,7 @@ begin
     if oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda) then
     begin
       MessageDlg('Pré-Venda atualizada com sucesso!', mtInformation, [mbOK], 0);
-      btnCancelar.Click;
+      pnlCancelarClick(Sender);
     end
     else
       MessageDlg('Erro ao atualizar Pré-Venda.', mtError, [mbOK], 0);
@@ -511,6 +519,11 @@ begin
     Key := 0;
     Abort; // corta qualquer fluxo
   end;
+
+  if Key = VK_RETURN then
+  begin
+    pnlAdicionarClick(pnlAdicionar);
+  end;
   inherited;
 
 end;
@@ -521,10 +534,16 @@ begin
 
   QryListagem.Open;
   TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
-  btnNovo.SetFocus;
+  pnlNovo.SetFocus;
 end;
 
-procedure TfrmProVendas.btnNovoClick(Sender: TObject);
+procedure TfrmProVendas.gdrListagemDblClick(Sender: TObject);
+begin
+  inherited;
+  pnlAlterarClick(pnlAlterar);
+end;
+
+procedure TfrmProVendas.pnlNovoClick(Sender: TObject);
 begin
   inherited;
   dtmVendas.QryProdutos.Close;
@@ -559,11 +578,14 @@ begin
 
 end;
 
-procedure TfrmProVendas.btnRemoverClick(Sender: TObject);
+procedure TfrmProVendas.pnlRemoverClick(Sender: TObject);
 begin
   inherited;
   if VarIsNull(lkpProduto.KeyValue) then begin
     MessageDlg('Selecione o Produto a ser excluido' ,mtInformation,[mbOK],0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     dbgridItensVenda.SetFocus;
     Abort;
   end;

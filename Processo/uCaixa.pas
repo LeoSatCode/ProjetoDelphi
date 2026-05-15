@@ -8,7 +8,7 @@ uses
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uEnum,cProVendas, cRelatorio, cCaixa, cPesquisar,
   uDTMConexao, Vcl.StdCtrls, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, System.UITypes,
-  PngBitBtn, cGridUtils, System.ImageList, Vcl.ImgList;
+  PngBitBtn, cGridUtils, System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage;
 
 type
   TfrmCaixa = class(TForm)
@@ -16,7 +16,6 @@ type
     Pendentes: TTabSheet;
     Faturados: TTabSheet;
     pnl2: TPanel;
-    btnReceber: TPngBitBtn;
     QryPendentes: TFDQuery;
     dtsPendentes: TDataSource;
     Panel2: TPanel;
@@ -32,18 +31,13 @@ type
     pnlListagemTopo: TPanel;
     lblIndice: TLabel;
     mskPesquisar: TMaskEdit;
-    btnPesquisar: TPngBitBtn;
     pnlListagemTopo1: TPanel;
     lblIndice1: TLabel;
     medt1: TMaskEdit;
     btnPesquisar1: TPngBitBtn;
     gdrPendentes: TDBGrid;
     gdrFaturados: TDBGrid;
-    btnCancelar: TPngBitBtn;
-    btnSair: TPngBitBtn;
-    PngBitBtn1: TPngBitBtn;
     ilimage: TImageList;
-    btnExtornar: TPngBitBtn;
     QryPendentespreVendaId: TFDAutoIncField;
     QryPendentesclienteId: TIntegerField;
     QryPendentesnome: TStringField;
@@ -52,10 +46,23 @@ type
     QryPendentesdataEmissao: TSQLTimeStampField;
     QryPendentestotalVenda: TFMTBCDField;
     QryPendentesstatus: TStringField;
-    procedure btnReceberClick(Sender: TObject);
+    pnlCancelar: TPanel;
+    imgj: TImage;
+    imgj1: TImage;
+    pnlReceber: TPanel;
+    imgq: TImage;
+    pnlPesquisar: TPanel;
+    imgj2: TImage;
+    pnlExit: TPanel;
+    imgj4: TImage;
+    pnlExtornar: TPanel;
+    Image1: TImage;
+    pnlSair: TPanel;
+    imgj41: TImage;
+    procedure pnlReceberClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
-    procedure btnPesquisarClick(Sender: TObject);
+    procedure pnlPesquisarClick(Sender: TObject);
     procedure gdrPendentesTitleClick(Column: TColumn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -63,10 +70,15 @@ type
       State: TGridDrawState);
     procedure gdrFaturadosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure btnExtornarClick(Sender: TObject);
+    procedure pnlExtornarClick(Sender: TObject);
+    procedure pnlCancelarClick(Sender: TObject);
+    procedure OnTabEnter(Sender: TObject);
+    procedure OnTabExit(Sender: TObject);
+    procedure OnMouseEnter(Sender: TObject);
+    procedure OnMouseLeave(Sender: TObject);
+    procedure pnlSairClick(Sender: TObject);
   private
     { Private declarations }
     dtmVendas:TdtmVenda;
@@ -91,19 +103,25 @@ uses
 {$R *.dfm}
 
 
-procedure TfrmCaixa.btnReceberClick(Sender: TObject);
+procedure TfrmCaixa.pnlReceberClick(Sender: TObject);
 var oCaixa: TCaixa;
 begin
   // Validação básica: tem pedido selecionado no grid?
   if QryPendentes.IsEmpty then
   begin
     MessageDlg('Selecione uma pré-venda na lista para receber!', mtWarning, [mbOK], 0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     Exit; // Sai da rotina sem fazer nada
   end;
 
   if QryPendentes.FieldByName('situacaoId').AsInteger = 2 then
   begin
     MessageDlg('Não é possível receber. Cliente está BLOQUEADO.', mtWarning, [mbOK],0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     Abort;
   end;
 
@@ -134,12 +152,21 @@ begin
   TFuncao.AtualizarDashBoard;
 end;
 
-procedure TfrmCaixa.btnCancelarClick(Sender: TObject);
+procedure TfrmCaixa.pnlSairClick(Sender: TObject);
+begin
+  Close;
+  TFuncao.AtualizarDashBoard;
+end;
+
+procedure TfrmCaixa.pnlCancelarClick(Sender: TObject);
 var oCaixa:TCaixa;
 begin
   if QryPendentes.IsEmpty then
   begin
     MessageDlg('Selecione uma pré-venda na lista para cancelar!', mtWarning, [mbOK], 0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     Exit; // Sai da rotina sem fazer nada
   end;
 
@@ -161,12 +188,15 @@ begin
   TFuncao.AtualizarDashBoard;
 end;
 
-procedure TfrmCaixa.btnExtornarClick(Sender: TObject);
+procedure TfrmCaixa.pnlExtornarClick(Sender: TObject);
 var oCaixa:TCaixa;
 begin
   if QryFaturados.IsEmpty then
   begin
     MessageDlg('Selecione uma venda do tipo PAGO na lista para extornar!', mtWarning, [mbOK], 0);
+    TPanel(Sender).Color := clWhite;
+    TPanel(Sender).Width := 109;
+    TPanel(Sender).Height:= 23;
     Exit; // Sai da rotina sem fazer nada
   end;
 
@@ -265,6 +295,10 @@ end;
 
 procedure TfrmCaixa.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+  if Key = VK_ESCAPE then
+  begin
+    pnlSairClick(pnlExit);
+  end;
   BloqueiaCTRL_DEL_DBGrid(Key, Shift);
 end;
 
@@ -273,7 +307,47 @@ begin
   TPesquisa.PesquisaCampo(Sender,mskPesquisar,QryPendentes,IndiceAtual);
 end;
 
-procedure TfrmCaixa.btnPesquisarClick(Sender: TObject);
+procedure TfrmCaixa.OnMouseEnter(Sender: TObject);
+begin
+  TPanel(Sender).Color := $00D6E8FF;
+  TPanel(Sender).Width := 111;
+  TPanel(Sender).Height:= 25;
+end;
+
+procedure TfrmCaixa.OnMouseLeave(Sender: TObject);
+var
+  Painel: TPanel;
+  PontoMouse: TPoint;
+begin
+  // Garante que quem chamou é o Painel
+  if not (Sender is TPanel) then Exit;
+  Painel := TPanel(Sender);
+
+  // Pega a posição global do mouse (na tela do PC) e traduz para as coordenadas do Painel
+  PontoMouse := Painel.ScreenToClient(Mouse.CursorPos);
+
+  // Se a coordenada X e Y do mouse ainda estiver dentro do quadrado do Painel, aborta!
+  if PtInRect(Painel.ClientRect, PontoMouse) then
+    Exit;
+
+  TPanel(Sender).Color := clWhite;
+  TPanel(Sender).Width := 109;
+  TPanel(Sender).Height:= 23;
+end;
+
+procedure TfrmCaixa.OnTabEnter(Sender: TObject);
+begin
+  TPanel(Sender).BevelOuter := bvRaised;
+  TPanel(Sender).Color := $0078AEEB;
+end;
+
+procedure TfrmCaixa.OnTabExit(Sender: TObject);
+begin
+  TPanel(Sender).BorderStyle := bsNone;
+  OnMouseLeave(Sender);
+end;
+
+procedure TfrmCaixa.pnlPesquisarClick(Sender: TObject);
 var I:Integer;
     TipoCampo:TFieldType;
     NomeCampo: string;

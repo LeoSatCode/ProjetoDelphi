@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls,cAcaoAcesso, uEnum, uDTMConexao, System.ImageList, Vcl.ImgList, PngBitBtn;
+  Vcl.Buttons, Vcl.ExtCtrls,cAcaoAcesso, uEnum, uDTMConexao, System.ImageList, Vcl.ImgList, PngBitBtn, Vcl.Imaging.pngimage;
 
 type
   TfrmCadAcaoAcesso = class(TfrmTelaHeranca)
@@ -19,9 +19,11 @@ type
     QryListagemchave: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnNovoClick(Sender: TObject);
-    procedure btnAlterarClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
+    procedure pnlAlterarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
+    procedure gdrListagemDblClick(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -40,7 +42,7 @@ implementation
 
 { TfrmCadAcaoAcesso }
 
-procedure TfrmCadAcaoAcesso.btnAlterarClick(Sender: TObject);
+procedure TfrmCadAcaoAcesso.pnlAlterarClick(Sender: TObject);
 begin
   if oAcaoAcesso.Selecionar(QryListagem.FieldByName('acaoAcessoId').AsInteger) then begin
     edtAcaoAcessoId.Text  :=oAcaoAcesso.codigo.ToString; //Ao inves de IntToStr(oAcaoAcesso.codigo);
@@ -48,7 +50,7 @@ begin
     edtChave.Text         :=oAcaoAcesso.chave;
   end
   else begin
-    btnCancelar.Click;
+    pnlCancelarClick(Sender);
     Abort;
   end;
   inherited;
@@ -75,7 +77,7 @@ begin
 
 end;
 
-procedure TfrmCadAcaoAcesso.btnNovoClick(Sender: TObject);
+procedure TfrmCadAcaoAcesso.pnlNovoClick(Sender: TObject);
 begin
   inherited;
   edtDescricao.SetFocus;
@@ -99,6 +101,12 @@ begin
   inherited;
   oAcaoAcesso:=TAcaoAcesso.Create(dtmConexao.ConexaoDB);
   IndiceAtual:='descricao';
+end;
+
+procedure TfrmCadAcaoAcesso.gdrListagemDblClick(Sender: TObject);
+begin
+  inherited;
+  pnlAlterarClick(pnlAlterar);
 end;
 
 function TfrmCadAcaoAcesso.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;

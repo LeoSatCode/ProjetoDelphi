@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, PngBitBtn,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.Buttons, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.Buttons, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Imaging.pngimage;
 
 type
   TfrmUsuarioVsAcoes = class(TForm)
@@ -24,10 +25,11 @@ type
     QryAcoesacaoAcessoId: TIntegerField;
     QryAcoesdescricao: TStringField;
     QryAcoesativo: TBooleanField;
-    btnFechar1: TPngBitBtn;
     QryUsuariousuarioId: TFDAutoIncField;
     QryUsuarionome: TStringField;
-    procedure btnFechar1Click(Sender: TObject);
+    pnlFechar: TPanel;
+    img1: TImage;
+    procedure pnlFecharClick(Sender: TObject);
     procedure QryUsuarioAfterScroll(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
     procedure grdAcoesDblClick(Sender: TObject);
@@ -36,6 +38,7 @@ type
     procedure grdUsuariosDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     procedure SelecionarAcoesAcessoPorUsuario;
@@ -53,7 +56,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfrmUsuarioVsAcoes.btnFechar1Click(Sender: TObject);
+procedure TfrmUsuarioVsAcoes.pnlFecharClick(Sender: TObject);
 begin
   Close;
 end;
@@ -183,6 +186,14 @@ begin
   // Centraliza os titulos grdAcoes
     for I := 0 to grdAcoes.Columns.Count - 1 do
     grdAcoes.Columns[I].Title.Alignment := taCenter;
+end;
+
+procedure TfrmUsuarioVsAcoes.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    pnlFecharClick(pnlFechar);
+  end;
 end;
 
 procedure TfrmUsuarioVsAcoes.FormShow(Sender: TObject);

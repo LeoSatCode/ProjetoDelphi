@@ -231,12 +231,6 @@ inherited frmConCliente: TfrmConCliente
       ExplicitTop = 21
       ExplicitWidth = 288
     end
-    inherited btnPesquisar: TPngBitBtn
-      Left = 295
-      Top = 20
-      ExplicitLeft = 295
-      ExplicitTop = 20
-    end
   end
   inherited pnl2: TPanel
     Top = 51

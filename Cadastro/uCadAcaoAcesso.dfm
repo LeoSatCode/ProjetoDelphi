@@ -1,10 +1,17 @@
 inherited frmCadAcaoAcesso: TfrmCadAcaoAcesso
   Caption = 'Cadastro de A'#231#227'o de Acesso'
+  ExplicitTop = 7
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
     inherited btnNavigator: TDBNavigator
+      Top = 16
       Hints.Strings = ()
+      ExplicitTop = 16
+    end
+    inherited pnlFechar: TPanel
+      Top = 16
+      ExplicitTop = 16
     end
   end
   inherited pgcPrincipal: TPageControl

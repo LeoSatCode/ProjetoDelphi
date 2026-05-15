@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask, Data.DB, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Vcl.Buttons, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
-  System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao, PngBitBtn, cGridUtils;
+  System.ImageList, Vcl.ImgList, System.IniFiles, cFuncao, PngBitBtn, cGridUtils, Vcl.Imaging.pngimage;
 
 type
   TfrmTelaHerancaConsulta = class(TForm)
@@ -19,20 +19,26 @@ type
     grdPesquisa: TDBGrid;
     QryListagem: TFDQuery;
     dtsListagem: TDataSource;
-
-    btnFechar: TPngBitBtn;
     ilimage: TImageList;
-    btnPesquisar: TPngBitBtn;
+    pnlFechar: TPanel;
+    imgj4: TImage;
+    pnlPesquisar: TPanel;
+    imgj2: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnFecharClick(Sender: TObject);
+    procedure pnlFecharClick(Sender: TObject);
     procedure grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure grdPesquisaTitleClick(Column: TColumn);
     procedure FormShow(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
     procedure grdPesquisaDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
-    procedure btnPesquisarClick(Sender: TObject);
+    procedure pnlPesquisarClick(Sender: TObject);
+    procedure OnMouseEnter(Sender: TObject);
+    procedure OnMouseLeave(Sender: TObject);
+    procedure OnTabEnter(Sender: TObject);
+    procedure OnTabExit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     SelectOriginal:String;
     procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
@@ -56,7 +62,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfrmTelaHerancaConsulta.btnFecharClick(Sender: TObject);
+procedure TfrmTelaHerancaConsulta.pnlFecharClick(Sender: TObject);
 begin
   Close;
 end;
@@ -77,6 +83,14 @@ begin
   if QryListagem.Active then QryListagem.Close;
   ExibirLabelIndice(IndiceAtual, lblIndice);
   QryListagem.Open;
+end;
+
+procedure TfrmTelaHerancaConsulta.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    pnlFecharClick(pnlFechar);
+  end;
 end;
 
 procedure TfrmTelaHerancaConsulta.FormShow(Sender: TObject);
@@ -170,8 +184,48 @@ begin
   end;
 end;
 
+procedure TfrmTelaHerancaConsulta.OnMouseEnter(Sender: TObject);
+begin
+  TPanel(Sender).Color := $00D6E8FF;
+  TPanel(Sender).Width := 111;
+  TPanel(Sender).Height:= 25;
+end;
+
+procedure TfrmTelaHerancaConsulta.OnMouseLeave(Sender: TObject);
+var
+  Painel: TPanel;
+  PontoMouse: TPoint;
+begin
+  // Garante que quem chamou é o Painel
+  if not (Sender is TPanel) then Exit;
+  Painel := TPanel(Sender);
+
+  // Pega a posição global do mouse (na tela do PC) e traduz para as coordenadas do Painel
+  PontoMouse := Painel.ScreenToClient(Mouse.CursorPos);
+
+  // Se a coordenada X e Y do mouse ainda estiver dentro do quadrado do Painel, aborta!
+  if PtInRect(Painel.ClientRect, PontoMouse) then
+    Exit;
+
+  TPanel(Sender).Color := clWhite;
+  TPanel(Sender).Width := 109;
+  TPanel(Sender).Height:= 23;
+end;
+
+procedure TfrmTelaHerancaConsulta.OnTabEnter(Sender: TObject);
+begin
+  TPanel(Sender).BevelOuter := bvRaised;
+  TPanel(Sender).Color := $0078AEEB;
+end;
+
+procedure TfrmTelaHerancaConsulta.OnTabExit(Sender: TObject);
+begin
+  TPanel(Sender).BorderStyle := bsNone;
+  OnMouseLeave(Sender);
+end;
+
 //Procedimentos de Controle de Tela
-procedure TfrmTelaHerancaConsulta.btnPesquisarClick(Sender: TObject);
+procedure TfrmTelaHerancaConsulta.pnlPesquisarClick(Sender: TObject);
 var I:Integer;
     TipoCampo:TFieldType;
     NomeCampo: string;

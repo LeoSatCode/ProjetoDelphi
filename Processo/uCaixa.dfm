@@ -1,15 +1,17 @@
 object frmCaixa: TfrmCaixa
   Left = 0
   Top = 0
+  BorderStyle = bsToolWindow
   Caption = 'Caixa'
-  ClientHeight = 457
-  ClientWidth = 976
+  ClientHeight = 467
+  ClientWidth = 988
   Color = 16774378
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
@@ -21,8 +23,8 @@ object frmCaixa: TfrmCaixa
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 976
-    Height = 457
+    Width = 988
+    Height = 467
     ActivePage = Pendentes
     Align = alClient
     TabOrder = 0
@@ -30,105 +32,186 @@ object frmCaixa: TfrmCaixa
       Caption = 'Pendentes'
       object pnl2: TPanel
         Left = 0
-        Top = 388
-        Width = 968
+        Top = 398
+        Width = 980
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
         DesignSize = (
-          968
+          980
           41)
-        object btnReceber: TPngBitBtn
-          Left = 3
-          Top = 7
-          Width = 84
-          Height = 26
-          Caption = '&Receber'
+        object pnlCancelar: TPanel
+          Left = 115
+          Top = 8
+          Width = 109
+          Height = 23
+          Cursor = crHandPoint
+          Caption = 'Cancelar'
+          Color = clWhite
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Segoe UI Variable Text Semibold'
           Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 0
-          OnClick = btnReceberClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C18000000E64944415478DA
-            6364A0103052C5002929A9B6FFFFFF17333232B211A309A8F61790EA7EFEFC79
-            0DD8004949C99F40CD279F3D7B66478C01400B0F030D31051AC00173C17FA066
-            14EF484B4B7BFDFBF76F26D4C6B4172F5E6C473304AC07C500A04B8E025DF20F
-            C8B605B21F03D9E140CD2035CB81B6C921CB633500E434908520AF800C00B223
-            A0E1B40C6400B23C5603909D282121E109B40DD90B3B707A011A88A7404E2332
-            108F000D35810722D0801620554A623476010DA8A54E424207401795035DD381
-            26DC00F462235106603104AB66BC06400D6900D140BF3690E4058AC380140000
-            62338F11BFFFBFBC0000000049454E44AE426082}
-        end
-        object btnCancelar: TPngBitBtn
-          Left = 93
-          Top = 7
-          Width = 89
-          Height = 25
-          Caption = '&Cancelar'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Segoe UI Variable Text Semibold'
-          Font.Style = [fsBold]
+          ParentBackground = False
           ParentFont = False
           TabOrder = 1
-          OnClick = btnCancelarClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C18000001AD4944415478DA
-            A593BB4BC35014C64D6B49402B7D589316B54B56A19B82956E0E3A5BF0B13889
-            544444D13F41D041B050D0A13829D2C9A14E22BEF70AC5C14DD33486524433C4
-            A6ADDF855C48A36D91060E27E7DC737EF7BB37274C57870F634F0483C109B804
-            8CF87E980ABB85256559BE6F05E846F301C33093F57A7DC7E1705C0882A0148B
-            45BE56AB4D21BF8D7C169035D41ABF00684EA1285CA954E2AAAA7ED9770A0402
-            BD2E972B03C80B202B0D005376DA308C0869E679BE4751148D16D1D8EFF7BB59
-            96CD01B2408F4301A77097481E9162A7D3F904D98B907F8D63C4709C74B55A1D
-            2110C44B8863854261CE0A90901C9524E98DC466D3195E77619B80C509CCAC1D
-            867BC066835680EEF57ADDF97CFE9BCA0E85421B1480DDF6685E144556D3B40F
-            00B80605B8C03114BEB65380B5306AEF0018B2024EE0AE903C6C770750B68CDA
-            28369BB702A2A01EEBBA1E29954A9FCDBE82CFE7EBE3382E87D42C008FF63948
-            022202324320F639309B33787D46F36AB349DC07641AF2C924663D1E8F522E97
-            0592C3FA16EC1CCDEB7F4EA245C9381A121816325C03B077C437E45FA0B25BFE
-            4CFF7D3A06FC00BBBAE611379FF1D70000000049454E44AE426082}
+          TabStop = True
+          OnClick = pnlCancelarClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            109
+            23)
+          object imgj: TImage
+            Left = 9
+            Top = 4
+            Width = 16
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              00100803000000282D0F53000000017352474201D9C92C7F0000000970485973
+              00000B1300000B1301009A9C1800000054504C54450000006767676767676767
+              67FFFFFF6767676767675B5B5B0000006767676767678080807373738C8C8C6D
+              6D6D6D6D6D6161616767670000002424246161616161616D6D6D616161676767
+              9292926161616161617DE9E49D0000001C74524E53003DFF3B0497651C056694
+              0C0B0D3F67741E06071DE91F693C0E39925476B988000000A24944415478DA65
+              8FD90E823010456790224BA9A889D2FFFF364D10225ACA1A16990289D179B80F
+              67B67B117E0A8D2C3AACC0C6C1469CACD6ED7A03D8E095D40B6AB72280E8955C
+              03701D96F316826577BCE24A685F1F8A91006B4168A1B882E3DB80E8091029F1
+              0238E7069C329A60AD824B66C0BEDE6E5C5302F12328962F3289EFE4C36F8282
+              7CC844DE16A74E13B271725299F46B96DD443ACF6FE1FED27ED707ECF2401188
+              2D06670000000049454E44AE426082}
+          end
+          object imgj1: TImage
+            Left = 9
+            Top = 4
+            Width = 16
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+              000001AD4944415478DAA593BB4BC35014C64D6B49402B7D589316B54B56A19B
+              82956E0E3A5BF0B13889544444D13F41D041B050D0A13829D2C9A14E22BEF70A
+              C5C14DD33486524433C4A6ADDF855C48A36D91060E27E7DC737EF7BB37274C57
+              870F634F0483C109B8048CF87E980ABB85256559BE6F05E846F301C33093F57A
+              7DC7E1705C0882A0148B45BE56AB4D21BF8D7C169035D41ABF00684EA1285CA9
+              54E2AAAA7ED9770A0402BD2E972B03C80B202B0D005376DA308C0869E679BE47
+              51148D16D1D8EFF7BB5996CD01B2408F4301A77097481E9162A7D3F904D98B90
+              7F8D63C4709C74B55A1D2110C44B8863854261CE0A90901C9524E98DC466D319
+              5E77619B80C509CCAC1D867BC066835680EEF57ADDF97CFE9BCA0E85421B1480
+              DDF6685E144556D3B40F00B80605B8C03114BEB65380B5306AEF0018B2024EE0
+              AE903C6C770750B68CDA28369BB702A2A01EEBBA1E29954A9FCDBE82CFE7EBE3
+              382E87D42C008FF63948022202324320F639309B33787D46F36AB349DC07641A
+              F2C924663D1E8F522E970592C3FA16EC1CCDEB7F4EA245C9381A121816325C03
+              B077C437E45FA0B25BFE4CFF7D3A06FC00BBBAE611379FF1D70000000049454E
+              44AE426082}
+          end
         end
-        object btnSair: TPngBitBtn
-          Left = 866
-          Top = 7
-          Width = 91
-          Height = 25
-          Anchors = [akTop, akRight]
-          Cancel = True
-          Caption = '&Sair'
+        object pnlReceber: TPanel
+          Left = 0
+          Top = 8
+          Width = 109
+          Height = 23
+          Cursor = crHandPoint
+          Caption = 'Receber'
+          Color = clWhite
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Segoe UI Variable Text Semibold'
           Font.Style = [fsBold]
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          TabStop = True
+          OnClick = pnlReceberClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            109
+            23)
+          object imgq: TImage
+            Left = 9
+            Top = 5
+            Width = 16
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+              000000E64944415478DA6364A0103052C5002929A9B6FFFFFF17333232B211A3
+              09A8F61790EA7EFEFC790DD8004949C99F40CD279F3D7B66478C01400B0F030D
+              31051AC00173C17FA06614EF484B4B7BFDFBF76F26D4C6B4172F5E6C473304AC
+              07C500A04B8E025DF20FC8B605B21F03D9E140CD2035CB81B6C921CB633500E4
+              34908520AF800C00B223A0E1B40C6400B23C5603909D282121E109B40DD90B3B
+              707A011A88A7404E2332108F000D35810722D0801620554A623476010DA8A54E
+              424207401795035DD38126DC00F462235106603104AB66BC06400D6900D140BF
+              3690E4058AC38014000062338F11BFFFBFBC0000000049454E44AE426082}
+          end
+        end
+        object pnlExit: TPanel
+          Left = 866
+          Top = 8
+          Width = 111
+          Height = 23
+          Cursor = crHandPoint
+          Anchors = [akLeft, akRight]
+          Caption = 'Sair'
+          Color = clWhite
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI Variable Text Semibold'
+          Font.Style = [fsBold]
+          ParentBackground = False
           ParentFont = False
           TabOrder = 2
-          OnClick = btnSairClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C18000000584944415478DA
-            636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
-            2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
-            931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
-            4E44AE426082}
+          TabStop = True
+          OnClick = pnlSairClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            111
+            23)
+          object imgj4: TImage
+            Left = 16
+            Top = 3
+            Width = 18
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+              000000584944415478DA636480022929A9FF0C448267CF9E31C2D88C54370059
+              9218405F03A06A3A816A2A28318001D910720D801B82D3002263A59352031A28
+              F14203506D23B9068035931B8870CD241B800D50DF0062005573230069A461B4
+              756035F10000000049454E44AE426082}
+            ExplicitWidth = 16
+          end
         end
       end
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 968
+        Width = 980
         Height = 57
         Align = alTop
+        BevelOuter = bvNone
         Color = 16774378
         ParentBackground = False
         TabOrder = 1
@@ -149,36 +232,59 @@ object frmCaixa: TfrmCaixa
           TextHint = 'Digite sua pesquisa'
           OnChange = mskPesquisarChange
         end
-        object btnPesquisar: TPngBitBtn
-          Tag = 99
+        object pnlPesquisar: TPanel
           Left = 295
-          Top = 17
-          Width = 114
-          Height = 25
+          Top = 18
+          Width = 109
+          Height = 23
           Cursor = crHandPoint
-          Caption = '&PESQUISAR'
+          Caption = 'Pesquisar'
+          Color = clWhite
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI Variable Text Semibold'
+          Font.Style = [fsBold]
+          ParentBackground = False
+          ParentFont = False
           TabOrder = 1
-          OnClick = btnPesquisarClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C180000011B4944415478DA
-            6364A01030E293949494E4025215401C05C4B240FC188897323333773C79F2E4
-            3B5E03A09AF702F19BFFFFFF3701F1354646462D20AE038A09010D71011982CF
-            80262065F8FCF9735F2C729B81069D79F6EC59233E03EE006D8D78F1E2C51974
-            3909090953A001CB8086ABE233E0DBAF5FBFC4DFBE7DFB195D4E585898978D8D
-            ED35D0000E7C065C02BA20098F0B96020D50C3698094945431D000073C61701A
-            18064DF85CE00654B41368C816502CFCFDFBF73A30E43541B100C482ACACAC2E
-            0F1F3EFC81D50069696907A0A695401C0B54AC0BA4E380C2AA40FC14C85F0CD4
-            DC05D28C351D006DB6012A5A0BC4914F9F3EDDC740003052A219C5007234A318
-            000CF54540CDF3809A0F10AB196B18900A283600001D378411B9615874000000
-            0049454E44AE426082}
+          TabStop = True
+          OnClick = pnlPesquisarClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            109
+            23)
+          object imgj2: TImage
+            Left = 5
+            Top = 4
+            Width = 16
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+              0000011B4944415478DA6364A01030E293949494E4025215401C05C4B240FC18
+              8897323333773C79F2E43B5E03A09AF702F19BFFFFFF3701F1354646462D20AE
+              038A09010D71011982CF80262065F8FCF9735F2C729B81069D79F6EC59233E03
+              EE006D8D78F1E2C519743909090953A001CB8086ABE233E0DBAF5FBFC4DFBE7D
+              FB195D4E585898978D8DED35D0000E7C065C02BA20098F0B96020D50C3698094
+              945431D000073C61701A18064DF85CE00654B41368C816502CFCFDFBF73A30E4
+              3541B100C482ACACAC2E0F1F3EFC81D50069696907A0A695401C0B54AC0BA4E3
+              80C2AA40FC14C85F0CD4DC05D28C351D006DB6012A5A0BC4914F9F3EDDC74000
+              3052A219C5007234A318000CF54540CDF3809A0F10AB196B18900A283600001D
+              378411B96158740000000049454E44AE426082}
+          end
         end
       end
       object gdrPendentes: TDBGrid
         Left = 0
         Top = 57
-        Width = 968
-        Height = 331
+        Width = 980
+        Height = 341
         Align = alClient
         DataSource = dtsPendentes
         DrawingStyle = gdsClassic
@@ -250,73 +356,134 @@ object frmCaixa: TfrmCaixa
       ImageIndex = 1
       object Panel2: TPanel
         Left = 0
-        Top = 388
-        Width = 968
+        Top = 398
+        Width = 980
         Height = 41
         Align = alBottom
         Color = 16774378
         ParentBackground = False
         TabOrder = 0
         DesignSize = (
-          968
+          980
           41)
-        object PngBitBtn1: TPngBitBtn
-          Left = 866
-          Top = 7
-          Width = 91
-          Height = 25
-          Anchors = [akTop, akRight]
-          Cancel = True
-          Caption = '&Sair'
+        object pnlExtornar: TPanel
+          Left = 0
+          Top = 9
+          Width = 109
+          Height = 23
+          Cursor = crHandPoint
+          Caption = 'Extornar'
+          Color = clWhite
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Segoe UI Variable Text Semibold'
           Font.Style = [fsBold]
+          ParentBackground = False
           ParentFont = False
           TabOrder = 0
-          OnClick = btnSairClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C18000000584944415478DA
-            636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
-            2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
-            931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
-            4E44AE426082}
+          TabStop = True
+          OnClick = pnlExtornarClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            109
+            23)
+          object Image1: TImage
+            Left = 9
+            Top = 5
+            Width = 16
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              07544269746D617036040000424D360400000000000036000000280000001000
+              0000100000000100200000000000000400000000000000000000000000000000
+              0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE9E9E9FFFFFFFFFFFFFFFFFF0303
+              03FF1C1C1CFF5A5A5AFFC5C5C5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF626262FFFFFFFFFFFFFFFFFFFCFC
+              FCFFE1E1E1FF969696FF1F1F1FFF6C6C6CFFFBFBFBFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFF1F1F1FF454545FF6C6C6CFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFE9E9E9FF646464FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0303
+              03FFFCFCFCFFFFFFFFFFFFFFFFFFF1F1F1FF1F1F1FFFC5C5C5FFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FF0000
+              00FF060606FF7C7C7CFFFFFFFFFFFFFFFFFF969696FF5A5A5AFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFDADADAFF0D0D0DFFFFFFFFFFFFFFFFFFE0E0E0FF1C1C1CFFFFFFFFFFFFFF
+              FFFFFFFFFFFF4A4A4AFFFFFFFFFFFFFFFFFFFFFFFFFF7B7B7BFF060606FF0000
+              00FF060606FF7B7B7BFFFFFFFFFFFFFFFFFFF8F8F8FF070707FFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0C0C0CFFDADADAFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE1E1E1FF1B1B1BFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF797979FF060606FF0000
+              00FF000000FFFFFFFFFFFFFFFFFFFFFFFFFF989898FF595959FFFFFFFFFFFFFF
+              FFFFFFFFFFFF000000FF000000FF1C1C1CFFDBDBDBFFFFFFFFFFFFFFFFFF0303
+              03FFFCFCFCFFFFFFFFFFFFFFFFFFF2F2F2FF202020FFC4C4C4FFFFFFFFFFFFFF
+              FFFFFFFFFFFF000000FF060606FF404040FFF3F3F3FFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFF3F3F3FF474747FF6A6A6AFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFF1D1D1DFFD9D9D9FF696969FF1F1F1FFF989898FFE1E1E1FFF9F9
+              F9FFE3E3E3FF999999FF212121FF6A6A6AFFFBFBFBFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFDCDCDCFFFFFFFFFFFFFFFFFFC2C2C2FF595959FF1B1B1BFF0606
+              06FF1B1B1BFF585858FFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFF}
+          end
         end
-        object btnExtornar: TPngBitBtn
-          Left = 3
-          Top = 7
-          Width = 84
-          Height = 26
-          Caption = 'Extornar'
+        object pnlSair: TPanel
+          Left = 866
+          Top = 9
+          Width = 111
+          Height = 23
+          Cursor = crHandPoint
+          Anchors = [akLeft, akRight]
+          Caption = 'Sair'
+          Color = clWhite
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Segoe UI Variable Text Semibold'
           Font.Style = [fsBold]
+          ParentBackground = False
           ParentFont = False
           TabOrder = 1
-          OnClick = btnExtornarClick
-          PngImage.Data = {
-            89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-            61000000097048597300000B1300000B1301009A9C18000001244944415478DA
-            A5D3BB4A034114C6F10D825A9874DA782B425EC0DA0B8295E20B443B110921A8
-            88C4423B2FA0B5A56F602762AF269D8D9D441B1114AD442B51E2FFE0271C8671
-            89E4C08F9D99DD3D3B67663693B419195DF3B8537B0C258CA3172FB8C0212EFF
-            4A708F29AC601A7B38C313FA34B6A1B1657C86099AF8401DB3788FCCB607C79A
-            693996C0E20193B855DFBED4852FF5B3B8C63C6A3E4118BB584367F0218B254C
-            A09896E00D236844EE0DA9D4019FE01433EEA16DAC6B06B63607D8D43D2BE915
-            DD6933F051C01572EA0F6B3B07D312345DDB66B08F2DF5ED8C8C62CE27B0BDDE
-            C1629028DC859C76A1A87568A984C4BD6CE7E00695DFC15882232CA8DD817E2D
-            701527584D2227D18795F3EC4A78C479F2F32FD4C387FF534234DA4EF00D0B69
-            391169DDCE8D0000000049454E44AE426082}
+          TabStop = True
+          OnClick = pnlSairClick
+          OnEnter = OnTabEnter
+          OnExit = OnTabExit
+          OnMouseEnter = OnMouseEnter
+          OnMouseLeave = OnMouseLeave
+          DesignSize = (
+            111
+            23)
+          object imgj41: TImage
+            Left = 16
+            Top = 3
+            Width = 18
+            Height = 19
+            Anchors = [akLeft, akTop, akRight, akBottom]
+            Center = True
+            Picture.Data = {
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+              001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+              000000584944415478DA636480022929A9FF0C448267CF9E31C2D88C54370059
+              9218405F03A06A3A816A2A28318001D910720D801B82D3002263A59352031A28
+              F14203506D23B9068035931B8870CD241B800D50DF0062005573230069A461B4
+              756035F10000000049454E44AE426082}
+            ExplicitWidth = 16
+          end
         end
       end
       object pnlListagemTopo1: TPanel
         Left = 0
         Top = 0
-        Width = 968
+        Width = 980
         Height = 57
         Align = alTop
         Color = 16774378
@@ -352,8 +519,8 @@ object frmCaixa: TfrmCaixa
       object gdrFaturados: TDBGrid
         Left = 0
         Top = 57
-        Width = 968
-        Height = 331
+        Width = 980
+        Height = 341
         Align = alClient
         DataSource = dtsFaturados
         DrawingStyle = gdsClassic

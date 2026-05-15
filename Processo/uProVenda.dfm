@@ -1,6 +1,7 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Pr'#233' Venda'
   ClientWidth = 1003
+  ExplicitTop = -106
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
@@ -8,12 +9,12 @@ inherited frmProVendas: TfrmProVendas
     Width = 1003
     TabOrder = 1
     ExplicitWidth = 1003
-    inherited btnFechar: TPngBitBtn
-      Left = 912
-      ExplicitLeft = 912
-    end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
+    end
+    inherited pnlFechar: TPanel
+      Left = 890
+      ExplicitLeft = 890
     end
   end
   inherited pgcPrincipal: TPageControl
@@ -133,21 +134,21 @@ inherited frmProVendas: TfrmProVendas
             Caption = 'Produto'
           end
           object lblQuantidade: TLabel
-            Left = 407
+            Left = 381
             Top = 8
             Width = 64
             Height = 13
             Caption = 'Valor Unit'#225'rio'
           end
           object lblQuantidade2: TLabel
-            Left = 534
+            Left = 508
             Top = 8
             Width = 56
             Height = 13
             Caption = 'Quantidade'
           end
           object lblQuantidade3: TLabel
-            Left = 661
+            Left = 635
             Top = 8
             Width = 80
             Height = 13
@@ -156,7 +157,7 @@ inherited frmProVendas: TfrmProVendas
           object lkpProduto: TDBLookupComboBox
             Left = 1
             Top = 27
-            Width = 388
+            Width = 369
             Height = 21
             KeyField = 'produtoId'
             ListField = 'nome'
@@ -165,7 +166,7 @@ inherited frmProVendas: TfrmProVendas
             OnExit = lkpProdutoExit
           end
           object edtValorUnitario: TCurrencyEdit
-            Left = 407
+            Left = 381
             Top = 27
             Width = 121
             Height = 21
@@ -173,7 +174,7 @@ inherited frmProVendas: TfrmProVendas
             TabOrder = 1
           end
           object edtQuantidade: TCurrencyEdit
-            Left = 534
+            Left = 508
             Top = 27
             Width = 121
             Height = 21
@@ -183,7 +184,7 @@ inherited frmProVendas: TfrmProVendas
             OnExit = edtQuantidadeExit
           end
           object edtTotalProduto: TCurrencyEdit
-            Left = 661
+            Left = 635
             Top = 27
             Width = 121
             Height = 21
@@ -193,42 +194,92 @@ inherited frmProVendas: TfrmProVendas
             ReadOnly = True
             TabOrder = 3
           end
-          object btnAdicionar: TPngBitBtn
-            Left = 793
-            Top = 25
-            Width = 97
-            Height = 25
-            Caption = 'A&DICIONAR'
+          object pnlAdicionar: TPanel
+            Left = 762
+            Top = 26
+            Width = 109
+            Height = 23
+            Cursor = crHandPoint
+            Caption = 'Adicionar'
+            Color = clWhite
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI Variable Text Semibold'
+            Font.Style = [fsBold]
+            ParentBackground = False
+            ParentFont = False
             TabOrder = 4
-            OnClick = btnAdicionarClick
-            PngImage.Data = {
-              89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-              61000000097048597300000B1300000B1301009A9C180000007E4944415478DA
-              6364A0103082082929A9B6FFFFFF17333232B211D20054F70B48753F7FFEBC06
-              6E80A4A4E44F666666C9274F9EBC2364808C8C8CD0DFBF7F9F010DE04076C1FF
-              67CF9E3112EB6C64F5780D20467C101A0062E3F23BB29A41EC05AA1A800B6018
-              40714A041AD002A44A49C80B5D40036AE1065002283600001AE8911104933359
-              0000000049454E44AE426082}
+            TabStop = True
+            OnClick = pnlAdicionarClick
+            OnEnter = OnTabEnter
+            OnExit = OnTabExit
+            OnMouseEnter = OnMouseEnter
+            OnMouseLeave = OnMouseLeave
+            DesignSize = (
+              109
+              23)
+            object img1sw1: TImage
+              Left = 6
+              Top = 4
+              Width = 16
+              Height = 19
+              Anchors = [akLeft, akTop, akRight, akBottom]
+              Center = True
+              Picture.Data = {
+                0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+                001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+                0000007E4944415478DA6364A0103082082929A9B6FFFFFF17333232B211D200
+                54F70B48753F7FFEBC066E80A4A4E44F666666C9274F9EBC2364808C8C8CD0DF
+                BF7F9F010DE04076C1FF67CF9E3112EB6C64F5780D20467C101A0062E3F23BB2
+                9A41EC05AA1A800B601840714A041AD002A44A49C80B5D40036AE10650022836
+                00001AE89111049333590000000049454E44AE426082}
+            end
           end
-          object btnRemover: TPngBitBtn
-            Left = 896
-            Top = 25
-            Width = 85
-            Height = 25
-            Caption = 'R&EMOVER'
+          object pnlRemover: TPanel
+            Left = 877
+            Top = 26
+            Width = 109
+            Height = 23
+            Cursor = crHandPoint
+            Caption = 'Remover'
+            Color = clWhite
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Segoe UI Variable Text Semibold'
+            Font.Style = [fsBold]
+            ParentBackground = False
+            ParentFont = False
             TabOrder = 5
-            OnClick = btnRemoverClick
-            PngImage.Data = {
-              89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-              61000000097048597300000B1300000B1301009A9C18000000D44944415478DA
-              6364A0103062139492926AFBFFFF7F312323231B90FE0514EA7EFEFC790DD106
-              484A4AFE646666967CF2E4C93B191919A1BF7FFF3E031AC081D700A0ADFF9125
-              9E3D7B46941C8A0B400A9125B1780D439E360600C3602130F0E6BD78F1E2A084
-              84843D3030938061104FB401204D4C4C4CAB40A10FC4A5FFFEFD0B0319469217
-              80EC12980140B11E92BC202D2DED00F4C24A9801402F843F7DFAF400D10600E9
-              45404DF3409AA0862501C5E3681F0BC829105D33AE14896E400BD4CF6CE80640
-              F34417D0805A9C0690032836000076E3A41184575B030000000049454E44AE42
-              6082}
+            TabStop = True
+            OnClick = pnlRemoverClick
+            OnEnter = OnTabEnter
+            OnExit = OnTabExit
+            OnMouseEnter = OnMouseEnter
+            OnMouseLeave = OnMouseLeave
+            DesignSize = (
+              109
+              23)
+            object imgr1: TImage
+              Left = 8
+              Top = 3
+              Width = 16
+              Height = 19
+              Anchors = [akLeft, akTop, akRight, akBottom]
+              Center = True
+              Picture.Data = {
+                0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+                001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+                000000D44944415478DA6364A0103062139492926AFBFFFF7F312323231B90FE
+                0514EA7EFEFC790DD106484A4AFE646666967CF2E4C93B191919A1BF7FFF3E03
+                1AC081D700A0ADFF91259E3D7B46941C8A0B400A9125B1780D439E360600C360
+                2130F0E6BD78F1E2A08484843D3030938061104FB401204D4C4C4CAB40A10FC4
+                A5FFFEFD0B031946921780EC12980140B11E92BC202D2DED00F4C24A9801402F
+                843F7DFAF400D10600E945404DF3409AA0862501C5E3681F0BC829105D33AE14
+                896E400BD4CF6CE80640F34417D0805A9C0690032836000076E3A41184575B03
+                0000000049454E44AE426082}
+            end
           end
         end
         object pnl3: TPanel

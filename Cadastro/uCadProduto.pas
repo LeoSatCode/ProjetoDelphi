@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
   Vcl.Buttons, Vcl.ExtCtrls, RxToolEdit, RxCurrEdit, cCadProduto, uEnum, uDTMConexao, cFuncao, uCadCategoria, uConCategoria,
-  Vcl.Menus, System.ImageList, Vcl.ImgList, PngBitBtn;
+  Vcl.Menus, System.ImageList, Vcl.ImgList, PngBitBtn, Vcl.Imaging.pngimage;
 
 type
   TfrmCadProduto = class(TfrmTelaHeranca)
@@ -43,8 +43,7 @@ type
     pnlImage1: TPanel;
     imgProduto: TImage;
     imgImage: TImage;
-    procedure btnAlterarClick(Sender: TObject);
-    procedure btnNovoClick(Sender: TObject);
+    procedure pnlAlterarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -54,6 +53,8 @@ type
     procedure CarregarImagem1Click(Sender: TObject);
     procedure dtsListagemDataChange(Sender: TObject; Field: TField);
     procedure imgImageClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
+    procedure gdrListagemDblClick(Sender: TObject);
   private
     { Private declarations }
     oProduto:TProduto;
@@ -134,13 +135,13 @@ begin
   TFuncao.LimparImagem(imgImage);
 end;
 
-{$ENDREGION}
-
-procedure TfrmCadProduto.btnNovoClick(Sender: TObject);
+procedure TfrmCadProduto.pnlNovoClick(Sender: TObject);
 begin
   inherited;
   edtNome.SetFocus;
 end;
+
+{$ENDREGION}
 
 procedure TfrmCadProduto.btnPesquisarCategoriaClick(Sender: TObject);
 begin
@@ -210,7 +211,7 @@ begin
   QryCategoria.Refresh;
 end;
 
-procedure TfrmCadProduto.btnAlterarClick(Sender: TObject);
+procedure TfrmCadProduto.pnlAlterarClick(Sender: TObject);
 begin
   if oProduto.Selecionar(QryListagem.FieldByName('produtoId').AsInteger) then begin
     with oProduto do begin
@@ -224,7 +225,7 @@ begin
     end;
   end
   else begin
-    btnCancelar.Click;
+    pnlCancelarClick(Sender);
     Abort;
   end;
   inherited;
@@ -248,6 +249,12 @@ procedure TfrmCadProduto.FormShow(Sender: TObject);
 begin
   inherited;
   QryCategoria.Open;
+end;
+
+procedure TfrmCadProduto.gdrListagemDblClick(Sender: TObject);
+begin
+  inherited;
+  pnlAlterarClick(pnlAlterar);
 end;
 
 end.

@@ -63,8 +63,7 @@ type
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnNovoClick(Sender: TObject);
-    procedure btnAlterarClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
     procedure edtDocumentoKeyPress(Sender: TObject; var Key: Char);
     procedure edtDocumentoChange(Sender: TObject);
     procedure cbPessoaChange(Sender: TObject);
@@ -76,11 +75,12 @@ type
     procedure edtTelefoneKeyPress(Sender: TObject; var Key: Char);
     procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
     procedure edtEstadoKeyPress(Sender: TObject; var Key: Char);
-    procedure btnFecharClick(Sender: TObject);
     procedure edtEmailExit(Sender: TObject);
     procedure edtCEPChange(Sender: TObject);
     procedure mskPesquisarChange(Sender: TObject);
     procedure mskPesquisarExit(Sender: TObject);
+    procedure pnlAlterarClick(Sender: TObject);
+    procedure gdrListagemDblClick(Sender: TObject);
   private
     { Private declarations }
     oCliente:TCliente;
@@ -214,9 +214,9 @@ end;
 
 {$ENDREGION}
 
-procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
+procedure TfrmCadCliente.pnlAlterarClick(Sender: TObject);
 begin
-
+  inherited;
   if ((QryListagem.FieldByName('situacaoId').AsInteger = 2) or (QryListagem.FieldByName('situacaoId').AsInteger = 3) ) then
       edtObservacao.Visible:=True
   else
@@ -242,20 +242,14 @@ begin
     end;
   end
   else begin
-    btnCancelar.Click;
+    pnlCancelarClick(Sender);
     Abort;
   end;
 
   inherited;
 end;
 
-procedure TfrmCadCliente.btnFecharClick(Sender: TObject);
-begin
-  inherited;
-  TFuncao.AtualizarDashBoard;
-end;
-
-procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
+procedure TfrmCadCliente.pnlNovoClick(Sender: TObject);
 begin
   inherited;
   edtDataNascimento.Date:=Date;
@@ -559,7 +553,12 @@ begin
 
   IndiceAtual:='nome';
 
+end;
 
+procedure TfrmCadCliente.gdrListagemDblClick(Sender: TObject);
+begin
+  inherited;
+  pnlAlterarClick(pnlAlterar);
 end;
 
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);

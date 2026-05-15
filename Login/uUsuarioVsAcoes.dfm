@@ -10,9 +10,11 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -133,23 +135,43 @@ object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
     DesignSize = (
       685
       41)
-    object btnFechar1: TPngBitBtn
-      Left = 591
+    object pnlFechar: TPanel
+      Left = 568
       Top = 8
-      Width = 85
-      Height = 24
+      Width = 109
+      Height = 23
+      Cursor = crHandPoint
       Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = '&SAIR'
+      Caption = 'Fechar'
+      Color = clWhite
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
       TabOrder = 0
-      OnClick = btnFechar1Click
-      PngImage.Data = {
-        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-        61000000097048597300000B1300000B1301009A9C18000000584944415478DA
-        636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
-        2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
-        931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
-        4E44AE426082}
+      TabStop = True
+      OnClick = pnlFecharClick
+      DesignSize = (
+        109
+        23)
+      object img1: TImage
+        Left = 15
+        Top = 2
+        Width = 16
+        Height = 19
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+          001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+          000000584944415478DA636480022929A9FF0C448267CF9E31C2D88C54370059
+          9218405F03A06A3A816A2A28318001D910720D801B82D3002263A59352031A28
+          F14203506D23B9068035931B8870CD241B800D50DF0062005573230069A461B4
+          756035F10000000049454E44AE426082}
+      end
     end
   end
   object QryUsuario: TFDQuery

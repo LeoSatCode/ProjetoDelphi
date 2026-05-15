@@ -11,9 +11,11 @@
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -39,6 +41,9 @@
     Color = 16774378
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      419
+      488)
     object img1: TImage
       Left = 104
       Top = 32
@@ -767,66 +772,128 @@
       Font.Style = [fsBold]
       ParentFont = False
     end
-  end
-  object btnFechar: TPngBitBtn
-    Left = 119
-    Top = 432
-    Width = 75
-    Height = 25
-    Cursor = crHandPoint
-    Cancel = True
-    Caption = 'FECHAR'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Segoe UI Variable Text Semibold'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 2
-    OnClick = btnFecharClick
-    PngImage.Data = {
-      89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-      61000000097048597300000B1300000B1301009A9C18000000584944415478DA
-      636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
-      2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
-      931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
-      4E44AE426082}
-  end
-  object btnLogin: TPngBitBtn
-    Left = 221
-    Top = 432
-    Width = 75
-    Height = 25
-    Cursor = crHandPoint
-    Caption = 'LOGIN'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Segoe UI Variable Text Semibold'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 1
-    OnClick = btnLoginClick
-    PngImage.Data = {
-      89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-      61000000097048597300000B1300000B1301009A9C18000001714944415478DA
-      6364A01030A20B484A4ADA32323266009936FFFFFF1707D26F80F830104F7DFE
-      FCF9117C063003354F026AF602B2BBFFFDFBB7554848E8F9C78F1FC5806C2FA0
-      7805D0C0ED4043F281F27F300C006A9E0254A4F6E3C78F9077EFDE7D42B74954
-      5494879595750DD090BB4043B2510C90969636074A2CFBFDFBB7FEEBD7AFBFE0
-      F2AFB0B0302F3B3BFB25A0DA18A02147B18601963069002A6E80F1252424D299
-      9898EC9F3D7B16459401525252400BFF37C20C011A2807A48E01F9327003408A
-      08461723A3E3D3A74F0FA8A8A8B07FFDFAF523D0000EB25C00F4823CD0B02340
-      BE2C59610034301348D900C3201A6E00D0545360C0AC04C6821EBE5800A60B3E
-      0E0E8E4B406614D08063282E009A3C1948A9FFFCF933F8EDDBB79F71685E0364
-      DE046ACE85870D921A26A0211380B42F033425F2F0F0BC00069838D0CFDE40B1
-      7220DE0CD45CC8802D2522F9D91A9A176C81812701A45F03F98780F45498B351
-      62875020128C5E4A0D00005C70A9114C8102E90000000049454E44AE426082}
+    object pnlFechar: TPanel
+      Left = 82
+      Top = 431
+      Width = 111
+      Height = 23
+      Cursor = crHandPoint
+      Anchors = [akLeft, akRight]
+      Caption = 'Fechar'
+      Color = clWhite
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 1
+      TabStop = True
+      OnClick = btnFecharClick
+      OnEnter = OnTabEnter
+      OnExit = OnTabExit
+      OnMouseEnter = OnMouseEnter
+      OnMouseLeave = OnMouseLeave
+      DesignSize = (
+        111
+        23)
+      object imgj4: TImage
+        Left = 11
+        Top = 3
+        Width = 18
+        Height = 19
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+          001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+          000000584944415478DA636480022929A9FF0C448267CF9E31C2D88C54370059
+          9218405F03A06A3A816A2A28318001D910720D801B82D3002263A59352031A28
+          F14203506D23B9068035931B8870CD241B800D50DF0062005573230069A461B4
+          756035F10000000049454E44AE426082}
+      end
+      object btnFechar: TPngBitBtn
+        Left = 93
+        Top = 29
+        Width = 42
+        Height = 14
+        Cursor = crHandPoint
+        Cancel = True
+        Caption = 'FECHAR'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Segoe UI Variable Text Semibold'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        TabStop = False
+        OnClick = btnFecharClick
+        PngImage.Data = {
+          89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+          61000000097048597300000B1300000B1301009A9C18000000584944415478DA
+          636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
+          2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
+          931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
+          4E44AE426082}
+      end
+    end
+    object pnlLogin: TPanel
+      Left = 221
+      Top = 431
+      Width = 109
+      Height = 23
+      Cursor = crHandPoint
+      Caption = 'Login'
+      Color = clWhite
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 0
+      TabStop = True
+      OnClick = pnlLoginClick
+      OnEnter = OnTabEnter
+      OnExit = OnTabExit
+      OnMouseEnter = OnMouseEnter
+      OnMouseLeave = OnMouseLeave
+      DesignSize = (
+        109
+        23)
+      object imgq: TImage
+        Left = 16
+        Top = 4
+        Width = 16
+        Height = 19
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+          001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+          000001714944415478DA6364A01030A20B484A4ADA32323266009936FFFFFF17
+          07D26F80F830104F7DFEFCF9117C063003354F026AF602B2BBFFFDFBB7554848
+          E8F9C78F1FC5806C2FA07805D0C0ED4043F281F27F300C006A9E0254A4F6E3C7
+          8F9077EFDE7D42B749545494879595750DD090BB4043B2510C90969636074A2C
+          FBFDFBB7FEEBD7AFBFE0F2AFB0B0302F3B3BFB25A0DA18A02147B18601963069
+          002A6E80F1252424D2999898EC9F3D7B16459401525252400BFF37C20C011A28
+          07A48E01F9327003408A08461723A3E3D3A74F0FA8A8A8B07FFDFAF523D0000E
+          B25C00F4823CD0B02340BE2C59610034301348D900C3201A6E00D0545360C0AC
+          04C6821EBE5800A60B3E0E0E8E4B406614D08063282E009A3C1948A9FFFCF933
+          F8EDDBB79F71685E0364DE046ACE85870D921A26A0211380B42F033425F2F0F0
+          BC00069838D0CFDE40B17220DE0CD45CC8802D2522F9D91A9A176C81812701A4
+          5F03F98780F45498B35162875020128C5E4A0D00005C70A9114C8102E9000000
+          0049454E44AE426082}
+      end
+    end
   end
   object edtUsuario: TEdit
-    Left = 119
+    Left = 82
     Top = 296
-    Width = 177
+    Width = 248
     Height = 27
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -834,12 +901,12 @@
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 1
   end
   object edtSenha: TEdit
-    Left = 119
+    Left = 82
     Top = 376
-    Width = 177
+    Width = 248
     Height = 27
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -848,6 +915,6 @@
     Font.Style = []
     ParentFont = False
     PasswordChar = '*'
-    TabOrder = 4
+    TabOrder = 2
   end
 end

@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls, cCadUsuario, uDTMConexao, uEnum, cAcaoAcesso, System.ImageList, Vcl.ImgList, PngBitBtn;
+  Vcl.Buttons, Vcl.ExtCtrls, cCadUsuario, uDTMConexao, uEnum, cAcaoAcesso, System.ImageList, Vcl.ImgList, PngBitBtn,
+  Vcl.Imaging.pngimage;
 
 type
   TfrmCadUsuario = class(TfrmTelaHeranca)
@@ -17,11 +18,14 @@ type
     edtUsuarioId: TLabeledEdit;
     edtNome: TLabeledEdit;
     edtSenha: TLabeledEdit;
-    procedure btnAlterarClick(Sender: TObject);
+    Panel1: TPanel;
+    img1: TImage;
+    procedure pnlAlterarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
-    procedure btnNovoClick(Sender: TObject);
+    procedure pnlNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure gdrListagemDblClick(Sender: TObject);
   private
     { Private declarations }
     oUsuario:TUsuario;
@@ -41,7 +45,7 @@ implementation
 
 { TfrmCadUsuario }
 
-procedure TfrmCadUsuario.btnAlterarClick(Sender: TObject);
+procedure TfrmCadUsuario.pnlAlterarClick(Sender: TObject);
 begin
   if oUsuario.Selecionar(QryListagem.FieldByName('usuarioId').AsInteger) then begin
     edtUsuarioId.Text :=IntToStr(oUsuario.codigo);
@@ -49,7 +53,7 @@ begin
     edtSenha.Text     :=oUsuario.senha;
   end
   else begin
-    btnCancelar.Click;
+    pnlCancelarClick(Sender);
     Abort;
   end;
 
@@ -77,7 +81,7 @@ begin
 
 end;
 
-procedure TfrmCadUsuario.btnNovoClick(Sender: TObject);
+procedure TfrmCadUsuario.pnlNovoClick(Sender: TObject);
 begin
   inherited;
   edtNome.SetFocus;
@@ -101,6 +105,12 @@ begin
   inherited;
   oUsuario:=TUsuario.Create(dtmConexao.ConexaoDB);
   IndiceAtual:='nome';
+end;
+
+procedure TfrmCadUsuario.gdrListagemDblClick(Sender: TObject);
+begin
+  inherited;
+  pnlAlterarClick(pnlAlterar);
 end;
 
 function TfrmCadUsuario.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;

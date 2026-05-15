@@ -1,19 +1,25 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientWidth = 1011
-  ExplicitTop = -159
+  ExplicitTop = -36
   ExplicitWidth = 1017
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
     Width = 1011
     ExplicitWidth = 1011
-    inherited btnFechar: TPngBitBtn
-      Left = 921
-      ExplicitLeft = 921
-    end
     inherited btnNavigator: TDBNavigator
+      Left = 649
+      Top = 16
       Hints.Strings = ()
+      ExplicitLeft = 649
+      ExplicitTop = 16
+    end
+    inherited pnlFechar: TPanel
+      Left = 896
+      Top = 16
+      ExplicitLeft = 896
+      ExplicitTop = 16
     end
   end
   inherited pgcPrincipal: TPageControl

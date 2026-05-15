@@ -1,7 +1,7 @@
 object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
+  BorderStyle = bsToolWindow
   Caption = 'DIGITE O TITULO AQUI'
   ClientHeight = 468
   ClientWidth = 827
@@ -11,10 +11,12 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -56,27 +58,52 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
       TextHint = 'Digite sua Pesquisa'
       OnChange = mskPesquisarChange
     end
-    object btnPesquisar: TPngBitBtn
+    object pnlPesquisar: TPanel
       Left = 303
-      Top = 23
-      Width = 90
-      Height = 25
-      Caption = 'PESQUISAR'
+      Top = 24
+      Width = 109
+      Height = 23
+      Cursor = crHandPoint
+      Caption = 'Pesquisar'
+      Color = clWhite
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Variable Text Semibold'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
       TabOrder = 1
-      OnClick = btnPesquisarClick
-      PngImage.Data = {
-        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-        61000000097048597300000B1300000B1301009A9C180000011B4944415478DA
-        6364A01030E293949494E4025215401C05C4B240FC188897323333773C79F2E4
-        3B5E03A09AF702F19BFFFFFF3701F1354646462D20AE038A09010D71011982CF
-        80262065F8FCF9735F2C729B81069D79F6EC59233E03EE006D8D78F1E2C51974
-        3909090953A001CB8086ABE233E0DBAF5FBFC4DFBE7DFB195D4E585898978D8D
-        ED35D0000E7C065C02BA20098F0B96020D50C3698094945431D000073C61701A
-        18064DF85CE00654B41368C816502CFCFDFBF73A30E43541B100C482ACACAC2E
-        0F1F3EFC81D50069696907A0A695401C0B54AC0BA4E380C2AA40FC14C85F0CD4
-        DC05D28C351D006DB6012A5A0BC4914F9F3EDDC740003052A219C5007234A318
-        000CF54540CDF3809A0F10AB196B18900A283600001D378411B9615874000000
-        0049454E44AE426082}
+      TabStop = True
+      OnClick = pnlPesquisarClick
+      OnEnter = OnTabEnter
+      OnExit = OnTabExit
+      OnMouseEnter = OnMouseEnter
+      OnMouseLeave = OnMouseLeave
+      DesignSize = (
+        109
+        23)
+      object imgj2: TImage
+        Left = 5
+        Top = 4
+        Width = 16
+        Height = 19
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+          001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+          0000011B4944415478DA6364A01030E293949494E4025215401C05C4B240FC18
+          8897323333773C79F2E43B5E03A09AF702F19BFFFFFF3701F1354646462D20AE
+          038A09010D71011982CF80262065F8FCF9735F2C729B81069D79F6EC59233E03
+          EE006D8D78F1E2C519743909090953A001CB8086ABE233E0DBAF5FBFC4DFBE7D
+          FB195D4E585898978D8DED35D0000E7C065C02BA20098F0B96020D50C3698094
+          945431D000073C61701A18064DF85CE00654B41368C816502CFCFDFBF73A30E4
+          3541B100C482ACACAC2E0F1F3EFC81D50069696907A0A695401C0B54AC0BA4E3
+          80C2AA40FC14C85F0CD4DC05D28C351D006DB6012A5A0BC4914F9F3EDDC74000
+          3052A219C5007234A318000CF54540CDF3809A0F10AB196B18900A283600001D
+          378411B96158740000000049454E44AE426082}
+      end
     end
   end
   object pnl2: TPanel
@@ -126,30 +153,48 @@ object frmTelaHerancaConsulta: TfrmTelaHerancaConsulta
     DesignSize = (
       827
       41)
-    object btnFechar: TPngBitBtn
-      Left = 741
-      Top = 10
-      Width = 85
-      Height = 24
+    object pnlFechar: TPanel
+      Left = 715
+      Top = 8
+      Width = 111
+      Height = 23
       Cursor = crHandPoint
-      Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = '&SAIR'
+      Anchors = [akLeft, akRight]
+      Caption = 'Sair'
+      Color = clWhite
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -13
       Font.Name = 'Segoe UI Variable Text Semibold'
       Font.Style = [fsBold]
+      ParentBackground = False
       ParentFont = False
       TabOrder = 0
-      OnClick = btnFecharClick
-      PngImage.Data = {
-        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-        61000000097048597300000B1300000B1301009A9C18000000584944415478DA
-        636480022929A9FF0C448267CF9E31C2D88C543700599218405F03A06A3A816A
-        2A28318001D910720D801B82D3002263A59352031A28F14203506D23B9068035
-        931B8870CD241B800D50DF0062005573230069A461B4756035F1000000004945
-        4E44AE426082}
+      TabStop = True
+      OnClick = pnlFecharClick
+      OnEnter = OnTabEnter
+      OnExit = OnTabExit
+      OnMouseEnter = OnMouseEnter
+      OnMouseLeave = OnMouseLeave
+      DesignSize = (
+        111
+        23)
+      object imgj4: TImage
+        Left = 16
+        Top = 3
+        Width = 18
+        Height = 19
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D49484452000000100000
+          001008060000001FF3FF61000000097048597300000B1300000B1301009A9C18
+          000000584944415478DA636480022929A9FF0C448267CF9E31C2D88C54370059
+          9218405F03A06A3A816A2A28318001D910720D801B82D3002263A59352031A28
+          F14203506D23B9068035931B8870CD241B800D50DF0062005573230069A461B4
+          756035F10000000049454E44AE426082}
+        ExplicitWidth = 16
+      end
     end
   end
   object QryListagem: TFDQuery
