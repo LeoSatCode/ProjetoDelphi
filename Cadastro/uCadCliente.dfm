@@ -1,7 +1,6 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientWidth = 1011
-  ExplicitTop = -159
   ExplicitWidth = 1017
   PixelsPerInch = 96
   TextHeight = 13
@@ -272,25 +271,25 @@ inherited frmCadCliente: TfrmCadCliente
           item
             Expanded = False
             FieldName = 'nome'
-            Width = 175
+            Width = 152
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'documento'
-            Width = 40
+            Width = 109
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'telefone'
-            Width = 47
+            Width = 74
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'endereco'
-            Width = 168
+            Width = 90
             Visible = True
           end
           item

@@ -70,15 +70,14 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnConOrcVencClick(Sender: TObject);
     procedure gdrListagemDblClick(Sender: TObject);
-
-
-
-
+    procedure lkpClienteExit(Sender: TObject);
 
   private
     { Private declarations }
     dtmVendas:TdtmVenda;
     oVenda:TVenda;
+    FOldClienteOnShow: TNotifyEvent;
+    procedure ClienteLocalOnShow(Sender: TObject);
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
     function Excluir:Boolean; override;
     function TotalizarProduto(valorUnitario, Quantidade: Double): Double;
@@ -296,20 +295,112 @@ begin
   end;
 end;
 
-procedure TfrmProVendas.AbrirCadastroCliente(AClienteId: Integer);
+procedure TfrmProVendas.lkpClienteExit(Sender: TObject);
+var Observacao:string;
 begin
-  if not Assigned(frmCadCliente) then
-    frmCadCliente := TfrmCadCliente.Create(nil);
+  inherited;
+  Observacao:=dtmVendas.QryCliente.FieldByName('observacao').AsString;
 
-  frmCadCliente.Show;
-  frmCadCliente.BringToFront;
+  if(dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 3) then
+  begin
+    if Observacao <> '' then
+      ShowMessage('ATENÇÃO: ' + sLineBreak + Observacao)
+    else
+      ShowMessage('Cliente em situação de ATENÇÃO.' + sLineBreak+ 'Sem Observações');
+  end;
 
-  // Carregar o cliente automaticamente
-  frmCadCliente.QryListagem.Close;
-  frmCadCliente.QryListagem.Open;
-  frmCadCliente.QryListagem.Locate('clienteId', AClienteId, []);
+  if(dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 2) then
+  begin
+    if Observacao <> '' then
+    begin
+      ShowMessage('Cliente BLOQUEADO. Razão: ' + sLineBreak + Observacao);
+      lkpCliente.KeyValue:='';
+      lkpCliente.SetFocus;
+    end
+    else  begin
+      ShowMessage('Cliente BLOQUEADO.' + sLineBreak+ 'Sem Observações');
+      lkpCliente.KeyValue:='';
+      lkpCliente.SetFocus;
+    end;
+  end;
 
-  frmCadCliente.pnlAlterarClick(Self);
+  if(dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 4) then
+  begin
+  if MessageDlg('Cliente está INATIVO.' + sLineBreak +
+                'Deseja atualizar os dados cadastrais agora?',
+                mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    AbrirCadastroCliente(
+      dtmVendas.QryCliente.FieldByName('clienteId').AsInteger
+    );
+  end
+  else
+  begin
+    lkpCliente.KeyValue:='';
+    lkpCliente.SetFocus;
+  end;
+  end;
+
+  if (dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 5)then
+  begin
+    if MessageDlg('Cliente está efetuando primeira compra, deseja continuar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+
+      with dtmVendas.QryClienteUpdate do
+      begin
+        SQL.Text := 'UPDATE clientes SET situacaoId = :situacaoId WHERE clienteId = :id';
+        ParamByName('situacaoId').AsInteger := 1;
+        ParamByName('id').AsInteger := dtmVendas.QryCliente.FieldByName('clienteId').AsInteger;
+        ExecSQL;
+      end;
+
+      ShowMessage('Cliente agora está ATIVO!');
+
+
+      dtmVendas.QryCliente.Close;
+      dtmVendas.QryCliente.Open;
+    end
+    else
+      lkpCliente.KeyValue:='';
+      lkpCliente.SetFocus;
+  end;
+end;
+
+procedure TfrmProVendas.AbrirCadastroCliente(AClienteId: Integer);
+var
+  frmLocalCliente: TfrmCadCliente;
+begin
+  frmLocalCliente := TfrmCadCliente.Create(Self);
+  try
+    frmLocalCliente.QryListagem.Close;
+    frmLocalCliente.QryListagem.Open;
+    frmLocalCliente.QryListagem.Locate('clienteId', AClienteId, []);
+
+    FOldClienteOnShow := frmLocalCliente.OnShow;
+
+    frmLocalCliente.OnShow := ClienteLocalOnShow;
+
+    frmLocalCliente.ShowModal;
+
+    dtmVendas.QryCliente.Close;
+    dtmVendas.QryCliente.Open;
+
+    if dtmVendas.QryCliente.Locate('clienteId', AClienteId, []) then
+    begin
+      if dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 1 then
+      begin
+         lkpCliente.KeyValue := AClienteId;
+         edtDataVenda.SetFocus;
+      end
+      else
+      begin
+         lkpCliente.KeyValue := Null;
+      end;
+    end;
+
+  finally
+    frmLocalCliente.Release;
+  end;
 end;
 
 function TfrmProVendas.TotalizarProduto(valorUnitario, Quantidade:Double):Double;
@@ -434,7 +525,7 @@ var
   frm: TfrmCadCliente;
   vSituacaoId: Integer;
   vClienteId: Integer;
-  vNomeSituacao: string; // <-- A nossa variável tradutora
+  vNomeSituacao: string;
 begin
   inherited;
 
@@ -494,7 +585,7 @@ end;
 
 procedure TfrmProVendas.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  TGrid.SalvarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
+  TGrid.SalvarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid.ini', oUsuarioLogado.nome, Self.ClassName);
   QryListagem.Close;
 
 end;
@@ -517,7 +608,7 @@ begin
   if Key = VK_DELETE then
   begin
     Key := 0;
-    Abort; // corta qualquer fluxo
+    Abort;
   end;
 
   if Key = VK_RETURN then
@@ -533,7 +624,7 @@ begin
   oVenda.AtualizarStatusVencidos;
 
   QryListagem.Open;
-  TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid', oUsuarioLogado.nome, Self.ClassName);
+  TGrid.CarregarGrid(dbgridItensVenda,'PreferenciasPreVendaGrid.ini', oUsuarioLogado.nome, Self.ClassName);
   pnlNovo.SetFocus;
 end;
 
@@ -679,5 +770,17 @@ begin
     dtmVendas.cdsItensVenda.Next;
   end;
 
+end;
+
+procedure TfrmProVendas.ClienteLocalOnShow(Sender: TObject);
+var
+  frm: TfrmCadCliente;
+begin
+
+  if Assigned(FOldClienteOnShow) then
+    FOldClienteOnShow(Sender);
+
+  frm := TfrmCadCliente(Sender);
+  frm.pnlAlterarClick(frm.pnlAlterar);
 end;
 end.

@@ -1,6 +1,6 @@
 ﻿[Closed Files]
 File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,2375,9,2390,0,0,,
-File_1=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadCliente.pas',0,1,558,29,561,0,0,{{106,0},{215,11},{'Override'}},
+File_1=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadCliente.pas',0,1,558,29,561,0,0,{{106,0}
 File_2=TSourceModule,'C:\ProjetoDelphi\Login\uLogin.pas',0,1,1,60,120,0,0,,
 File_3=TSourceModule,'C:\ProjetoDelphi\Processo\uCaixa.pas',0,1,302,39,314,0,0,,
 File_4=TSourceModule,'C:\ProjetoDelphi\Processo\uProVenda.pas',0,1,530,37,546,0,0,,
@@ -13,22 +13,28 @@ File_10=TSourceModule,'C:\ProjetoDelphi\Consulta\uConCategoria.pas',0,1,29,9,45,
 File_11=TSourceModule,'C:\ProjetoDelphi\Consulta\uConCliente.pas',0,1,54,37,71,0,0,,
 
 [Modules]
-Module0=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+Module0=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
 Module1=C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas
-Module2=C:\ProjetoDelphi\Classes\cUsuarioLogado.pas
-Module3=C:\ProjetoDelphi\Classes\cAcaoAcesso.pas
-Module4=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
-Module5=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas
-Module6=C:\Components\units\RxToolEdit.pas
-Module7=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
+Module2=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
+Module3=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+Module4=C:\ProjetoDelphi\Classes\cUsuarioLogado.pas
+Module5=C:\ProjetoDelphi\Classes\cAcaoAcesso.pas
+Module6=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas
+Module7=C:\Components\units\RxToolEdit.pas
 Module8=C:\ProjetoDelphi\uPrincipal.pas
 Count=9
 EditWindowCount=1
 
-[C:\ProjetoDelphi\Heranca\uTelaHeranca.pas]
+[C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas]
 ModuleType=TSourceModule
 
 [C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas]
+ModuleType=TSourceModule
+
+[C:\ProjetoDelphi\Cadastro\uCadProduto.pas]
+ModuleType=TSourceModule
+
+[C:\ProjetoDelphi\Heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
 [C:\ProjetoDelphi\Classes\cUsuarioLogado.pas]
@@ -37,16 +43,10 @@ ModuleType=TSourceModule
 [C:\ProjetoDelphi\Classes\cAcaoAcesso.pas]
 ModuleType=TSourceModule
 
-[C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas]
-ModuleType=TSourceModule
-
 [c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas]
 ModuleType=TSourceModule
 
 [C:\Components\units\RxToolEdit.pas]
-ModuleType=TSourceModule
-
-[C:\ProjetoDelphi\Cadastro\uCadProduto.pas]
 ModuleType=TSourceModule
 
 [C:\ProjetoDelphi\uPrincipal.pas]
@@ -54,7 +54,7 @@ ModuleType=TSourceModule
 
 [EditWindow0]
 ViewCount=9
-CurrentEditView=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+CurrentEditView=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
 View0=0
 View1=1
 View2=2
@@ -107,8 +107,8 @@ EditViewName=C:\ProjetoDelphi\uPrincipal.pas
 [View1]
 CustomEditViewType=TEditView
 Module=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
-CursorX=7
-CursorY=376
+CursorX=24
+CursorY=386
 TopLine=370
 LeftCol=1
 Elisions={{101,0},{104,11},{' OBSERVAÇÕES'}}{{182,0},{211,11},{'MÉTODOS VURTUAIS'}}
@@ -120,7 +120,7 @@ CustomEditViewType=TEditView
 Module=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
 CursorX=54
 CursorY=101
-TopLine=91
+TopLine=103
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -153,7 +153,7 @@ CustomEditViewType=TEditView
 Module=C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas
 CursorX=60
 CursorY=87
-TopLine=219
+TopLine=87
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -184,13 +184,13 @@ EditViewName=C:\Components\units\RxToolEdit.pas
 [View8]
 CustomEditViewType=TEditView
 Module=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
-CursorX=28
-CursorY=260
-TopLine=254
+CursorX=32
+CursorY=111
+TopLine=103
 LeftCol=1
-Elisions={{78,0},{144,11},{'Override'}}
+Elisions=
 Bookmarks=
-EditViewName=Borland.FormDesignerView
+EditViewName=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
 
 [UndockedDesigner]
 Count=0
@@ -272,12 +272,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2042
-Height=6500
+Width=1881
+Height=8125
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2042
-ClientHeight=6500
+ClientWidth=1881
+ClientHeight=8125
 TBDockHeight=5903
 LRDockWidth=2350
 Dockable=1
@@ -310,12 +310,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2028
-Height=6847
+Width=1896
+Height=8472
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2028
-ClientHeight=6847
+ClientWidth=1896
+ClientHeight=8472
 TBDockHeight=7153
 LRDockWidth=1999
 Dockable=1
@@ -378,11 +378,6 @@ LRDockWidth=1911
 Dockable=1
 StayOnTop=0
 SplitPos=112
-
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=Caption,CustomHint
-ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,Font=0,GlassFrame=0,HorzScrollBar=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,Padding=0,Menu=0,StyleElements=0,Touch=0,VertScrollBar=0,BevelEdges=0,DataSource=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -449,11 +444,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=1881
 Height=8125
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=1881
 ClientHeight=8125
 TBDockHeight=5958
 LRDockWidth=2511
@@ -673,11 +668,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=1881
 Height=8125
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=1881
 ClientHeight=8125
 TBDockHeight=4889
 LRDockWidth=7152
@@ -756,11 +751,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1911
+Width=1881
 Height=8125
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1911
+ClientWidth=1881
 ClientHeight=8125
 TBDockHeight=4889
 LRDockWidth=5307
@@ -845,16 +840,16 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=3
-Top=23
-Width=2042
-Height=6847
+Left=1368
+Top=82
+Width=1999
+Height=9014
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2042
-ClientHeight=6847
+ClientWidth=1881
+ClientHeight=8472
 TBDockHeight=9014
-LRDockWidth=2028
+LRDockWidth=1999
 Dockable=1
 StayOnTop=0
 TabPosition=1
@@ -893,14 +888,14 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=3
-Top=23
-Width=2028
-Height=6847
+Left=8
+Top=8
+Width=2013
+Height=9014
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2028
-ClientHeight=6847
+ClientWidth=1896
+ClientHeight=8472
 TBDockHeight=9014
 LRDockWidth=2013
 Dockable=1

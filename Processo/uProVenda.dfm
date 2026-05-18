@@ -1,7 +1,6 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Pr'#233' Venda'
   ClientWidth = 1003
-  ExplicitTop = -106
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
@@ -508,6 +507,7 @@ inherited frmProVendas: TfrmProVendas
           ListSource = dtmVenda.dtsCliente
           TabOrder = 1
           OnCloseUp = lkpClienteCloseUp
+          OnExit = lkpClienteExit
         end
         object edtDataVenda: TDateEdit
           Left = 638

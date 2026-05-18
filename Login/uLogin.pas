@@ -83,7 +83,7 @@ begin
        ModalResult := mrOk;
     end
     else begin
-       MessageDlg('Usuário Invalido', mtConfirmation, [mbOK],0);
+       MessageDlg('Usuário ou senha inválidos.', mtConfirmation, [mbOK],0);
     end;
 
   finally
