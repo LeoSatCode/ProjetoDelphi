@@ -171,7 +171,9 @@ begin
     else if (Components[i] is TCurrencyEdit) then
         TCurrencyEdit(Components[i]).Value:=0
     else if (Components[i] is TDateEdit) then
-        TDateEdit(Components[i]).Date:=0;
+        TDateEdit(Components[i]).Date:=0
+    else if (Components[i] is TImage) then
+        TImage(Components[i]).Picture:=nil;
   end;
 end;
 
@@ -256,6 +258,11 @@ end;
 
 procedure TfrmTelaHeranca.pnlNovoClick(Sender: TObject);
 begin
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPanel(Sender).Name, dtmConexao.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+    Abort;
+  end;
 
   ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,False);
@@ -339,6 +346,12 @@ end;
 
 procedure TfrmTelaHeranca.pnlAlterarClick(Sender: TObject);
 begin
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPanel(Sender).Name, dtmConexao.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+    Abort;
+  end;
+
   if QryListagem.IsEmpty then
   begin
     MessageDlg('Não há registros para serem alterados.', mtWarning, [mbOK], 0);
@@ -356,6 +369,11 @@ end;
 
 procedure TfrmTelaHeranca.pnlApagarClick(Sender: TObject);
 begin
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPanel(Sender).Name, dtmConexao.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+    Abort;
+  end;
 
   if QryListagem.IsEmpty then
   begin
@@ -382,6 +400,12 @@ end;
 
 procedure TfrmTelaHeranca.pnlCancelarClick(Sender: TObject);
 begin
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPanel(Sender).Name, dtmConexao.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+    Abort;
+  end;
+
   ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,True);
   ControlarIndiceTab(pgcPrincipal, 0);
@@ -397,11 +421,16 @@ end;
 
 procedure TfrmTelaHeranca.pnlGravarClick(Sender: TObject);
 begin
+    if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, Self.Name+'_'+TPanel(Sender).Name, dtmConexao.ConexaoDB) then
+  begin
+    MessageDlg('Usuário: '+oUsuarioLogado.nome+',não tem permissão de acesso.',mtInformation,[mbOK],0);
+    Abort;
+  end;
 
-    if (ExisteCampoObrigatorio) then Abort; //Quando é uma unica linha de instrução, não precisamos de begin e end
+  if (ExisteCampoObrigatorio) then Abort; //Quando é uma unica linha de instrução, não precisamos de begin e end
 
     //Podemos usar o Try, Finally e Catch para garantir o funcionamento do código.
-    Try //Tenta executar o bloco de código abaixo
+  Try //Tenta executar o bloco de código abaixo
       if Gravar (EstadoDoCadastro) then begin
         ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                         btnNavigator, pgcPrincipal,True);
@@ -414,9 +443,9 @@ begin
       else begin
         MessageDlg('Erro na Gravação', mtError, [mbok], 0);
       end;
-    Finally //Executa o EstadoDoCadastro independentemente do resultado do 'Try'
+  Finally //Executa o EstadoDoCadastro independentemente do resultado do 'Try'
 
-    End; //Finaliza a opereção
+  End; //Finaliza a opereção
 
     TFuncao.AtualizarDashBoard;
 
@@ -458,6 +487,7 @@ begin
   begin
     pnlFecharClick(pnlFechar);
   end;
+
 
   if (ActiveControl is TCustomEdit) or (ActiveControl is TCustomComboBox) then
     Exit;

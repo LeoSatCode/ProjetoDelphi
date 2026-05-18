@@ -62,32 +62,41 @@ begin
 end;
 
 procedure TfrmUsuarioVsAcoes.grdAcoesDblClick(Sender: TObject);
-var Qry:TFDQuery;
-    bmRegistroAtual:TBookmark;
+var
+  QryAux:TFDQuery;
+  StatusAtual: Boolean;
 begin
+  if QryAcoes.IsEmpty then Exit; // Prevenção contra duplo clique em grid vazia
+
+  StatusAtual := QryAcoes.FieldByName('ativo').AsBoolean;
+
+  QryAux := TFDQuery.Create(nil);
   try
-    bmRegistroAtual := QryAcoes.GetBookmark;
-    Qry:=TFDQuery.Create(nil);
-    Qry.Connection:=dtmConexao.ConexaoDB;
-    Qry.SQL.Clear;
-    Qry.SQL.Add('UPDATE usuariosAcaoAcesso '+
-                '   SET ativo=:ativo '+
-                ' WHERE usuarioId=:usuarioId '+
-                '   AND acaoAcessoId=:acaoAcessoId ');
-    Qry.ParamByName('usuarioId').AsInteger    :=QryAcoes.FieldByName('usuarioId').AsInteger;
-    Qry.ParamByName('acaoAcessoId').AsInteger :=QryAcoes.FieldByName('acaoAcessoId').AsInteger;
-    Qry.ParamByName('ativo').AsBoolean        :=not QryAcoes.FieldByName('ativo').AsBoolean;
+    QryAux.Connection := dtmConexao.ConexaoDB;
+    QryAux.SQL.Clear;
+    QryAux.SQL.Add('UPDATE usuariosAcaoAcesso '+
+                   '   SET ativo=:ativo '+
+                   ' WHERE usuarioId=:usuarioId '+
+                   '   AND acaoAcessoId=:acaoAcessoId ');
+    QryAux.ParamByName('usuarioId').AsInteger    := QryAcoes.FieldByName('usuarioId').AsInteger;
+    QryAux.ParamByName('acaoAcessoId').AsInteger := QryAcoes.FieldByName('acaoAcessoId').AsInteger;
+    QryAux.ParamByName('ativo').AsBoolean        := not StatusAtual;
+
     try
       dtmConexao.ConexaoDB.StartTransaction;
-      Qry.ExecSQL;
+      QryAux.ExecSQL;
       dtmConexao.ConexaoDB.Commit;
+
+      QryAcoes.Edit;
+      QryAcoes.FieldByName('ativo').AsBoolean := not StatusAtual;
+      QryAcoes.Post;
+
     except
       dtmConexao.ConexaoDB.Rollback;
+      MessageDlg('Erro ao atualizar a permissão no banco de dados.', mtError, [mbOK], 0);
     end;
   finally
-    SelecionarAcoesAcessoPorUsuario;
-    QryAcoes.GotoBookMark(bmRegistroAtual);
-    if Assigned(Qry) then FreeAndNil(Qry);
+    QryAux.Free;
   end;
 end;
 

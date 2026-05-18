@@ -1,6 +1,6 @@
 inherited frmCadProduto: TfrmCadProduto
   Caption = 'Cadastro de Produto'
-  ExplicitTop = 5
+  ExplicitTop = -18
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlRodape: TPanel
@@ -80,6 +80,10 @@ inherited frmCadProduto: TfrmCadProduto
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 933
+      ExplicitHeight = 433
       object lblDescricao: TLabel
         Left = 12
         Top = 149

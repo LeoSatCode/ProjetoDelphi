@@ -86,37 +86,44 @@ end;
 
 function TfrmCadProduto.Gravar(EstadoDoCadastro: TEstadoDoCadastro):Boolean;
 begin
+
+  if VarIsNull(lkpCategoria.KeyValue) then
+  begin
+    MessageDlg('Por favor, selecione uma Categoria para o Produto.', mtWarning, [mbOK], 0);
+    lkpCategoria.SetFocus;
+    Abort;
+  end;
+
+
   with oProduto do begin
-  if edtProdutoId.Text<>EmptyStr then
-     codigo:=StrToInt(edtProdutoId.Text)
-  else
-     codigo:=0;
+    if edtProdutoId.Text<>EmptyStr then
+       codigo:=StrToInt(edtProdutoId.Text)
+    else
+       codigo:=0;
 
-  nome            :=edtNome.Text;
-  descricao       :=edtDescricao.Text;
-  categoriaId     :=lkpCategoria.KeyValue;
-  valor           :=edtValor.Value;
-  quantidade      :=edtQuantidade.Value;
+    nome            :=edtNome.Text;
+    descricao       :=edtDescricao.Text;
+    categoriaId     :=lkpCategoria.KeyValue;
+    valor           :=edtValor.Value;
+    quantidade      :=edtQuantidade.Value;
 
+    if imgImage.Picture.Bitmap.Empty then
+       oProduto.foto.Assign(nil)
+    else
+       oProduto.foto.Assign(imgImage.Picture);
 
-  if imgImage.Picture.Bitmap.Empty then
-     oProduto.foto.Assign(nil)
-  else
-     oProduto.foto.Assign(imgImage.Picture);
-
-  if (EstadoDoCadastro=ecInserir) then
-  begin
-     Result:=oProduto.Inserir;
-     ShowMessage('Inserido');
+    if (EstadoDoCadastro=ecInserir) then
+    begin
+       Result:=oProduto.Inserir;
+       ShowMessage('Inserido');
+    end
+    else if (EstadoDoCadastro=ecAlterar) then
+    begin
+       Result:=oProduto.Atualizar;
+       ShowMessage('Alterado');
+    end
   end
-  else if (EstadoDoCadastro=ecAlterar) then
-  begin
-     Result:=oProduto.Atualizar;
-     ShowMessage('Alterado');
-  end
-  end
-end ;
-
+end;
 procedure TfrmCadProduto.imgImageClick(Sender: TObject);
 var seta: TPoint;
 begin

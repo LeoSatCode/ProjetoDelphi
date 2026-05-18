@@ -43,6 +43,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       TabOrder = 0
     end
     object pnlNovo: TPanel
+      Tag = 99
       Left = 5
       Top = 16
       Width = 109
@@ -113,6 +114,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       end
     end
     object pnlAlterar: TPanel
+      Tag = 99
       Left = 120
       Top = 16
       Width = 109
@@ -184,6 +186,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       end
     end
     object pnlGravar: TPanel
+      Tag = 99
       Left = 235
       Top = 16
       Width = 109
@@ -245,6 +248,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       end
     end
     object pnlCancelar: TPanel
+      Tag = 99
       Left = 350
       Top = 16
       Width = 109
@@ -319,6 +323,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       end
     end
     object pnlApagar: TPanel
+      Tag = 99
       Left = 469
       Top = 16
       Width = 109
