@@ -1,7 +1,7 @@
 inherited frmCadCliente: TfrmCadCliente
   Caption = 'Cadastro de Cliente'
   ClientWidth = 1011
-  ExplicitTop = -36
+  ExplicitTop = -159
   ExplicitWidth = 1017
   PixelsPerInch = 96
   TextHeight = 13

@@ -364,7 +364,6 @@ begin
   ControlarBotoes(pnlNovo, pnlAlterar, pnlCancelar, pnlGravar, pnlApagar,
                   btnNavigator, pgcPrincipal,False);
   EstadoDoCadastro:=ecAlterar;
-
 end;
 
 procedure TfrmTelaHeranca.pnlApagarClick(Sender: TObject);
@@ -496,19 +495,24 @@ begin
   begin
     case Key of
       Ord('N'):
-        if pnlNovo.Enabled then pnlNovoClick(pnlNovo);
+        if pnlNovo.Enabled and Assigned(pnlNovo.OnClick) then
+          pnlNovo.OnClick(pnlNovo);
 
       Ord('A'):
-        if pnlAlterar.Enabled then pnlAlterarClick(pnlAlterar);
+        if pnlAlterar.Enabled and Assigned(pnlAlterar.OnClick) then
+          pnlAlterar.OnClick(pnlAlterar);
 
       Ord('G'):
-        if pnlGravar.Enabled then pnlGravarClick(pnlGravar);
+        if pnlGravar.Enabled and Assigned(pnlGravar.OnClick) then
+          pnlGravar.OnClick(pnlGravar);
 
       Ord('C'):
-        if pnlCancelar.Enabled then pnlCancelarClick(pnlCancelar);
+        if pnlCancelar.Enabled and Assigned(pnlCancelar.OnClick) then
+          pnlCancelar.OnClick(pnlCancelar);
 
       Ord('D'):
-        if pnlApagar.Enabled then pnlApagarClick(pnlApagar);
+        if pnlApagar.Enabled and Assigned(pnlApagar.OnClick) then
+          pnlApagar.OnClick(pnlApagar);
     end;
 
     // Zera a tecla APENAS se foi uma das nossas letras, para não apitar erro no Windows
@@ -537,7 +541,7 @@ end;
 
 procedure TfrmTelaHeranca.gdrListagemDblClick(Sender: TObject);
 begin
-  pnlAlterarClick(Sender);
+  pnlAlterarClick(pnlAlterar);
 end;
 
 procedure TfrmTelaHeranca.gdrListagemDrawColumnCell(

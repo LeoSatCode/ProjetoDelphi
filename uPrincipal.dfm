@@ -438,6 +438,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object mniROCARUSURIO1: TMenuItem
         Caption = 'TROCAR USU'#193'RIO'
+        ShortCut = 16468
         OnClick = mniROCARUSURIO1Click
       end
       object mnuFechar: TMenuItem

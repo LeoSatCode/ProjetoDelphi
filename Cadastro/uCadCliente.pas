@@ -245,8 +245,6 @@ begin
     pnlCancelarClick(Sender);
     Abort;
   end;
-
-  inherited;
 end;
 
 procedure TfrmCadCliente.pnlNovoClick(Sender: TObject);
