@@ -105,6 +105,7 @@ uses
 
 procedure TfrmCaixa.pnlReceberClick(Sender: TObject);
 var oCaixa: TCaixa;
+    vClienteId: Integer;
 begin
   // Validação básica: tem pedido selecionado no grid?
   if QryPendentes.IsEmpty then

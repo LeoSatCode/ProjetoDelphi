@@ -440,7 +440,7 @@ begin
   inherited;
   if (edtEmail.Text <> '') and ((Pos('@', edtEmail.Text) = 0) or (Pos('.', edtEmail.Text) = 0)) then
     begin
-      MessageDlg('E-mail inválido!', mtError, [mbOK], 0);
+      MessageDlg('Por favor, digite o Email num formato válido.', mtInformation, [mbOK], 0);
       edtEmail.SetFocus;
       Abort;
     end;

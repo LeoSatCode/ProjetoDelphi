@@ -1,60 +1,51 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,2375,9,2390,0,0,,
-File_1=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadCliente.pas',0,1,558,29,561,0,0,{{106,0}
-File_2=TSourceModule,'C:\ProjetoDelphi\Login\uLogin.pas',0,1,1,60,120,0,0,,
-File_3=TSourceModule,'C:\ProjetoDelphi\Processo\uCaixa.pas',0,1,302,39,314,0,0,,
-File_4=TSourceModule,'C:\ProjetoDelphi\Processo\uProVenda.pas',0,1,530,37,546,0,0,,
-File_5=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadCategoria.pas',0,1,111,31,114,0,0,,
-File_6=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadUsuario.pas',0,1,62,38,84,0,0,,
-File_7=TSourceModule,'C:\ProjetoDelphi\Login\uAlterarSenha.pas',0,1,27,72,94,0,0,,
-File_8=TSourceModule,'C:\ProjetoDelphi\Heranca\uTelaHerancaConsulta.pas',0,1,177,36,189,0,0,,
-File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas',0,1,14863,1,14875,0,0,,
-File_10=TSourceModule,'C:\ProjetoDelphi\Consulta\uConCategoria.pas',0,1,29,9,45,0,0,,
-File_11=TSourceModule,'C:\ProjetoDelphi\Consulta\uConCliente.pas',0,1,54,37,71,0,0,,
+File_0=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas',0,1,103,43,127,0,0,,
+File_1=TSourceModule,'C:\ProjetoDelphi\Classes\cAcaoAcesso.pas',0,1,232,65,241,0,0,{{47,0}
+File_2=TSourceModule,'C:\ProjetoDelphi\Classes\cUsuarioLogado.pas',0,1,10,62,23,0,0,,
+File_3=TSourceModule,'C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas',0,1,87,60,87,0,0,,
+File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas',0,1,1,1,12,0,0,,
+File_5=TSourceModule,'C:\Components\units\RxToolEdit.pas',0,1,730,1,746,0,0,,
+File_6=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadProduto.pas',0,1,103,32,111,0,0,,
+File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,2375,9,2390,0,0,,
+File_8=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadCategoria.pas',0,1,111,31,114,0,0,,
+File_9=TSourceModule,'C:\ProjetoDelphi\Cadastro\uCadUsuario.pas',0,1,62,38,84,0,0,,
+File_10=TSourceModule,'C:\ProjetoDelphi\Login\uAlterarSenha.pas',0,1,27,72,94,0,0,,
 
 [Modules]
-Module0=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
-Module1=C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas
-Module2=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
-Module3=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
-Module4=C:\ProjetoDelphi\Classes\cUsuarioLogado.pas
-Module5=C:\ProjetoDelphi\Classes\cAcaoAcesso.pas
-Module6=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas
-Module7=C:\Components\units\RxToolEdit.pas
-Module8=C:\ProjetoDelphi\uPrincipal.pas
-Count=9
+Module0=C:\ProjetoDelphi\Processo\uProVenda.pas
+Module1=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+Module2=C:\ProjetoDelphi\Processo\uCaixa.pas
+Module3=C:\ProjetoDelphi\Classes\cFuncao.pas
+Module4=C:\ProjetoDelphi\uPrincipal.pas
+Module5=C:\ProjetoDelphi\Login\uLogin.pas
+Module6=C:\ProjetoDelphi\Cadastro\uCadCliente.pas
+Count=7
 EditWindowCount=1
 
-[C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas]
-ModuleType=TSourceModule
-
-[C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas]
-ModuleType=TSourceModule
-
-[C:\ProjetoDelphi\Cadastro\uCadProduto.pas]
+[C:\ProjetoDelphi\Processo\uProVenda.pas]
 ModuleType=TSourceModule
 
 [C:\ProjetoDelphi\Heranca\uTelaHeranca.pas]
 ModuleType=TSourceModule
 
-[C:\ProjetoDelphi\Classes\cUsuarioLogado.pas]
+[C:\ProjetoDelphi\Processo\uCaixa.pas]
 ModuleType=TSourceModule
 
-[C:\ProjetoDelphi\Classes\cAcaoAcesso.pas]
-ModuleType=TSourceModule
-
-[c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas]
-ModuleType=TSourceModule
-
-[C:\Components\units\RxToolEdit.pas]
+[C:\ProjetoDelphi\Classes\cFuncao.pas]
 ModuleType=TSourceModule
 
 [C:\ProjetoDelphi\uPrincipal.pas]
 ModuleType=TSourceModule
 
+[C:\ProjetoDelphi\Login\uLogin.pas]
+ModuleType=TSourceModule
+
+[C:\ProjetoDelphi\Cadastro\uCadCliente.pas]
+ModuleType=TSourceModule
+
 [EditWindow0]
-ViewCount=9
-CurrentEditView=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
+ViewCount=7
+CurrentEditView=C:\ProjetoDelphi\Processo\uProVenda.pas
 View0=0
 View1=1
 View2=2
@@ -62,8 +53,6 @@ View3=3
 View4=4
 View5=5
 View6=6
-View7=7
-View8=8
 PercentageSizes=1
 Create=1
 Visible=1
@@ -102,95 +91,73 @@ TopLine=113
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\ProjetoDelphi\uPrincipal.pas
+EditViewName=Borland.FormDesignerView
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
-CursorX=24
-CursorY=386
-TopLine=370
+Module=C:\ProjetoDelphi\Processo\uCaixa.pas
+CursorX=1
+CursorY=109
+TopLine=247
 LeftCol=1
-Elisions={{101,0},{104,11},{' OBSERVAÇÕES'}}{{182,0},{211,11},{'MÉTODOS VURTUAIS'}}
-Bookmarks={1,615,1}
-EditViewName=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+Elisions=
+Bookmarks=
+EditViewName=C:\ProjetoDelphi\Processo\uCaixa.pas
 
 [View2]
 CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
-CursorX=54
-CursorY=101
-TopLine=103
+Module=C:\ProjetoDelphi\Heranca\uTelaHeranca.pas
+CursorX=35
+CursorY=504
+TopLine=493
 LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\ProjetoDelphi\Cadastro\uCadAcaoAcesso.pas
+Elisions={{101,0},{104,11},{' OBSERVAÇÕES'}}{{182,0},{211,11},{'MÉTODOS VURTUAIS'}}
+Bookmarks={1,619,1}
+EditViewName=Borland.FormDesignerView
 
 [View3]
 CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Classes\cAcaoAcesso.pas
-CursorX=65
-CursorY=241
-TopLine=232
+Module=C:\ProjetoDelphi\Cadastro\uCadCliente.pas
+CursorX=26
+CursorY=246
+TopLine=228
 LeftCol=1
-Elisions={{47,0},{59,11},{'Destructor and Destructor'}}{{61,0},{178,11},{'Métodos CRUD'}}
+Elisions={{106,0},{215,11},{'Override'}}
 Bookmarks=
-EditViewName=C:\ProjetoDelphi\Classes\cAcaoAcesso.pas
+EditViewName=Borland.FormDesignerView
 
 [View4]
 CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Classes\cUsuarioLogado.pas
+Module=C:\ProjetoDelphi\Processo\uProVenda.pas
 CursorX=62
-CursorY=23
-TopLine=10
+CursorY=109
+TopLine=131
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\ProjetoDelphi\Classes\cUsuarioLogado.pas
+EditViewName=C:\ProjetoDelphi\Processo\uProVenda.pas
 
 [View5]
 CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas
-CursorX=60
-CursorY=87
-TopLine=87
+Module=C:\ProjetoDelphi\Classes\cFuncao.pas
+CursorX=35
+CursorY=143
+TopLine=155
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\ProjetoDelphi\Login\uUsuarioVsAcoes.pas
+EditViewName=C:\ProjetoDelphi\Classes\cFuncao.pas
 
 [View6]
 CustomEditViewType=TEditView
-Module=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas
-CursorX=1
-CursorY=12
-TopLine=1
+Module=C:\ProjetoDelphi\Login\uLogin.pas
+CursorX=62
+CursorY=85
+TopLine=80
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.pas
-
-[View7]
-CustomEditViewType=TEditView
-Module=C:\Components\units\RxToolEdit.pas
-CursorX=1
-CursorY=746
-TopLine=730
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Components\units\RxToolEdit.pas
-
-[View8]
-CustomEditViewType=TEditView
-Module=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
-CursorX=32
-CursorY=111
-TopLine=103
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\ProjetoDelphi\Cadastro\uCadProduto.pas
+EditViewName=C:\ProjetoDelphi\Login\uLogin.pas
 
 [UndockedDesigner]
 Count=0
@@ -220,8 +187,7 @@ Dockable=1
 StayOnTop=0
 
 [Breakpoints]
-Count=1
-Breakpoint0='C:\ProjetoDelphi\Cadastro\uCadCliente.pas',251,'',0,1,'',1,0,0,'',1,'','','',0,''
+Count=0
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
 Count=0
@@ -378,6 +344,11 @@ LRDockWidth=1911
 Dockable=1
 StayOnTop=0
 SplitPos=112
+
+[PropInspDesignerSelection]
+ArrangeBy=Name
+SelectedItem=Action,
+ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0
 
 [ClassBrowserTool]
 PercentageSizes=1

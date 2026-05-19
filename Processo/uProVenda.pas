@@ -101,7 +101,29 @@ uses uCadCliente, cFuncao, uPrincipal, uConCliente, uRelPreVenda, uConOrcVen;
 
 {$REGION 'Overrides'}
 function TfrmProVendas.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+var IDCliente: Integer;
 begin
+  if VarIsNull(lkpCliente.KeyValue) then
+  begin
+    lkpCliente.SetFocus;
+    raise Exception.Create('Selecione um cliente antes de efeturar a pré-venda.');
+  end;
+
+  IDCliente := lkpCliente.KeyValue;
+
+  if dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 2 then
+  begin
+    MessageDlg('Operação barrada: Cliente com status BLOQUEADO!', mtWarning, [mbOK], 0);
+    Abort;
+  end;
+
+  if dtmVendas.cdsItensVenda.IsEmpty then
+  begin
+    MessageDlg('Insira ao menos um produto para gerar a pré-venda!', mtWarning, [mbOK], 0);
+    lkpProduto.SetFocus;
+    Abort;
+  end;
+
   if edtVendaId.Text<>EmptyStr then
      oVenda.VendaId:=StrToInt(edtVendaId.Text)
   else
@@ -112,19 +134,20 @@ begin
   oVenda.DataValidade     :=edtDataValidade.Date;
   oVenda.TotalVenda       :=edtValorTotalProduto.Value;
 
-    if (EstadoDoCadastro=ecInserir) then
-    begin
-       oVenda.InserirPreVenda(dtmVendas.cdsItensVenda);
-       ShowMessage('Pré-Venda gerada');
-    end
-    else if (EstadoDoCadastro=ecAlterar) then
-    begin
-       oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda);
-       ShowMessage('');
-    end;
+  if (EstadoDoCadastro=ecInserir) then
+  begin
+     oVenda.InserirPreVenda(dtmVendas.cdsItensVenda);
+     ShowMessage('Pré-Venda gerada com sucesso!');
+  end
+  else if (EstadoDoCadastro=ecAlterar) then
+  begin
+     oVenda.AtualizarPreVenda(dtmVendas.cdsItensVenda);
+     ShowMessage('Pré-Venda atualizada com sucesso!');
+  end;
 
   Result:=True;
 end;
+
 
 function TfrmProVendas.Excluir: Boolean;
 var vPreVendaId: Integer;
@@ -300,6 +323,9 @@ var Observacao:string;
 begin
   inherited;
   Observacao:=dtmVendas.QryCliente.FieldByName('observacao').AsString;
+
+  if VarIsNull(lkpCliente.KeyValue) then
+    Exit;
 
   if(dtmVendas.QryCliente.FieldByName('situacaoId').AsInteger = 3) then
   begin
@@ -621,6 +647,7 @@ end;
 
 procedure TfrmProVendas.FormShow(Sender: TObject);
 begin
+
   oVenda.AtualizarStatusVencidos;
 
   QryListagem.Open;

@@ -30,6 +30,10 @@ object frmCaixa: TfrmCaixa
     TabOrder = 0
     object Pendentes: TTabSheet
       Caption = 'Pendentes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnl2: TPanel
         Left = 0
         Top = 398
@@ -354,6 +358,10 @@ object frmCaixa: TfrmCaixa
     object Faturados: TTabSheet
       Caption = 'Faturados'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 398

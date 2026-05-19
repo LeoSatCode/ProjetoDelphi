@@ -1,6 +1,7 @@
 inherited frmProVendas: TfrmProVendas
   Caption = 'Pr'#233' Venda'
   ClientWidth = 1003
+  ExplicitTop = -141
   ExplicitWidth = 1009
   PixelsPerInch = 96
   TextHeight = 13
@@ -108,7 +109,10 @@ inherited frmProVendas: TfrmProVendas
       end
     end
     inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 995
+      ExplicitHeight = 433
       object pnl1: TPanel
         Left = 0
         Top = 83

@@ -133,8 +133,6 @@ begin
   if not FileExists(TArquivo.ArquivoIni) then
   begin
     TArquivo.AtualizarIni('SERVER', 'TipoDataBase', 'MSSQL');
-    //TArquivo.AtualizarIni('SERVER', 'HostName', '.\');
-    //TArquivo.AtualizarIni('SERVER', 'Port', '1433');
     TArquivo.AtualizarIni('SERVER', 'User', 'sa');
     TArquivo.AtualizarIni('SERVER', 'Password', 'domtec@10');
     TArquivo.AtualizarIni('SERVER', 'Database', 'vendas');
@@ -145,14 +143,7 @@ begin
     Application.Terminate;
   end
   else begin
-    {
-    dtmConexao := TdtmConexao.Create(Self);
-    dtmConexao.ConexaoDB.Params.DriverID:='MSSQL';
-    dtmConexao.ConexaoDB.Params.UserName:='sa';
-    dtmConexao.ConexaoDB.Params.Password:='domtec@10';
-    dtmConexao.ConexaoDB.Params.Database:='Vendas';
-    dtmConexao.ConexaoDB.Connected:=true;
-    }
+
     frmAtualizaDB:=TfrmAtualizaDB.Create(Self); //Cria o formulário
     frmAtualizaDB.Show; //O 'Show', coloca o formulário na tela e continua executando as linhas abaixo
     frmAtualizaDB.Refresh; //Atualiza a tela

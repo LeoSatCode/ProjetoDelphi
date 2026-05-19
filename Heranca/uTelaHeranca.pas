@@ -201,10 +201,6 @@ end;
 
 function TfrmTelaHeranca.Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean;
 begin
-//  if (EstadoDoCadastro=ecInserir) then
-//    ShowMessage('Inserido')
-//  else if (EstadoDoCadastro=ecAlterar) then
-//    ShowMessage('Alterado');
     Result := True;
 end;
 
